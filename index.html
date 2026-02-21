@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MANIFOLD WERKS — Models of the Real World</title>
+<meta name="description" content="Manifold Werks builds AI systems that learn mathematical models of biological systems from data. Flagship product: Geomancer.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================
+   MANIFOLD WERKS — Design System
+   ============================================ */
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --coral:        #E8614D;
+  --desert:       #C4A882;
+  --ink:          #1A1A18;
+  --paper:        #F0EBE3;
+  --paper-dark:   #D9D2C7;
+  --clay:         #8B7355;
+  --rust:         #B85C38;
+  --chalk:        #FAF8F5;
+
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-body:    'Source Serif 4', Georgia, serif;
+  --font-mono:    'JetBrains Mono', monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: var(--chalk);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--coral);
+  color: var(--chalk);
+}
+
+/* ============================================
+   GRAIN OVERLAY — paper texture across site
+   ============================================ */
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.028;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 256px 256px;
+}
+
+/* ============================================
+   SCROLL REVEAL
+   ============================================ */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.23, 1, 0.32, 1),
+              transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.35s; }
+.reveal-delay-5 { transition-delay: 0.4s; }
+
+/* ============================================
+   SECTION — HERO
+   ============================================ */
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 4rem 8vw;
+  background: var(--ink);
+  color: var(--paper);
+  overflow: hidden;
+}
+
+/* Topographic contour lines — manifold reference */
+.hero-topo {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.hero-topo svg {
+  position: absolute;
+  width: 140%;
+  height: 140%;
+  top: -20%;
+  left: -20%;
+  opacity: 0.045;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(4.5rem, 14vw, 11rem);
+  line-height: 0.92;
+  letter-spacing: 0.03em;
+  color: var(--paper);
+  margin-bottom: 0;
+}
+
+.hero-title .accent {
+  color: var(--coral);
+}
+
+.hero-rule {
+  width: 72px;
+  height: 3px;
+  background: var(--coral);
+  border: none;
+  margin: 1.8rem 0 1.6rem;
+}
+
+.hero-sub {
+  font-family: var(--font-mono);
+  font-size: clamp(0.75rem, 1.4vw, 0.95rem);
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  color: var(--desert);
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.hero-sub .cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.1em;
+  background: var(--coral);
+  margin-left: 3px;
+  animation: blink 1s steps(1) infinite;
+  vertical-align: text-bottom;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+.hero-scroll-hint {
+  position: absolute;
+  bottom: 3rem;
+  left: 8vw;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  color: var(--clay);
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.hero-scroll-hint .line {
+  width: 32px;
+  height: 1px;
+  background: var(--clay);
+}
+
+/* ============================================
+   SECTION — WHAT WE BUILD
+   ============================================ */
+
+.section {
+  padding: 7rem 8vw;
+}
+
+.section--paper {
+  background: var(--paper);
+}
+
+.section--chalk {
+  background: var(--chalk);
+}
+
+.section--ink {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.section--desert {
+  background: var(--desert);
+  color: var(--ink);
+}
+
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--clay);
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.section-label::before {
+  content: '';
+  width: 20px;
+  height: 1px;
+  background: var(--coral);
+}
+
+.section--ink .section-label {
+  color: var(--desert);
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 6vw, 5rem);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  margin-bottom: 2rem;
+}
+
+.section-body {
+  max-width: 640px;
+  font-size: 1.1rem;
+  line-height: 1.7;
+}
+
+.section-body p + p {
+  margin-top: 1.2rem;
+}
+
+.section-body strong {
+  font-weight: 600;
+}
+
+.section-body em {
+  font-style: italic;
+}
+
+/* ============================================
+   SCHEMATIC — What We Build diagram
+   ============================================ */
+
+.schematic {
+  margin-top: 3.5rem;
+  padding: 2rem 0;
+  overflow-x: auto;
+}
+
+.schematic-flow {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  min-width: 0;
+  flex-wrap: wrap;
+  row-gap: 0.8rem;
+}
+
+.schematic-node {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.55rem 1rem;
+  border: 1.5px solid var(--ink);
+  white-space: nowrap;
+  position: relative;
+  background: transparent;
+}
+
+.schematic-node.highlight {
+  border-color: var(--coral);
+  color: var(--coral);
+}
+
+.schematic-arrow {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--clay);
+  padding: 0 0.5rem;
+  flex-shrink: 0;
+}
+
+/* ============================================
+   SECTION — GEOMANCER
+   ============================================ */
+
+.capabilities {
+  margin-top: 3rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+
+.capability {
+  padding: 1.4rem 0;
+  border-top: 1px solid var(--paper-dark);
+}
+
+.capability:last-child {
+  border-bottom: 1px solid var(--paper-dark);
+}
+
+.section--ink .capability {
+  border-color: rgba(240, 235, 227, 0.1);
+}
+
+.capability-label {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.3rem;
+}
+
+.section--ink .capability-label {
+  color: var(--coral);
+}
+
+.capability-desc {
+  font-size: 0.95rem;
+  color: var(--clay);
+  max-width: 560px;
+}
+
+.section--ink .capability-desc {
+  color: var(--desert);
+}
+
+/* ============================================
+   SECTION — THE LOOP (cycle diagram)
+   ============================================ */
+
+.loop-container {
+  margin-top: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loop-cycle {
+  position: relative;
+  width: 340px;
+  height: 340px;
+}
+
+.loop-node {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.loop-node .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--coral);
+  margin: 0 auto 0.5rem;
+  opacity: 0.3;
+  animation: pulse-dot 4.2s ease-in-out infinite;
+}
+
+/* Position 7 nodes around a circle */
+.loop-node:nth-child(1) { top: 0; left: 50%; transform: translateX(-50%); }
+.loop-node:nth-child(1) .dot { animation-delay: 0s; }
+
+.loop-node:nth-child(2) { top: 13%; right: 2%; transform: none; }
+.loop-node:nth-child(2) .dot { animation-delay: 0.6s; }
+
+.loop-node:nth-child(3) { top: 46%; right: -5%; transform: none; }
+.loop-node:nth-child(3) .dot { animation-delay: 1.2s; }
+
+.loop-node:nth-child(4) { bottom: 8%; right: 10%; transform: none; }
+.loop-node:nth-child(4) .dot { animation-delay: 1.8s; }
+
+.loop-node:nth-child(5) { bottom: 8%; left: 10%; transform: none; }
+.loop-node:nth-child(5) .dot { animation-delay: 2.4s; }
+
+.loop-node:nth-child(6) { top: 46%; left: -7%; transform: none; }
+.loop-node:nth-child(6) .dot { animation-delay: 3.0s; }
+
+.loop-node:nth-child(7) { top: 13%; left: 2%; transform: none; }
+.loop-node:nth-child(7) .dot { animation-delay: 3.6s; }
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 0.25; transform: scale(1); }
+  14% { opacity: 1; transform: scale(1.6); background: var(--coral); }
+  28% { opacity: 0.25; transform: scale(1); }
+}
+
+/* Circular path SVG behind nodes */
+.loop-ring {
+  position: absolute;
+  inset: 30px;
+  pointer-events: none;
+}
+
+.loop-ring circle {
+  fill: none;
+  stroke: var(--paper-dark);
+  stroke-width: 1;
+  stroke-dasharray: 6 8;
+}
+
+/* Animated traveling dot */
+.loop-ring .traveler {
+  fill: var(--coral);
+  r: 3;
+  offset-path: circle(140px at 50% 50%);
+  animation: orbit 4.2s linear infinite;
+}
+
+@keyframes orbit {
+  0% { offset-distance: 0%; }
+  100% { offset-distance: 100%; }
+}
+
+/* Fallback for browsers that don't support offset-path on SVG */
+@supports not (offset-path: circle(1px)) {
+  .loop-ring .traveler {
+    display: none;
+  }
+}
+
+.loop-label-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.loop-label-center .big {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  letter-spacing: 0.06em;
+  color: var(--coral);
+  line-height: 1.1;
+}
+
+.loop-label-center .small {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--clay);
+  margin-top: 0.3rem;
+}
+
+/* ============================================
+   SECTION — APPLICATIONS
+   ============================================ */
+
+.applications {
+  margin-top: 2.5rem;
+}
+
+.application {
+  padding: 1.8rem 0;
+  border-top: 1px solid var(--paper-dark);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.5rem;
+  align-items: baseline;
+}
+
+.application:last-child {
+  border-bottom: 1px solid var(--paper-dark);
+}
+
+.application-domain {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.application-detail {
+  font-size: 0.95rem;
+  color: var(--clay);
+}
+
+.application-partner {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  color: var(--rust);
+  margin-top: 0.3rem;
+}
+
+/* ============================================
+   SECTION — TEAM
+   ============================================ */
+
+.team-grid {
+  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.team-item {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  line-height: 1.7;
+  color: var(--desert);
+}
+
+.team-item .team-heading {
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--paper);
+  font-size: 0.68rem;
+  margin-bottom: 0.4rem;
+}
+
+.team-item a {
+  color: var(--coral);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+
+.team-item a:hover {
+  border-bottom-color: var(--coral);
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+
+.footer {
+  padding: 3rem 8vw;
+  background: var(--ink);
+  color: var(--clay);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 2rem;
+  border-top: 1px solid rgba(196, 168, 130, 0.1);
+}
+
+.footer-left {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.footer-mark {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  letter-spacing: 0.06em;
+  color: var(--paper);
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.footer-mark .salamander {
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+.footer-mark .salamander svg {
+  width: 100%;
+  height: 100%;
+}
+
+.footer-links {
+  display: flex;
+  gap: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+}
+
+.footer-links a {
+  color: var(--desert);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover {
+  color: var(--coral);
+}
+
+.footer-right {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+  color: var(--clay);
+  text-align: right;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 768px) {
+  .section {
+    padding: 5rem 6vw;
+  }
+
+  .hero {
+    padding: 3rem 6vw;
+  }
+
+  .hero-title {
+    font-size: clamp(3.5rem, 16vw, 6rem);
+  }
+
+  .application {
+    grid-template-columns: 1fr;
+    gap: 0.4rem;
+  }
+
+  .schematic-flow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+  }
+
+  .schematic-arrow {
+    padding: 0.2rem 0 0.2rem 1rem;
+    transform: rotate(90deg);
+    transform-origin: left center;
+  }
+
+  .loop-cycle {
+    width: 280px;
+    height: 280px;
+  }
+
+  .loop-node {
+    font-size: 0.6rem;
+  }
+
+  .footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .footer-right {
+    text-align: left;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: clamp(2.8rem, 18vw, 4.5rem);
+  }
+
+  .section-title {
+    font-size: clamp(2.2rem, 10vw, 3.5rem);
+  }
+
+  .loop-cycle {
+    width: 240px;
+    height: 240px;
+  }
+}
+
+/* ============================================
+   PRINT
+   ============================================ */
+
+@media print {
+  body::after { display: none; }
+  .hero { min-height: auto; padding: 2rem; }
+  .reveal { opacity: 1; transform: none; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ==========================================
+     HERO
+     ========================================== -->
+<section class="hero" id="top">
+
+  <!-- Topographic contour background -->
+  <div class="hero-topo" aria-hidden="true">
+    <svg viewBox="0 0 1000 1000" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M200 500C200 350 350 200 500 200C650 200 800 350 800 500C800 650 650 800 500 800C350 800 200 650 200 500Z" stroke="#F0EBE3" stroke-width="0.8"/>
+      <path d="M250 500C250 380 380 250 500 250C620 250 750 380 750 500C750 620 620 750 500 750C380 750 250 620 250 500Z" stroke="#F0EBE3" stroke-width="0.7"/>
+      <path d="M310 500C310 400 400 310 500 310C600 310 690 400 690 500C690 600 600 690 500 690C400 690 310 600 310 500Z" stroke="#F0EBE3" stroke-width="0.6"/>
+      <path d="M360 500C360 425 425 360 500 360C575 360 640 425 640 500C640 575 575 640 500 640C425 640 360 575 360 500Z" stroke="#F0EBE3" stroke-width="0.5"/>
+      <path d="M410 500C410 450 450 410 500 410C550 410 590 450 590 500C590 550 550 590 500 590C450 590 410 550 410 500Z" stroke="#F0EBE3" stroke-width="0.4"/>
+      <!-- Offset contours — shifted center for organic feel -->
+      <path d="M150 400C180 250 340 140 520 160C700 180 850 340 830 520C810 700 650 850 470 830C290 810 120 550 150 400Z" stroke="#F0EBE3" stroke-width="0.6"/>
+      <path d="M180 420C210 290 360 190 530 210C700 230 820 370 800 540C780 710 630 830 460 810C290 790 150 560 180 420Z" stroke="#F0EBE3" stroke-width="0.5"/>
+      <path d="M220 440C245 330 380 240 540 260C700 280 790 400 770 560C750 720 610 810 450 790C290 770 195 560 220 440Z" stroke="#F0EBE3" stroke-width="0.4"/>
+      <!-- Upper-right cluster -->
+      <path d="M550 100C680 80 820 180 840 310C860 440 760 560 630 580C500 600 360 500 340 370C320 240 420 120 550 100Z" stroke="#F0EBE3" stroke-width="0.5"/>
+      <path d="M560 150C660 130 770 210 790 320C810 430 730 530 620 550C510 570 410 480 390 380C370 280 460 170 560 150Z" stroke="#F0EBE3" stroke-width="0.4"/>
+      <!-- Lower-left cluster -->
+      <path d="M100 600C120 500 230 420 360 440C490 460 580 580 560 700C540 820 420 900 290 880C160 860 80 700 100 600Z" stroke="#F0EBE3" stroke-width="0.5"/>
+      <path d="M140 620C160 530 260 460 380 480C500 500 570 600 550 710C530 820 420 880 310 860C200 840 120 720 140 620Z" stroke="#F0EBE3" stroke-width="0.4"/>
+    </svg>
+  </div>
+
+  <div class="hero-content">
+    <h1 class="hero-title">MANIFOLD<br>WERK<span class="accent">S</span></h1>
+    <hr class="hero-rule">
+    <p class="hero-sub">
+      <span>mnfldwrks — models of the real world</span><span class="cursor" aria-hidden="true"></span>
+    </p>
+  </div>
+
+  <div class="hero-scroll-hint" aria-hidden="true">
+    <span class="line"></span>
+    <span>Scroll</span>
+  </div>
+</section>
+
+
+<!-- ==========================================
+     WHAT WE BUILD
+     ========================================== -->
+<section class="section section--paper" id="what">
+
+  <div class="section-label reveal">01 — What We Build</div>
+
+  <h2 class="section-title reveal reveal-delay-1">World models<br>from data<span style="color: var(--coral)">.</span></h2>
+
+  <div class="section-body reveal reveal-delay-2">
+    <p>We build AI systems that learn mathematical models of biological systems from data. Not chatbots. Not pipelines. <strong>Models that simulate, predict, and learn from experiments.</strong></p>
+    <p>Our models live on manifolds — the geometric surfaces that describe how cells move, differentiate, and respond. We learn the dynamics on these surfaces directly from high-dimensional biological data, then use those dynamics to do science.</p>
+  </div>
+
+  <div class="schematic reveal reveal-delay-3">
+    <div class="schematic-flow">
+      <div class="schematic-node">Data</div>
+      <div class="schematic-arrow">→</div>
+      <div class="schematic-node">Geometric Embedding</div>
+      <div class="schematic-arrow">→</div>
+      <div class="schematic-node highlight">Neural ODE</div>
+      <div class="schematic-arrow">→</div>
+      <div class="schematic-node">Simulation</div>
+      <div class="schematic-arrow">→</div>
+      <div class="schematic-node">Hypothesis</div>
+      <div class="schematic-arrow">→</div>
+      <div class="schematic-node">Lab</div>
+      <div class="schematic-arrow">→</div>
+      <div class="schematic-node highlight">Repeat</div>
+    </div>
+  </div>
+
+</section>
+
+
+<!-- ==========================================
+     GEOMANCER
+     ========================================== -->
+<section class="section section--ink" id="geomancer">
+
+  <div class="section-label reveal">02 — Flagship</div>
+
+  <h2 class="section-title reveal reveal-delay-1" style="color: var(--paper);">GEOMANCER</h2>
+
+  <div class="section-body reveal reveal-delay-2" style="color: var(--desert);">
+    <p>Geomancer is an AI scientist. It takes biological data — single-cell transcriptomics, imaging, time series — and constructs a mathematical world model: a system of differential equations on a learned geometric space that captures how the biology actually works.</p>
+    <p>Then it uses that model. It runs simulations, generates testable hypotheses, designs experiments, and updates itself when the lab results come back. Geomancer learns ODEs from your data and tells you what happens next.</p>
+  </div>
+
+  <div class="capabilities reveal reveal-delay-3">
+    <div class="capability">
+      <div class="capability-label">Geometric Data Encoding</div>
+      <div class="capability-desc">Learns the intrinsic manifold structure of high-dimensional biological data. Preserves topology and geometry that linear methods destroy.</div>
+    </div>
+    <div class="capability">
+      <div class="capability-label">Neural Dynamical Modeling</div>
+      <div class="capability-desc">Fits neural ODEs and SDEs directly on learned manifolds. Captures continuous-time dynamics without discretization artifacts.</div>
+    </div>
+    <div class="capability">
+      <div class="capability-label">Cross-Domain Generalizability</div>
+      <div class="capability-desc">Same mathematical framework applies to neurodegeneration, cancer, stem cell biology. Geometry doesn't care about the domain.</div>
+    </div>
+    <div class="capability">
+      <div class="capability-label">Lab-in-the-Loop</div>
+      <div class="capability-desc">Generates hypotheses, designs validation experiments, incorporates results. Closes the gap between computation and wet lab.</div>
+    </div>
+  </div>
+
+</section>
+
+
+<!-- ==========================================
+     THE LOOP
+     ========================================== -->
+<section class="section section--paper" id="loop">
+
+  <div class="section-label reveal">03 — The Loop</div>
+
+  <h2 class="section-title reveal reveal-delay-1">Closed-loop<br>discovery<span style="color: var(--coral)">.</span></h2>
+
+  <div class="section-body reveal reveal-delay-2">
+    <p>The core innovation isn't any single model. It's the loop: a system that learns, predicts, tests, and refines — continuously. Each pass through the cycle makes the model sharper and the hypotheses more precise.</p>
+  </div>
+
+  <div class="loop-container reveal reveal-delay-3">
+    <div class="loop-cycle" role="img" aria-label="Circular diagram showing the closed-loop discovery cycle: Data, Model, Simulate, Hypothesize, Experiment, Validate, Update">
+
+      <!-- Dashed ring -->
+      <svg class="loop-ring" viewBox="0 0 280 280" aria-hidden="true">
+        <circle cx="140" cy="140" r="120" />
+      </svg>
+
+      <!-- Nodes around the ring -->
+      <div class="loop-node">
+        <div class="dot"></div>
+        Data
+      </div>
+      <div class="loop-node">
+        <div class="dot"></div>
+        Model
+      </div>
+      <div class="loop-node">
+        <div class="dot"></div>
+        Simulate
+      </div>
+      <div class="loop-node">
+        <div class="dot"></div>
+        Hypothesize
+      </div>
+      <div class="loop-node">
+        <div class="dot"></div>
+        Experiment
+      </div>
+      <div class="loop-node">
+        <div class="dot"></div>
+        Validate
+      </div>
+      <div class="loop-node">
+        <div class="dot"></div>
+        Update
+      </div>
+
+      <!-- Center label -->
+      <div class="loop-label-center">
+        <div class="big">∞</div>
+        <div class="small">Continuous</div>
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+
+<!-- ==========================================
+     APPLICATIONS
+     ========================================== -->
+<section class="section section--chalk" id="applications">
+
+  <div class="section-label reveal">04 — Applications</div>
+
+  <h2 class="section-title reveal reveal-delay-1">Where it<br>works<span style="color: var(--coral)">.</span></h2>
+
+  <div class="applications">
+
+    <div class="application reveal reveal-delay-2">
+      <div class="application-domain">Neurodegeneration</div>
+      <div>
+        <div class="application-detail">Modeling dopaminergic neuron dynamics in Parkinson's disease. Predicting disease trajectories and identifying intervention windows.</div>
+        <div class="application-partner">Yale School of Medicine / Adams Center for Parkinson's Research</div>
+      </div>
+    </div>
+
+    <div class="application reveal reveal-delay-3">
+      <div class="application-domain">Cancer Biology</div>
+      <div>
+        <div class="application-detail">Simulating breast cancer organoid growth and drug response. Building predictive models of tumor evolution from single-cell data.</div>
+        <div class="application-partner">Garvan Institute of Medical Research, Sydney</div>
+      </div>
+    </div>
+
+    <div class="application reveal reveal-delay-4">
+      <div class="application-domain">Stem Cell Biology</div>
+      <div>
+        <div class="application-detail">Mapping differentiation landscapes and predicting cell fate decisions. Guiding reprogramming strategies through learned dynamics.</div>
+        <div class="application-partner">University of Georgia</div>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ==========================================
+     TEAM / ABOUT
+     ========================================== -->
+<section class="section section--ink" id="team">
+
+  <div class="section-label reveal">05 — About</div>
+
+  <h2 class="section-title reveal reveal-delay-1" style="color: var(--paper);">Built to<br>last<span style="color: var(--coral)">.</span></h2>
+
+  <div class="team-grid reveal reveal-delay-2">
+    <div class="team-item">
+      <div class="team-heading">Home base</div>
+      Mila — Quebec AI Institute<br>
+      McGill University, Montreal
+    </div>
+    <div class="team-item">
+      <div class="team-heading">Collaborators</div>
+      Yale School of Medicine<br>
+      Garvan Institute of Medical Research<br>
+      University of Georgia
+    </div>
+    <div class="team-item">
+      <div class="team-heading">Open source</div>
+      <a href="https://github.com/Latent-Reasoning-Works" target="_blank" rel="noopener noreferrer">github.com/Latent-Reasoning-Works</a>
+    </div>
+  </div>
+
+</section>
+
+
+<!-- ==========================================
+     FOOTER
+     ========================================== -->
+<footer class="footer">
+
+  <div class="footer-left">
+    <div class="footer-mark">
+      <!-- Hellbender salamander silhouette -->
+      <span class="salamander" aria-hidden="true">
+        <svg viewBox="0 0 40 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 14C2 14 1 13 1 12C1 10.5 3 10 4 10.5C4.5 8 6 6 9 6C9 4.5 10 3 12 3C13 3 14 3.5 14.5 4.5C15.5 3.5 17 3 18.5 3.5C19 2 20.5 1 22 1.5C23.5 2 24 3.5 23.5 5C25 5 27 6 28 8C29.5 7.5 31 8 32 9C33 10 33 11.5 32 12.5C33.5 13 35 14 35.5 15.5C36 17 35 18.5 33.5 19C34 20 33.5 21.5 32 22C30.5 22.5 29 21.5 28.5 20C27 21 25 21.5 23 21C22 22 20.5 22.5 19 22C17.5 22.5 15.5 22 14.5 21C13 21.5 11 21 10 20C8.5 20.5 7 20 6 19C5 18 4.5 16.5 5 15C3.5 15 2.5 14.5 2 13.5" stroke="#E8614D" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="14" cy="10" r="1" fill="#E8614D"/>
+          <circle cx="20" cy="9" r="1" fill="#E8614D"/>
+        </svg>
+      </span>
+      MANIFOLD WERKS
+    </div>
+    <div class="footer-links">
+      <a href="https://github.com/Latent-Reasoning-Works" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="mailto:hello@manifoldwerks.com">Contact</a>
+    </div>
+  </div>
+
+  <div class="footer-right">
+    &copy; 2025 manifold werks
+  </div>
+
+</footer>
+
+
+<!-- ==========================================
+     SCROLL REVEAL — IntersectionObserver
+     ========================================== -->
+<script>
+(function() {
+  'use strict';
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.12,
+    rootMargin: '0px 0px -40px 0px'
+  });
+
+  document.querySelectorAll('.reveal').forEach(function(el) {
+    observer.observe(el);
+  });
+})();
+</script>
+
+</body>
+</html>
