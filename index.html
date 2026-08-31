@@ -3,1023 +3,1155 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MANIFOLD WERKS — Models of the Real World</title>
-<meta name="description" content="Manifold Werks builds AI systems that learn mathematical models of biological systems from data. Flagship product: Geomancer.">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
-
-<style>
-/* ============================================
-   MANIFOLD WERKS — Design System
-   ============================================ */
-
-*, *::before, *::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-:root {
-  --coral:        #E8614D;
-  --desert:       #C4A882;
-  --ink:          #1A1A18;
-  --paper:        #F0EBE3;
-  --paper-dark:   #D9D2C7;
-  --clay:         #8B7355;
-  --rust:         #B85C38;
-  --chalk:        #FAF8F5;
-
-  --font-display: 'Bebas Neue', sans-serif;
-  --font-body:    'Source Serif 4', Georgia, serif;
-  --font-mono:    'JetBrains Mono', monospace;
-}
-
-html {
-  scroll-behavior: smooth;
-  font-size: 16px;
-}
-
-body {
-  font-family: var(--font-body);
-  color: var(--ink);
-  background: var(--chalk);
-  line-height: 1.65;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
-}
-
-::selection {
-  background: var(--coral);
-  color: var(--chalk);
-}
-
-/* ============================================
-   GRAIN OVERLAY — paper texture across site
-   ============================================ */
-
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 9999;
-  opacity: 0.028;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size: 256px 256px;
-}
-
-/* ============================================
-   SCROLL REVEAL
-   ============================================ */
-
-.reveal {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.7s cubic-bezier(0.23, 1, 0.32, 1),
-              transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.reveal-delay-1 { transition-delay: 0.1s; }
-.reveal-delay-2 { transition-delay: 0.2s; }
-.reveal-delay-3 { transition-delay: 0.3s; }
-.reveal-delay-4 { transition-delay: 0.35s; }
-.reveal-delay-5 { transition-delay: 0.4s; }
-
-/* ============================================
-   SECTION — HERO
-   ============================================ */
-
-.hero {
-  position: relative;
-  min-height: 100vh;
-  min-height: 100dvh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 4rem 8vw;
-  background: var(--ink);
-  color: var(--paper);
-  overflow: hidden;
-}
-
-/* Topographic contour lines — manifold reference */
-.hero-topo {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.hero-topo svg {
-  position: absolute;
-  width: 140%;
-  height: 140%;
-  top: -20%;
-  left: -20%;
-  opacity: 0.045;
-}
-
-.hero-content {
-  position: relative;
-  z-index: 2;
-  max-width: 900px;
-}
-
-.hero-title {
-  font-family: var(--font-display);
-  font-size: clamp(4.5rem, 14vw, 11rem);
-  line-height: 0.92;
-  letter-spacing: 0.03em;
-  color: var(--paper);
-  margin-bottom: 0;
-}
-
-.hero-title .accent {
-  color: var(--coral);
-}
-
-.hero-rule {
-  width: 72px;
-  height: 3px;
-  background: var(--coral);
-  border: none;
-  margin: 1.8rem 0 1.6rem;
-}
-
-.hero-sub {
-  font-family: var(--font-mono);
-  font-size: clamp(0.75rem, 1.4vw, 0.95rem);
-  font-weight: 300;
-  letter-spacing: 0.08em;
-  color: var(--desert);
-  display: flex;
-  align-items: center;
-  gap: 0;
-}
-
-.hero-sub .cursor {
-  display: inline-block;
-  width: 2px;
-  height: 1.1em;
-  background: var(--coral);
-  margin-left: 3px;
-  animation: blink 1s steps(1) infinite;
-  vertical-align: text-bottom;
-}
-
-@keyframes blink {
-  0%, 50% { opacity: 1; }
-  51%, 100% { opacity: 0; }
-}
-
-.hero-scroll-hint {
-  position: absolute;
-  bottom: 3rem;
-  left: 8vw;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.12em;
-  color: var(--clay);
-  text-transform: uppercase;
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-}
-
-.hero-scroll-hint .line {
-  width: 32px;
-  height: 1px;
-  background: var(--clay);
-}
-
-/* ============================================
-   SECTION — WHAT WE BUILD
-   ============================================ */
-
-.section {
-  padding: 7rem 8vw;
-}
-
-.section--paper {
-  background: var(--paper);
-}
-
-.section--chalk {
-  background: var(--chalk);
-}
-
-.section--ink {
-  background: var(--ink);
-  color: var(--paper);
-}
-
-.section--desert {
-  background: var(--desert);
-  color: var(--ink);
-}
-
-.section-label {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--clay);
-  margin-bottom: 2rem;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.section-label::before {
-  content: '';
-  width: 20px;
-  height: 1px;
-  background: var(--coral);
-}
-
-.section--ink .section-label {
-  color: var(--desert);
-}
-
-.section-title {
-  font-family: var(--font-display);
-  font-size: clamp(2.8rem, 6vw, 5rem);
-  line-height: 1;
-  letter-spacing: 0.02em;
-  margin-bottom: 2rem;
-}
-
-.section-body {
-  max-width: 640px;
-  font-size: 1.1rem;
-  line-height: 1.7;
-}
-
-.section-body p + p {
-  margin-top: 1.2rem;
-}
-
-.section-body strong {
-  font-weight: 600;
-}
-
-.section-body em {
-  font-style: italic;
-}
-
-/* ============================================
-   SCHEMATIC — What We Build diagram
-   ============================================ */
-
-.schematic {
-  margin-top: 3.5rem;
-  padding: 2rem 0;
-  overflow-x: auto;
-}
-
-.schematic-flow {
-  display: flex;
-  align-items: center;
-  gap: 0;
-  min-width: 0;
-  flex-wrap: wrap;
-  row-gap: 0.8rem;
-}
-
-.schematic-node {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  padding: 0.55rem 1rem;
-  border: 1.5px solid var(--ink);
-  white-space: nowrap;
-  position: relative;
-  background: transparent;
-}
-
-.schematic-node.highlight {
-  border-color: var(--coral);
-  color: var(--coral);
-}
-
-.schematic-arrow {
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  color: var(--clay);
-  padding: 0 0.5rem;
-  flex-shrink: 0;
-}
-
-/* ============================================
-   SECTION — GEOMANCER
-   ============================================ */
-
-.capabilities {
-  margin-top: 3rem;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0;
-}
-
-.capability {
-  padding: 1.4rem 0;
-  border-top: 1px solid var(--paper-dark);
-}
-
-.capability:last-child {
-  border-bottom: 1px solid var(--paper-dark);
-}
-
-.section--ink .capability {
-  border-color: rgba(240, 235, 227, 0.1);
-}
-
-.capability-label {
-  font-family: var(--font-display);
-  font-size: 1.35rem;
-  letter-spacing: 0.04em;
-  margin-bottom: 0.3rem;
-}
-
-.section--ink .capability-label {
-  color: var(--coral);
-}
-
-.capability-desc {
-  font-size: 0.95rem;
-  color: var(--clay);
-  max-width: 560px;
-}
-
-.section--ink .capability-desc {
-  color: var(--desert);
-}
-
-/* ============================================
-   SECTION — THE LOOP (cycle diagram)
-   ============================================ */
-
-.loop-container {
-  margin-top: 3rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.loop-cycle {
-  position: relative;
-  width: 340px;
-  height: 340px;
-}
-
-.loop-node {
-  position: absolute;
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  text-align: center;
-  white-space: nowrap;
-}
-
-.loop-node .dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--coral);
-  margin: 0 auto 0.5rem;
-  opacity: 0.3;
-  animation: pulse-dot 4.2s ease-in-out infinite;
-}
-
-/* Position 7 nodes around a circle */
-.loop-node:nth-child(1) { top: 0; left: 50%; transform: translateX(-50%); }
-.loop-node:nth-child(1) .dot { animation-delay: 0s; }
-
-.loop-node:nth-child(2) { top: 13%; right: 2%; transform: none; }
-.loop-node:nth-child(2) .dot { animation-delay: 0.6s; }
-
-.loop-node:nth-child(3) { top: 46%; right: -5%; transform: none; }
-.loop-node:nth-child(3) .dot { animation-delay: 1.2s; }
-
-.loop-node:nth-child(4) { bottom: 8%; right: 10%; transform: none; }
-.loop-node:nth-child(4) .dot { animation-delay: 1.8s; }
-
-.loop-node:nth-child(5) { bottom: 8%; left: 10%; transform: none; }
-.loop-node:nth-child(5) .dot { animation-delay: 2.4s; }
-
-.loop-node:nth-child(6) { top: 46%; left: -7%; transform: none; }
-.loop-node:nth-child(6) .dot { animation-delay: 3.0s; }
-
-.loop-node:nth-child(7) { top: 13%; left: 2%; transform: none; }
-.loop-node:nth-child(7) .dot { animation-delay: 3.6s; }
-
-@keyframes pulse-dot {
-  0%, 100% { opacity: 0.25; transform: scale(1); }
-  14% { opacity: 1; transform: scale(1.6); background: var(--coral); }
-  28% { opacity: 0.25; transform: scale(1); }
-}
-
-/* Circular path SVG behind nodes */
-.loop-ring {
-  position: absolute;
-  inset: 30px;
-  pointer-events: none;
-}
-
-.loop-ring circle {
-  fill: none;
-  stroke: var(--paper-dark);
-  stroke-width: 1;
-  stroke-dasharray: 6 8;
-}
-
-/* Animated traveling dot */
-.loop-ring .traveler {
-  fill: var(--coral);
-  r: 3;
-  offset-path: circle(140px at 50% 50%);
-  animation: orbit 4.2s linear infinite;
-}
-
-@keyframes orbit {
-  0% { offset-distance: 0%; }
-  100% { offset-distance: 100%; }
-}
-
-/* Fallback for browsers that don't support offset-path on SVG */
-@supports not (offset-path: circle(1px)) {
-  .loop-ring .traveler {
-    display: none;
-  }
-}
-
-.loop-label-center {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-}
-
-.loop-label-center .big {
-  font-family: var(--font-display);
-  font-size: 1.6rem;
-  letter-spacing: 0.06em;
-  color: var(--coral);
-  line-height: 1.1;
-}
-
-.loop-label-center .small {
-  font-family: var(--font-mono);
-  font-size: 0.58rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--clay);
-  margin-top: 0.3rem;
-}
-
-/* ============================================
-   SECTION — APPLICATIONS
-   ============================================ */
-
-.applications {
-  margin-top: 2.5rem;
-}
-
-.application {
-  padding: 1.8rem 0;
-  border-top: 1px solid var(--paper-dark);
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 1.5rem;
-  align-items: baseline;
-}
-
-.application:last-child {
-  border-bottom: 1px solid var(--paper-dark);
-}
-
-.application-domain {
-  font-family: var(--font-display);
-  font-size: 1.4rem;
-  letter-spacing: 0.04em;
-  white-space: nowrap;
-}
-
-.application-detail {
-  font-size: 0.95rem;
-  color: var(--clay);
-}
-
-.application-partner {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  font-weight: 400;
-  letter-spacing: 0.06em;
-  color: var(--rust);
-  margin-top: 0.3rem;
-}
-
-/* ============================================
-   SECTION — TEAM
-   ============================================ */
-
-.team-grid {
-  margin-top: 2rem;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1rem;
-}
-
-.team-item {
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-  letter-spacing: 0.04em;
-  line-height: 1.7;
-  color: var(--desert);
-}
-
-.team-item .team-heading {
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--paper);
-  font-size: 0.68rem;
-  margin-bottom: 0.4rem;
-}
-
-.team-item a {
-  color: var(--coral);
-  text-decoration: none;
-  border-bottom: 1px solid transparent;
-  transition: border-color 0.2s;
-}
-
-.team-item a:hover {
-  border-bottom-color: var(--coral);
-}
-
-/* ============================================
-   FOOTER
-   ============================================ */
-
-.footer {
-  padding: 3rem 8vw;
-  background: var(--ink);
-  color: var(--clay);
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 2rem;
-  border-top: 1px solid rgba(196, 168, 130, 0.1);
-}
-
-.footer-left {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-}
-
-.footer-mark {
-  font-family: var(--font-display);
-  font-size: 1.3rem;
-  letter-spacing: 0.06em;
-  color: var(--paper);
-  display: flex;
-  align-items: center;
-  gap: 0.7rem;
-}
-
-.footer-mark .salamander {
-  display: inline-block;
-  width: 22px;
-  height: 22px;
-  flex-shrink: 0;
-}
-
-.footer-mark .salamander svg {
-  width: 100%;
-  height: 100%;
-}
-
-.footer-links {
-  display: flex;
-  gap: 1.5rem;
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.06em;
-}
-
-.footer-links a {
-  color: var(--desert);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
-.footer-links a:hover {
-  color: var(--coral);
-}
-
-.footer-right {
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  letter-spacing: 0.06em;
-  color: var(--clay);
-  text-align: right;
-}
-
-/* ============================================
-   RESPONSIVE
-   ============================================ */
-
-@media (max-width: 768px) {
-  .section {
-    padding: 5rem 6vw;
-  }
-
-  .hero {
-    padding: 3rem 6vw;
-  }
-
-  .hero-title {
-    font-size: clamp(3.5rem, 16vw, 6rem);
-  }
-
-  .application {
-    grid-template-columns: 1fr;
-    gap: 0.4rem;
-  }
-
-  .schematic-flow {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0;
-  }
-
-  .schematic-arrow {
-    padding: 0.2rem 0 0.2rem 1rem;
-    transform: rotate(90deg);
-    transform-origin: left center;
-  }
-
-  .loop-cycle {
-    width: 280px;
-    height: 280px;
-  }
-
-  .loop-node {
-    font-size: 0.6rem;
-  }
-
-  .footer {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .footer-right {
-    text-align: left;
-  }
-}
-
-@media (max-width: 480px) {
-  .hero-title {
-    font-size: clamp(2.8rem, 18vw, 4.5rem);
-  }
-
-  .section-title {
-    font-size: clamp(2.2rem, 10vw, 3.5rem);
-  }
-
-  .loop-cycle {
-    width: 240px;
-    height: 240px;
-  }
-}
-
-/* ============================================
-   PRINT
-   ============================================ */
-
-@media print {
-  body::after { display: none; }
-  .hero { min-height: auto; padding: 2rem; }
-  .reveal { opacity: 1; transform: none; }
-}
-</style>
-</head>
-
-<body>
-
-<!-- ==========================================
-     HERO
-     ========================================== -->
-<section class="hero" id="top">
-
-  <!-- Topographic contour background -->
-  <div class="hero-topo" aria-hidden="true">
-    <svg viewBox="0 0 1000 1000" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M200 500C200 350 350 200 500 200C650 200 800 350 800 500C800 650 650 800 500 800C350 800 200 650 200 500Z" stroke="#F0EBE3" stroke-width="0.8"/>
-      <path d="M250 500C250 380 380 250 500 250C620 250 750 380 750 500C750 620 620 750 500 750C380 750 250 620 250 500Z" stroke="#F0EBE3" stroke-width="0.7"/>
-      <path d="M310 500C310 400 400 310 500 310C600 310 690 400 690 500C690 600 600 690 500 690C400 690 310 600 310 500Z" stroke="#F0EBE3" stroke-width="0.6"/>
-      <path d="M360 500C360 425 425 360 500 360C575 360 640 425 640 500C640 575 575 640 500 640C425 640 360 575 360 500Z" stroke="#F0EBE3" stroke-width="0.5"/>
-      <path d="M410 500C410 450 450 410 500 410C550 410 590 450 590 500C590 550 550 590 500 590C450 590 410 550 410 500Z" stroke="#F0EBE3" stroke-width="0.4"/>
-      <!-- Offset contours — shifted center for organic feel -->
-      <path d="M150 400C180 250 340 140 520 160C700 180 850 340 830 520C810 700 650 850 470 830C290 810 120 550 150 400Z" stroke="#F0EBE3" stroke-width="0.6"/>
-      <path d="M180 420C210 290 360 190 530 210C700 230 820 370 800 540C780 710 630 830 460 810C290 790 150 560 180 420Z" stroke="#F0EBE3" stroke-width="0.5"/>
-      <path d="M220 440C245 330 380 240 540 260C700 280 790 400 770 560C750 720 610 810 450 790C290 770 195 560 220 440Z" stroke="#F0EBE3" stroke-width="0.4"/>
-      <!-- Upper-right cluster -->
-      <path d="M550 100C680 80 820 180 840 310C860 440 760 560 630 580C500 600 360 500 340 370C320 240 420 120 550 100Z" stroke="#F0EBE3" stroke-width="0.5"/>
-      <path d="M560 150C660 130 770 210 790 320C810 430 730 530 620 550C510 570 410 480 390 380C370 280 460 170 560 150Z" stroke="#F0EBE3" stroke-width="0.4"/>
-      <!-- Lower-left cluster -->
-      <path d="M100 600C120 500 230 420 360 440C490 460 580 580 560 700C540 820 420 900 290 880C160 860 80 700 100 600Z" stroke="#F0EBE3" stroke-width="0.5"/>
-      <path d="M140 620C160 530 260 460 380 480C500 500 570 600 550 710C530 820 420 880 310 860C200 840 120 720 140 620Z" stroke="#F0EBE3" stroke-width="0.4"/>
-    </svg>
-  </div>
-
-  <div class="hero-content">
-    <h1 class="hero-title">MANIFOLD<br>WERK<span class="accent">S</span></h1>
-    <hr class="hero-rule">
-    <p class="hero-sub">
-      <span>mnfldwrks — models of the real world</span><span class="cursor" aria-hidden="true"></span>
-    </p>
-  </div>
-
-  <div class="hero-scroll-hint" aria-hidden="true">
-    <span class="line"></span>
-    <span>Scroll</span>
-  </div>
-</section>
-
-
-<!-- ==========================================
-     WHAT WE BUILD
-     ========================================== -->
-<section class="section section--paper" id="what">
-
-  <div class="section-label reveal">01 — What We Build</div>
-
-  <h2 class="section-title reveal reveal-delay-1">World models<br>from data<span style="color: var(--coral)">.</span></h2>
-
-  <div class="section-body reveal reveal-delay-2">
-    <p>We build AI systems that learn mathematical models of biological systems from data. Not chatbots. Not pipelines. <strong>Models that simulate, predict, and learn from experiments.</strong></p>
-    <p>Our models live on manifolds — the geometric surfaces that describe how cells move, differentiate, and respond. We learn the dynamics on these surfaces directly from high-dimensional biological data, then use those dynamics to do science.</p>
-  </div>
-
-  <div class="schematic reveal reveal-delay-3">
-    <div class="schematic-flow">
-      <div class="schematic-node">Data</div>
-      <div class="schematic-arrow">→</div>
-      <div class="schematic-node">Geometric Embedding</div>
-      <div class="schematic-arrow">→</div>
-      <div class="schematic-node highlight">Neural ODE</div>
-      <div class="schematic-arrow">→</div>
-      <div class="schematic-node">Simulation</div>
-      <div class="schematic-arrow">→</div>
-      <div class="schematic-node">Hypothesis</div>
-      <div class="schematic-arrow">→</div>
-      <div class="schematic-node">Lab</div>
-      <div class="schematic-arrow">→</div>
-      <div class="schematic-node highlight">Repeat</div>
-    </div>
-  </div>
-
-</section>
-
-
-<!-- ==========================================
-     GEOMANCER
-     ========================================== -->
-<section class="section section--ink" id="geomancer">
-
-  <div class="section-label reveal">02 — Flagship</div>
-
-  <h2 class="section-title reveal reveal-delay-1" style="color: var(--paper);">GEOMANCER</h2>
-
-  <div class="section-body reveal reveal-delay-2" style="color: var(--desert);">
-    <p>Geomancer is an AI scientist. It takes biological data — single-cell transcriptomics, imaging, time series — and constructs a mathematical world model: a system of differential equations on a learned geometric space that captures how the biology actually works.</p>
-    <p>Then it uses that model. It runs simulations, generates testable hypotheses, designs experiments, and updates itself when the lab results come back. Geomancer learns ODEs from your data and tells you what happens next.</p>
-  </div>
-
-  <div class="capabilities reveal reveal-delay-3">
-    <div class="capability">
-      <div class="capability-label">Geometric Data Encoding</div>
-      <div class="capability-desc">Learns the intrinsic manifold structure of high-dimensional biological data. Preserves topology and geometry that linear methods destroy.</div>
-    </div>
-    <div class="capability">
-      <div class="capability-label">Neural Dynamical Modeling</div>
-      <div class="capability-desc">Fits neural ODEs and SDEs directly on learned manifolds. Captures continuous-time dynamics without discretization artifacts.</div>
-    </div>
-    <div class="capability">
-      <div class="capability-label">Cross-Domain Generalizability</div>
-      <div class="capability-desc">Same mathematical framework applies to neurodegeneration, cancer, stem cell biology. Geometry doesn't care about the domain.</div>
-    </div>
-    <div class="capability">
-      <div class="capability-label">Lab-in-the-Loop</div>
-      <div class="capability-desc">Generates hypotheses, designs validation experiments, incorporates results. Closes the gap between computation and wet lab.</div>
-    </div>
-  </div>
-
-</section>
-
-
-<!-- ==========================================
-     THE LOOP
-     ========================================== -->
-<section class="section section--paper" id="loop">
-
-  <div class="section-label reveal">03 — The Loop</div>
-
-  <h2 class="section-title reveal reveal-delay-1">Closed-loop<br>discovery<span style="color: var(--coral)">.</span></h2>
-
-  <div class="section-body reveal reveal-delay-2">
-    <p>The core innovation isn't any single model. It's the loop: a system that learns, predicts, tests, and refines — continuously. Each pass through the cycle makes the model sharper and the hypotheses more precise.</p>
-  </div>
-
-  <div class="loop-container reveal reveal-delay-3">
-    <div class="loop-cycle" role="img" aria-label="Circular diagram showing the closed-loop discovery cycle: Data, Model, Simulate, Hypothesize, Experiment, Validate, Update">
-
-      <!-- Dashed ring -->
-      <svg class="loop-ring" viewBox="0 0 280 280" aria-hidden="true">
-        <circle cx="140" cy="140" r="120" />
-      </svg>
-
-      <!-- Nodes around the ring -->
-      <div class="loop-node">
-        <div class="dot"></div>
-        Data
-      </div>
-      <div class="loop-node">
-        <div class="dot"></div>
-        Model
-      </div>
-      <div class="loop-node">
-        <div class="dot"></div>
-        Simulate
-      </div>
-      <div class="loop-node">
-        <div class="dot"></div>
-        Hypothesize
-      </div>
-      <div class="loop-node">
-        <div class="dot"></div>
-        Experiment
-      </div>
-      <div class="loop-node">
-        <div class="dot"></div>
-        Validate
-      </div>
-      <div class="loop-node">
-        <div class="dot"></div>
-        Update
-      </div>
-
-      <!-- Center label -->
-      <div class="loop-label-center">
-        <div class="big">∞</div>
-        <div class="small">Continuous</div>
-      </div>
-
-    </div>
-  </div>
-
-</section>
-
-
-<!-- ==========================================
-     APPLICATIONS
-     ========================================== -->
-<section class="section section--chalk" id="applications">
-
-  <div class="section-label reveal">04 — Applications</div>
-
-  <h2 class="section-title reveal reveal-delay-1">Where it<br>works<span style="color: var(--coral)">.</span></h2>
-
-  <div class="applications">
-
-    <div class="application reveal reveal-delay-2">
-      <div class="application-domain">Neurodegeneration</div>
-      <div>
-        <div class="application-detail">Modeling dopaminergic neuron dynamics in Parkinson's disease. Predicting disease trajectories and identifying intervention windows.</div>
-      </div>
-    </div>
-
-    <div class="application reveal reveal-delay-3">
-      <div class="application-domain">Cancer Biology</div>
-      <div>
-        <div class="application-detail">Simulating breast cancer organoid growth and drug response. Building predictive models of tumor evolution from single-cell data.</div>
-      </div>
-    </div>
-
-    <div class="application reveal reveal-delay-4">
-      <div class="application-domain">Stem Cell Biology</div>
-      <div>
-        <div class="application-detail">Mapping differentiation landscapes and predicting cell fate decisions. Guiding reprogramming strategies through learned dynamics.</div>
-      </div>
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- ==========================================
-     TEAM / ABOUT
-     ========================================== -->
-<section class="section section--ink" id="team">
-
-  <div class="section-label reveal">05 — About</div>
-
-  <h2 class="section-title reveal reveal-delay-1" style="color: var(--paper);">Built to<br>last<span style="color: var(--coral)">.</span></h2>
-
-  <div class="team-grid reveal reveal-delay-2">
-    <div class="team-item">
-      <div class="team-heading">Institutions</div>
-      Yale University
-    </div>
-    <div class="team-item">
-      <div class="team-heading">&nbsp;</div>
-      Mila — Quebec AI Institute
-    </div>
-  </div>
-  <div class="team-grid reveal reveal-delay-3" style="margin-top: 2rem;">
-    <div class="team-item">
-      <div class="team-heading">Open source</div>
-      <a href="https://github.com/Latent-Reasoning-Works" target="_blank" rel="noopener noreferrer">github.com/Latent-Reasoning-Works</a>
-    </div>
-  </div>
-
-</section>
-
-
-<!-- ==========================================
-     FOOTER
-     ========================================== -->
-<footer class="footer">
-
-  <div class="footer-left">
-    <div class="footer-mark">
-      <!-- Hellbender salamander silhouette -->
-      <span class="salamander" aria-hidden="true">
-        <svg viewBox="0 0 40 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M4 14C2 14 1 13 1 12C1 10.5 3 10 4 10.5C4.5 8 6 6 9 6C9 4.5 10 3 12 3C13 3 14 3.5 14.5 4.5C15.5 3.5 17 3 18.5 3.5C19 2 20.5 1 22 1.5C23.5 2 24 3.5 23.5 5C25 5 27 6 28 8C29.5 7.5 31 8 32 9C33 10 33 11.5 32 12.5C33.5 13 35 14 35.5 15.5C36 17 35 18.5 33.5 19C34 20 33.5 21.5 32 22C30.5 22.5 29 21.5 28.5 20C27 21 25 21.5 23 21C22 22 20.5 22.5 19 22C17.5 22.5 15.5 22 14.5 21C13 21.5 11 21 10 20C8.5 20.5 7 20 6 19C5 18 4.5 16.5 5 15C3.5 15 2.5 14.5 2 13.5" stroke="#E8614D" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-          <circle cx="14" cy="10" r="1" fill="#E8614D"/>
-          <circle cx="20" cy="9" r="1" fill="#E8614D"/>
-        </svg>
-      </span>
-      MANIFOLD WERKS
-    </div>
-    <div class="footer-links">
-      <a href="https://github.com/Latent-Reasoning-Works" target="_blank" rel="noopener noreferrer">GitHub</a>
-      <a href="mailto:hello@manifoldwerks.com">Contact</a>
-    </div>
-  </div>
-
-  <div class="footer-right">
-    &copy; 2026 manifold werks
-  </div>
-
-</footer>
-
-
-<!-- ==========================================
-     SCROLL REVEAL — IntersectionObserver
-     ========================================== -->
+<title>Manifoldwerks — Biology is not that creative</title>
+<meta name="description" content="Manifoldwerks builds the AI co-scientist that constructs a model of your system, not a report about it.">
+<meta property="og:title" content="Manifoldwerks — Biology is not that creative">
+<meta property="og:description" content="Manifoldwerks builds the AI co-scientist that constructs a model of your system, not a report about it.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://manifoldwerks.com/">
+
+<!-- Google tag (gtag.js) — production hostnames only. Local checks are served
+     from localhost, and the ?still= / ?t= capture URLs get reloaded a lot, so
+     an unguarded tag would put that traffic in the numbers. -->
 <script>
-(function() {
-  'use strict';
+(function(){
+  var HOSTS = ['manifoldwerks.com', 'www.manifoldwerks.com'];
+  if(HOSTS.indexOf(location.hostname) === -1) return;
 
-  var observer = new IntersectionObserver(function(entries) {
-    entries.forEach(function(entry) {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, {
-    threshold: 0.12,
-    rootMargin: '0px 0px -40px 0px'
-  });
+  var ID = 'G-B0G1JX3RSD';
+  /* Google's own snippet pushes to a bare `dataLayer`, which only resolves
+     because window is the global object. Hold the array directly instead. */
+  var dl = window.dataLayer = window.dataLayer || [];
+  function gtag(){ dl.push(arguments); }
+  window.gtag = gtag;
+  gtag('js', new Date());
+  gtag('config', ID);
 
-  document.querySelectorAll('.reveal').forEach(function(el) {
-    observer.observe(el);
-  });
+  var s = document.createElement('script');
+  s.async = true;
+  s.src = 'https://www.googletagmanager.com/gtag/js?id=' + ID;
+  document.head.appendChild(s);
 })();
 </script>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=DM+Mono:wght@400;500&display=swap">
+<script>
+/* Entrances are gated on this class and it is set before first paint, so the
+   page never flashes its finished state — and never hides its copy behind a
+   script that did not run. ?still=1 skips straight to the finished state, for
+   stills and visual checks. */
+document.documentElement.className +=
+  /[?&]still=1/.test(location.search) ? ' settled' : ' js';
+</script>
+<style>
+/* ===========================================================================
+   THEME — "Mat": deep forest ground, warm cream ink, a single burnt-orange
+   accent used only as punctuation, and a low wood glow from the bottom right.
+   Lifted from the venture pitch deck. That deck is authored at a fixed
+   1920x1080 stage and scaled as one unit; a site has to reflow, so every
+   fixed dimension here becomes a clamp() off the viewport instead.
+   =========================================================================== */
+:root{
+  /* --- surface --- */
+  --bg-dark:#232E26;
+  --bg-dark-alt:#2E3D30;
+  --bg-cream:#EDE6D0;
+  --bg-cream-alt:#E4DAC4;
+  /* --- ink --- */
+  --ink-cream:#F0E8D2;
+  --ink-cream-2:rgba(240,232,210,.58);
+  --ink-cream-3:rgba(240,232,210,.30);
+  --ink-dark:#1E2820;
+  --ink-dark-2:rgba(30,40,32,.62);
+  --ink-dark-3:rgba(30,40,32,.30);
+  /* --- the one accent. Punctuation only: kickers, em-dashes, inline <em>. --- */
+  --accent:#C07030;
+  --wood:#7A4E24;
+  /* --- hairlines: the only divider language, never above 1px --- */
+  --bd-dark:rgba(240,232,210,.12);
+  --bd-cream:rgba(30,40,32,.14);
+
+  --f-display:'Bricolage Grotesque',sans-serif;
+  --f-body:'DM Sans',sans-serif;
+  --f-mono:'DM Mono',monospace;
+
+  --pad-x:clamp(1.5rem,6vw,7.5rem);
+  --pad-y:clamp(4.5rem,10vw,8.5rem);
+  --measure:78rem;
+
+  --ease:cubic-bezier(.16,1,.3,1);
+  --dur:.66s;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{font-family:var(--f-body);background:var(--bg-dark);color:var(--ink-cream);
+  -webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+/* ===========================================================================
+   GROUNDS
+   Dark forest is the default. The wood glow is part of the surface, not a
+   flourish, so it is applied to every dark band. Cream bands are a
+   deliberate tonal break and carry no glow.
+   =========================================================================== */
+.band{position:relative;padding:var(--pad-y) var(--pad-x);background:var(--bg-dark);
+  color:var(--ink-cream);overflow:hidden}
+.band.dark::before{content:"";position:absolute;right:0;bottom:0;width:55%;height:70%;
+  background:radial-gradient(ellipse at bottom right,rgba(122,78,36,.28) 0%,rgba(80,50,20,.14) 45%,transparent 72%);
+  pointer-events:none;z-index:0}
+.band.cream{background:var(--bg-cream);color:var(--ink-dark)}
+.band.cream .muted{color:var(--ink-dark-2)}
+.band.dark  .muted{color:var(--ink-cream-2)}
+.band.void  .muted{color:var(--ink-cream-2)}
+.band > *{position:relative;z-index:2}
+
+/* The one ground that leaves the forest entirely: the thesis and the turn.
+   Chromeless, no glow, nothing on it but the sentence. */
+.band.void{background:#0A0F0C;color:var(--ink-cream)}
+
+/* width:100% matters. Several bands are column flex containers, and an auto
+   cross-axis margin beats `align-items:stretch`, so without it .inner
+   shrink-wraps its text instead of holding the measure. */
+.inner{width:100%;max-width:var(--measure);margin:0 auto;position:relative;z-index:2}
+
+/* ===========================================================================
+   TYPE
+   Heavy mixed-case display + light mixed-case body + small uppercase mono
+   label. Display type is NEVER uppercased; uppercase belongs to mono only.
+   Negative tracking on display is what gives the type its compressed feel.
+   =========================================================================== */
+.display{font-family:var(--f-display);font-weight:800;
+  font-size:clamp(3.2rem,11.5vw,9.5rem);line-height:.94;
+  letter-spacing:-.035em;padding-bottom:.02em}
+h1{font-family:var(--f-display);font-weight:800;
+  font-size:clamp(2.6rem,7.4vw,6rem);line-height:1.0;
+  letter-spacing:-.030em;padding-bottom:.02em}
+h2{font-family:var(--f-display);font-weight:700;
+  font-size:clamp(1.95rem,4.6vw,3.7rem);line-height:1.07;
+  letter-spacing:-.022em;padding-bottom:.03em}
+h3{font-family:var(--f-display);font-weight:600;
+  font-size:clamp(1.25rem,2.2vw,1.95rem);line-height:1.14;letter-spacing:-.014em}
+.lead{font-size:clamp(1.15rem,2vw,1.65rem);line-height:1.44}
+.body{font-size:clamp(1rem,1.25vw,1.2rem);line-height:1.52}
+.caption{font-size:clamp(.9rem,1vw,1rem);line-height:1.45}
+.kicker{font-family:var(--f-mono);font-size:clamp(.7rem,.9vw,.82rem);letter-spacing:.12em;
+  text-transform:uppercase;color:var(--accent)}
+.label{font-family:var(--f-mono);font-size:clamp(.7rem,.9vw,.82rem);letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink-cream-3)}
+.cream .label{color:var(--ink-dark-3)}
+.pull{font-family:var(--f-display);font-weight:600;
+  font-size:clamp(1.35rem,2.7vw,2.15rem);line-height:1.2;
+  letter-spacing:-.018em;padding-bottom:.02em}
+.stat{font-family:var(--f-display);font-weight:800;
+  font-size:clamp(2.4rem,5vw,4rem);line-height:1.08;
+  letter-spacing:-.03em;padding-bottom:.04em}
+/* <em> is repurposed as an orange inline colour switch and stays upright */
+em{font-style:normal;color:var(--accent)}
+/* ...so spoken stress needs its own mark. Bricolage ships no italic, but its
+   rounded forms take the synthetic oblique cleanly at display sizes. */
+.stress{font-style:italic}
+strong{font-weight:700}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(192,112,48,.4);
+  transition:border-color .2s}
+a:hover{border-bottom-color:var(--accent)}
+
+/* --- the 32px orange rule that sits under a kicker --- */
+.rule{width:32px;height:1px;background:var(--accent);margin:20px 0 0;border:none}
+
+/* ===========================================================================
+   CHROME — a mono label pair, separated by a hairline. Cover, quote and
+   closing bands suppress it by convention, as in the deck.
+   =========================================================================== */
+.chrome{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;
+  padding-bottom:14px;margin-bottom:clamp(2.5rem,5vw,4.5rem);
+  border-bottom:1px solid var(--bd-dark)}
+.cream .chrome{border-bottom-color:var(--bd-cream)}
+.footband{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;
+  padding-top:14px;margin-top:clamp(2.5rem,5vw,4.5rem);
+  border-top:1px solid var(--bd-dark)}
+.cream .footband{border-top-color:var(--bd-cream)}
+
+.head h2 + .lead,.head h1 + .lead{margin-top:26px;color:var(--ink-cream-2);max-width:58ch}
+.cream .head h2 + .lead{color:var(--ink-dark-2)}
+
+/* ===========================================================================
+   LAYOUT HELPERS
+   No rounded corners anywhere. No shadows. Region separation is hairlines.
+   =========================================================================== */
+.row{display:flex;gap:clamp(2rem,4vw,3rem)}
+.col{flex:1;min-width:0}
+@media (max-width:56rem){.row{flex-direction:column}}
+
+/* a plain region divided by hairlines rather than boxed */
+.cell{padding:0 0 0 30px;border-left:1px solid var(--bd-dark)}
+.cream .cell{border-left-color:var(--bd-cream)}
+.cell:first-child{padding-left:0;border-left:none}
+@media (max-width:56rem){
+  .cell{padding:26px 0 0;border-left:none;border-top:1px solid var(--bd-dark)}
+  .cream .cell{border-top-color:var(--bd-cream)}
+  .cell:first-child{padding-top:0;border-top:none}
+}
+
+/* bullets: an em-dash marker in orange mono. Never a dot, never a check. */
+/* The em-dash marker is absolutely positioned rather than a grid column.
+   A grid li makes EVERY element child its own grid item, so any inline
+   <span>, <em> or <strong> inside a bullet jumps to a new row. */
+ul.ticks{list-style:none}
+ul.ticks li{position:relative;padding-left:1.5em;margin-bottom:15px;
+  font-size:clamp(1rem,1.25vw,1.2rem);line-height:1.46}
+ul.ticks li::before{content:"—";position:absolute;left:0;top:0;
+  font-family:var(--f-mono);color:var(--accent)}
+
+/* ===========================================================================
+   LIVE FIGURES
+   Every animated figure is a <canvas data-viz="..."> driven by the visual
+   registry. Only figures currently on screen run.
+   =========================================================================== */
+.fig{display:block;width:100%;height:auto;background:transparent}
+
+/* the hero field, sized to cover its band while keeping its 16:9 geometry so
+   the seam stays exactly on the midline */
+.field-cover{position:absolute;inset:0;overflow:hidden;z-index:0}
+.field-cover canvas{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:100%;height:100%}
+
+/* scrim so type stays legible over a live field */
+.scrim{position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(to top,rgba(35,46,38,.97) 0%,rgba(35,46,38,.90) 24%,
+    rgba(35,46,38,.34) 46%,rgba(35,46,38,.10) 62%,rgba(35,46,38,.50) 100%)}
+.scrim-soft{background:linear-gradient(to top,rgba(35,46,38,.92) 0%,rgba(35,46,38,.72) 38%,
+    rgba(35,46,38,.62) 100%)}
+.scrim-void{background:linear-gradient(to top,rgba(10,15,12,.97) 0%,rgba(10,15,12,.88) 30%,
+    rgba(10,15,12,.62) 60%,rgba(10,15,12,.80) 100%)}
+/* the seam where the two regimes meet */
+.seam{position:absolute;left:50%;top:0;width:2px;height:100%;z-index:1;pointer-events:none;
+  background:linear-gradient(to bottom,transparent,rgba(240,232,210,.34) 14%,
+    rgba(240,232,210,.34) 86%,transparent)}
+/* a label pinned onto a live field */
+.fieldtag{position:absolute;top:clamp(4rem,12vh,9rem);z-index:3;isolation:isolate}
+.fieldtag::before{content:"";position:absolute;left:-28px;top:-24px;
+  width:calc(100% + 56px);height:calc(100% + 48px);z-index:-1;
+  background:radial-gradient(ellipse at 30% 50%,rgba(35,46,38,.94),rgba(35,46,38,0) 70%)}
+.fieldtag .sub{font-size:clamp(.85rem,1.1vw,1.05rem);color:var(--ink-cream-2);margin-top:10px}
+@media (max-width:48rem){.fieldtag--right{display:none}}
+
+/* Align absolutely positioned chrome to the centred measure rather than to
+   the raw page padding, so it shares an edge with the copy above it. */
+.measure-inset{left:max(var(--pad-x),calc((100% - var(--measure)) / 2));
+  right:max(var(--pad-x),calc((100% - var(--measure)) / 2))}
+
+/* the instrument readout strip */
+.readout{position:absolute;bottom:clamp(1.5rem,4vh,3rem);
+  z-index:3;display:flex;align-items:baseline;gap:clamp(1.2rem,3.5vw,3.4rem);flex-wrap:wrap;
+  padding-top:16px;border-top:1px solid var(--bd-dark);
+  font-family:var(--f-mono);font-size:clamp(.62rem,.85vw,.78rem);letter-spacing:.11em;
+  text-transform:uppercase;color:var(--ink-cream-3)}
+.readout .v{color:var(--ink-cream);font-size:1.15em;letter-spacing:.04em}
+.readout .v.acc{color:var(--accent)}
+.readout .sp{margin-left:auto}
+@media (max-width:40rem){.readout .sp{display:none}}
+
+/* a content figure that must not shrink its own type into illegibility */
+.fig-scroll{overflow-x:auto;overscroll-behavior-x:contain}
+/* a figure whose composition is authored at a fixed frame: scale the element,
+   never re-lay-out the drawing, or its pinned annotations fall off the edge */
+.fig--fixed{width:100%;max-width:1020px;min-width:720px;height:auto}
+.fig-cap{margin-top:22px}
+
+/* ===========================================================================
+   THE PRODUCT PLATE — the terminal recording. Rendered text, so it stays
+   sharp; the hairline keeps it a plate rather than a screenshot.
+
+   The recording itself is out until the rename lands; see the marked slot in
+   the product band. This rule stays so putting it back is one element.
+   =========================================================================== */
+.demo{display:block;width:100%;height:auto;margin-top:clamp(2rem,4vw,3rem);
+  border:1px solid var(--bd-cream)}
+.dark .demo,.void .demo{border-color:var(--bd-dark)}
+
+/* ===========================================================================
+   MOTION — one orchestrated reveal per band, staggered.
+
+   Every entrance is gated on html.js, which an inline script in the head sets
+   before first paint. With no JavaScript — or with a script that failed — the
+   page is simply already in its finished state rather than a blank green
+   field, since all of the copy lives inside .reveal.
+   =========================================================================== */
+html.js .reveal{opacity:0;transform:translateY(26px);
+  transition:opacity var(--dur) var(--ease),transform var(--dur) var(--ease)}
+html.js .band.visible .reveal{opacity:1;transform:none}
+html.js .band.visible .reveal:nth-child(1){transition-delay:.06s}
+html.js .band.visible .reveal:nth-child(2){transition-delay:.14s}
+html.js .band.visible .reveal:nth-child(3){transition-delay:.22s}
+html.js .band.visible .reveal:nth-child(4){transition-delay:.30s}
+html.js .band.visible .reveal:nth-child(5){transition-delay:.38s}
+html.js .band.visible .reveal:nth-child(6){transition-delay:.46s}
+html.js .band.visible .r-late{transition-delay:1.2s}
+html.js .band.visible .r-late2{transition-delay:1.4s}
+
+/* --- the turn: "Pipelines" is struck through, then dims; "Models" lands after.
+       The rule draws left to right, so the correction happens on screen. --- */
+@keyframes riseIn{from{opacity:0;transform:translateY(26px)} to{opacity:1;transform:none}}
+@keyframes strikeThrough{from{transform:scaleX(0)} to{transform:scaleX(1)}}
+@keyframes struckOut{
+  0%{opacity:0;transform:translateY(26px);color:var(--ink-cream)}
+  16%{opacity:1;transform:none;color:var(--ink-cream)}
+  58%{opacity:1;color:var(--ink-cream)}
+  100%{opacity:1;color:rgba(240,232,210,.24)}
+}
+.strike{position:relative;display:inline-block;color:rgba(240,232,210,.24)}
+.strike::after{content:"";position:absolute;left:-.02em;right:-.02em;top:.46em;
+  height:.055em;background:var(--accent);transform-origin:0 50%}
+html.js .strike{opacity:0;color:var(--ink-cream)}
+html.js .strike::after{transform:scaleX(0)}
+html.js .band.visible .strike{animation:struckOut 3.1s var(--ease) .15s forwards}
+html.js .band.visible .strike::after{animation:strikeThrough .62s var(--ease) 1.15s forwards}
+html.js .after-strike{opacity:0}
+html.js .band.visible .after-strike{animation:riseIn .9s var(--ease) 2.15s forwards}
+
+/* Reduced motion, print, and ?still=1 all resolve to the finished state. */
+@media (prefers-reduced-motion:reduce){
+  html.js .reveal{opacity:1!important;transform:none!important;transition:none!important}
+  html.js .strike,html.js .after-strike{opacity:1!important;animation:none!important}
+  html.js .strike{color:rgba(240,232,210,.24)!important}
+  html.js .strike::after{transform:scaleX(1)!important;animation:none!important}
+}
+html.settled .reveal{opacity:1!important;transform:none!important;transition:none!important}
+html.settled .strike,html.settled .after-strike{opacity:1!important;animation:none!important}
+html.settled .strike{color:rgba(240,232,210,.24)!important}
+html.settled .strike::after{transform:scaleX(1)!important;animation:none!important}
+
+/* ===========================================================================
+   PRINT — resolve every entrance to its finished state.
+   =========================================================================== */
+@media print{
+  html{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .band{break-inside:avoid;page-break-inside:avoid}
+  .reveal{opacity:1!important;transform:none!important;transition:none!important}
+  .strike,.after-strike{opacity:1!important;transform:none!important;animation:none!important}
+  .strike{color:rgba(240,232,210,.24)!important}
+  .strike::after{transform:scaleX(1)!important;animation:none!important}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     01 — THESIS. One job: plant the claim and say whose it is. No subhead
+     and no examples — the measurement below does the showing.
+     ═══════════════════════════════════════════════════════════════════════ -->
+<section class="band void" id="top" style="min-height:100svh;display:flex;flex-direction:column;justify-content:center">
+  <div class="field-cover" aria-hidden="true">
+    <canvas data-viz="field-split" data-opt='{"quiver":false,"flock":620}' style="opacity:.22"></canvas>
+  </div>
+  <div class="scrim scrim-void" aria-hidden="true"></div>
+  <div class="inner">
+    <h1 class="reveal">Biology is not <span class="stress">that</span> creative.</h1>
+    <p class="reveal lead" style="margin-top:clamp(2rem,4vw,3.2rem);color:var(--ink-cream-2)">
+      Manifoldwerks
+    </p>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     02 — THE MEASUREMENT. The claim becomes checkable on screen rather than
+     asserted. One field, two parameter regimes, identical quiver on both
+     halves: the arrows are literally the same arrows. That identity is the
+     argument, and it costs no photograph to make.
+     ═══════════════════════════════════════════════════════════════════════ -->
+<section class="band dark" id="measurement" style="min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:clamp(7rem,16vh,11rem)">
+  <div class="field-cover" aria-hidden="true">
+    <canvas data-viz="field-split"></canvas>
+  </div>
+  <div class="scrim" aria-hidden="true"></div>
+  <div class="seam" aria-hidden="true"></div>
+
+  <div class="fieldtag reveal r-late" style="left:max(var(--pad-x),calc((100% - var(--measure)) / 2))">
+    <div class="label" style="color:var(--ink-cream)">Starlings</div>
+    <div class="sub">Sturnus vulgaris &middot; winter roost</div>
+  </div>
+  <div class="fieldtag fieldtag--right reveal r-late2" style="left:calc(50% + clamp(1.5rem,4vw,5rem))">
+    <div class="label" style="color:var(--ink-cream)">Epithelium</div>
+    <div class="sub">confluent cell monolayer</div>
+  </div>
+
+  <div class="inner">
+    <h1 class="reveal">The same dance.</h1>
+    <p class="lead reveal" style="margin-top:clamp(1.5rem,3vw,2.2rem);max-width:44ch">
+      Different worlds, different scales, the same equations.
+    </p>
+  </div>
+
+  <div class="readout measure-inset">
+    <div>alignment, flock <span class="v acc" id="phi-flock">0.000</span></div>
+    <div>alignment, sheet <span class="v acc" id="phi-sheet">0.000</span></div>
+    <div><span class="v">one shared field, both panels</span></div>
+    <div class="sp">Live</div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     03 — THE THESIS PAYOFF. The measurement generalises, and that has a
+     consequence: findings blink on in rooms nobody is watching.
+     ═══════════════════════════════════════════════════════════════════════ -->
+<section class="band void" id="consequence">
+  <div class="inner">
+    <p class="lead reveal" style="max-width:52ch;color:rgba(240,232,210,.68)">
+      A flock, a foam and a sheet of skin cells all jam and flow by the same rule.
+    </p>
+    <hr class="rule reveal" style="margin-top:clamp(1.6rem,3vw,2.2rem)">
+    <p class="pull reveal" style="margin-top:clamp(1.6rem,3vw,2rem);font-size:clamp(1.6rem,3.6vw,3rem);max-width:24ch;line-height:1.18">
+      So the answer to your problem is probably already sitting in
+      <em>somebody else's data</em>.
+    </p>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     04 — THE HUMAN HEURISTIC. The other half. 03 says the data exists
+     somewhere; this says the judgment does too, and was never written down.
+     ═══════════════════════════════════════════════════════════════════════ -->
+<section class="band dark" id="judgment">
+  <div class="inner">
+    <div class="chrome"><span class="label">The other half</span><span class="label">02</span></div>
+    <div class="head">
+      <h2 class="reveal" style="max-width:20ch">And in somebody's head.</h2>
+      <p class="lead muted reveal" style="margin-top:28px;max-width:52ch">
+        What makes an expert is the judgment about what to run next. It never makes it into the paper.
+      </p>
+    </div>
+    <div class="fig-scroll reveal" style="margin-top:clamp(2.5rem,5vw,4rem)">
+      <canvas class="fig" data-viz="heuristics" data-aspect="4" style="min-width:680px"></canvas>
+    </div>
+    <div class="footband">
+      <span class="pull">Now imagine <em>all of them</em> looking at your data.</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     05 — WHY NOW. Better information already turned this curve once, and the
+     three facts beside the chart say why the next increment has to come from
+     expertise rather than headcount.
+     ═══════════════════════════════════════════════════════════════════════ -->
+<section class="band dark" id="why-now">
+  <div class="inner">
+    <div class="chrome"><span class="label">Why now</span><span class="label">03</span></div>
+    <div class="head">
+      <div class="kicker reveal">Eroom's law, and what broke it</div>
+      <h2 class="reveal" style="margin-top:18px">Better information already broke the curve once.</h2>
+    </div>
+    <div class="fig-scroll reveal" style="margin-top:clamp(2.5rem,5vw,3.5rem)">
+      <canvas class="fig fig--fixed" data-viz="eroom" data-fixed width="1020" height="452"></canvas>
+    </div>
+    <div class="row reveal" style="margin-top:clamp(2.5rem,5vw,3.5rem)">
+      <div class="col cell">
+        <div class="stat" style="font-size:clamp(2rem,3.6vw,2.9rem)">1000&times;</div>
+        <p class="body muted" style="margin-top:2px">cheaper per cell than a decade ago</p>
+      </div>
+      <div class="col cell">
+        <div class="stat" style="font-size:clamp(2rem,3.6vw,2.9rem)">1.2%</div>
+        <p class="body muted" style="margin-top:2px">a year: how fast the people who interpret it grow</p>
+      </div>
+      <div class="col cell">
+        <div class="stat" style="font-size:clamp(2rem,3.6vw,2.9rem)">Fading</div>
+        <p class="body muted" style="margin-top:2px">the 2010s gains, as they are absorbed</p>
+      </div>
+    </div>
+    <div class="footband">
+      <span class="pull">What broke the law was better information. <em>That is the business we are in.</em></span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     06 — THE CATEGORY ERROR. Everyone is solving a data-analysis problem
+     when this is a modelling problem. Two words, one struck through.
+     ═══════════════════════════════════════════════════════════════════════ -->
+<section class="band void" id="the-turn" style="min-height:88svh;display:flex;flex-direction:column;justify-content:center">
+  <div class="inner">
+    <div class="display"><span class="strike">Pipelines.</span></div>
+    <div class="display after-strike" style="margin-top:14px">Models.</div>
+    <p class="lead reveal" style="margin-top:clamp(3rem,7vw,5.5rem);max-width:48ch;color:rgba(240,232,210,.62)">
+      Everyone is racing to pick the right method. That was never the problem.
+    </p>
+    <div class="footband" style="border-top-color:rgba(240,232,210,.12)">
+      <span class="pull">A report tells you what happened. <em>A model tells you what happens next.</em></span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     07 — PRODUCT. The tonal break. Cream paper, and the terminal recording
+     as the plate: rendered text, so it stays sharp at any size.
+     ═══════════════════════════════════════════════════════════════════════ -->
+<section class="band cream" id="product">
+  <div class="inner">
+    <div class="chrome"><span class="label">The product</span><span class="label">04</span></div>
+    <div class="head">
+      <h2 class="reveal">The AI co-scientist that builds the model.</h2>
+      <p class="lead reveal" style="margin-top:26px;max-width:56ch;color:var(--ink-dark-2)">
+        Drop your data in. It reads the actual geometry and constructs a living, simulatable
+        model of your system. Perturb it. Ask it what to run next. Prove it wrong.
+      </p>
+    </div>
+    <div class="row reveal" style="margin-top:clamp(2.5rem,5vw,3.5rem)">
+      <div class="col cell">
+        <h3>The wrong analyses are ruled out on day one</h3>
+        <p class="body muted" style="margin-top:12px">Shape constrains behaviour. Get the geometry right and most of the methods that could not have worked are gone before you run one.</p>
+      </div>
+      <div class="col cell">
+        <h3>Weeks to an afternoon</h3>
+        <p class="body muted" style="margin-top:12px">The judgment about what to run next arrives with the data, not three meetings later.</p>
+      </div>
+      <div class="col cell">
+        <h3>Your data never leaves your machine</h3>
+        <p class="body muted" style="margin-top:12px">What travels is the geometry.</p>
+      </div>
+    </div>
+    <!-- THE PRODUCT PLATE goes here — the terminal recording, once the rename
+         has landed and it can be re-captured. Drop it straight back in as:
+
+           <img class="demo reveal" src="assets/demo.gif" width="1680" height="640"
+                loading="lazy"
+                alt="A session: fit a model to the data, perturb it, and ask what to run next.">
+
+         The .demo rule is still in the stylesheet, so nothing else has to
+         change. Set width/height to the file's real pixel size — the earlier
+         capture was 1680x640, and declaring the wrong ratio renders it
+         stretched. If it lands as a video rather than a gif, .demo styles a
+         <video> the same way. -->
+    <div class="footband">
+      <span class="pull">A small solution space is one you can map. <em>A map shows you what nature hasn't built yet.</em></span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     08 — CLOSE. Chromeless. Say it, then stop.
+     ═══════════════════════════════════════════════════════════════════════ -->
+<section class="band dark" id="contact" style="min-height:84svh;display:flex;flex-direction:column;justify-content:center">
+  <div class="field-cover" aria-hidden="true">
+    <canvas data-viz="field-split" data-opt='{"quiver":false,"flock":620}' style="opacity:.22"></canvas>
+  </div>
+  <div class="scrim scrim-soft" aria-hidden="true"></div>
+  <div class="inner">
+    <h2 class="reveal" style="font-size:clamp(2.2rem,5.6vw,4.4rem)">Nature repeats her best ideas.</h2>
+    <h2 class="reveal" style="font-size:clamp(2.2rem,5.6vw,4.4rem);color:var(--accent);margin-top:clamp(1rem,2vw,1.9rem)">We find yours.</h2>
+    <p class="reveal" style="margin-top:clamp(3rem,7vw,5rem)">
+      <a class="lead" href="mailto:cesar.valdez@mila.quebec" style="font-family:var(--f-mono);letter-spacing:.02em">cesar.valdez@mila.quebec</a>
+    </p>
+  </div>
+  <div class="inner" style="margin-top:clamp(3.5rem,8vw,6rem)">
+    <div class="footband" style="margin-top:0">
+      <span class="label">Manifoldwerks</span>
+      <span class="label">In use in labs at Yale and Mila</span>
+    </div>
+  </div>
+</section>
+
+<script>
+/* =========================================================================
+   THE VISUAL REGISTRY
+   -------------------------------------------------------------------------
+   Every animated figure is generated here. No images, no libraries, no
+   network. Each visual is registered by name in VIZ and mounted onto any
+   <canvas data-viz="name"> in the document.
+
+   Lifted from the deck, with one change: the deck runs the figures on the
+   ACTIVE SLIDE, and a scrolling page has no such thing. An
+   IntersectionObserver takes that job, so a figure costs a simulation only
+   while it is actually on screen.
+   ========================================================================= */
+const VIZ = {};
+const REDUCE = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+/* ?t=<seconds> freezes every visual at a settled moment. Used for stills,
+   PDF export and visual checks; zero while presenting. */
+const TOFF = parseFloat(new URLSearchParams(location.search).get('t') || '0') || 0;
+
+/* deterministic PRNG — the composition is identical on every load */
+function mkRnd(seed){
+  return function(){ seed = (seed*1664525 + 1013904223) % 4294967296; return seed/4294967296; };
+}
+
+/* ---------------------------------------------------------------- palette */
+const C = {
+  ground:'#232E26', groundAlt:'#1B241E',
+  cream:'240,232,210', orange:'192,112,48', wood:'122,78,36', white:'255,255,255'
+};
+const rgba = (t,a) => 'rgba(' + t + ',' + a.toFixed(3) + ')';
+
+/* =========================================================================
+   THE SHARED FIELD
+   A single time-varying velocity field built from five drifting vortices,
+   each solid-body rotation under a Gaussian envelope — smooth everywhere,
+   with a genuine zero (a topological defect) at its core. Sampled in
+   normalised [0,1]^2 so every panel that uses it sees the SAME function.
+   ========================================================================= */
+const VORT = [
+  {x:.24,y:.32,k: 1.00,r:.30,ax:.085,ay:.060,px:0.0,py:1.3,w:.17},
+  {x:.66,y:.26,k:-1.00,r:.26,ax:.070,ay:.080,px:2.1,py:0.4,w:.21},
+  {x:.42,y:.70,k: 0.95,r:.28,ax:.095,ay:.055,px:4.0,py:2.2,w:.15},
+  {x:.84,y:.68,k:-0.85,r:.24,ax:.060,ay:.075,px:1.2,py:3.1,w:.25},
+  {x:.10,y:.80,k:-0.70,r:.22,ax:.055,ay:.045,px:3.3,py:1.7,w:.19}
+];
+const VX = new Float64Array(VORT.length), VY = new Float64Array(VORT.length);
+function moveVortices(t){
+  for(let i=0;i<VORT.length;i++){
+    const v = VORT[i];
+    VX[i] = v.x + v.ax*Math.sin(v.w*t + v.px);
+    VY[i] = v.y + v.ay*Math.cos(v.w*t*1.13 + v.py);
+  }
+}
+function sampleField(x, y, drift, out){
+  let vx = 0, vy = 0;
+  for(let i=0;i<VORT.length;i++){
+    const v = VORT[i];
+    const dx = x - VX[i], dy = y - VY[i];
+    const g = Math.exp(-(dx*dx + dy*dy)/(2*v.r*v.r));
+    const s = v.k * g / v.r;
+    vx += -dy*s; vy += dx*s;
+  }
+  vx += drift;
+  out[0] = vx; out[1] = vy;
+  return out;
+}
+
+/* small drawing helpers ---------------------------------------------------- */
+function arrow(ctx, x, y, ux, uy, len, head){
+  const m = Math.hypot(ux, uy) || 1;
+  const dx = ux/m*len, dy = uy/m*len;
+  ctx.beginPath();
+  ctx.moveTo(x - dx*0.5, y - dy*0.5); ctx.lineTo(x + dx*0.5, y + dy*0.5); ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(x + dx*0.5, y + dy*0.5);
+  ctx.lineTo(x + dx*0.5 - dx*head - dy*head*0.55, y + dy*0.5 - dy*head + dx*head*0.55);
+  ctx.lineTo(x + dx*0.5 - dx*head + dy*head*0.55, y + dy*0.5 - dy*head - dx*head*0.55);
+  ctx.closePath(); ctx.fill();
+}
+function hexPath(ctx, cx, cy, r){
+  ctx.beginPath();
+  for(let k=0;k<6;k++){
+    const a = Math.PI/6 + k*Math.PI/3;
+    const x = cx + Math.cos(a)*r, y = cy + Math.sin(a)*r;
+    k ? ctx.lineTo(x,y) : ctx.moveTo(x,y);
+  }
+  ctx.closePath();
+}
+const smoothstep = (a,b,x) => { const t = Math.max(0, Math.min(1, (x-a)/(b-a))); return t*t*(3-2*t); };
+
+/* =========================================================================
+   1. FIELD SPLIT  —  slide "The same dance"
+   One field. Two parameter regimes. Identical quiver on both halves.
+     left   sparse, fast, long trails        -> a flock
+     right  dense,  slow, sprung to a packing -> a confluent sheet
+   The arrows are sampled at the same normalised lattice on both panels, so
+   they are literally the same arrows. That identity is the argument.
+   ========================================================================= */
+VIZ['field-split'] = function(cv){
+  const W = cv.width, H = cv.height, ctx = cv.getContext('2d');
+  const opt = JSON.parse(cv.dataset.opt || '{}');
+  const showQuiver = opt.quiver !== false;
+  const PW = W/2, OUT = [0,0], rnd = mkRnd(20260827);
+
+  const N_F = opt.flock || 820;
+  const F = new Float32Array(N_F*2);
+  for(let i=0;i<N_F;i++){ F[i*2] = rnd(); F[i*2+1] = rnd(); }
+
+  const cols = 30, rows = 20, CELLS = [];
+  for(let r=0;r<rows;r++) for(let c=0;c<cols;c++){
+    const hx = (c + (r%2 ? 0.5 : 0) + 0.5)/cols, hy = (r+0.5)/rows;
+    CELLS.push({hx, hy, x:hx, y:hy});
+  }
+
+  ctx.fillStyle = C.ground; ctx.fillRect(0,0,W,H);
+  let phiF = 0, phiS = 0;
+
+  return {
+    reset(){ ctx.fillStyle = C.ground; ctx.fillRect(0,0,W,H); },
+    frame(el){
+      const t = REDUCE ? 6 : el;
+      moveVortices(t);
+
+      /* --- left panel: the flock, trails decaying slowly --- */
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.fillStyle = rgba('35,46,38', 0.070); ctx.fillRect(0,0,PW,H);
+      ctx.fillStyle = C.ground;                ctx.fillRect(PW,0,PW,H);
+
+      ctx.save(); ctx.beginPath(); ctx.rect(0,0,PW,H); ctx.clip();
+      ctx.globalCompositeOperation = 'lighter';
+      let sx=0, sy=0;
+      for(let i=0;i<N_F;i++){
+        let nx = F[i*2], ny = F[i*2+1];
+        sampleField(nx, ny, 0.62, OUT);
+        const sp = Math.hypot(OUT[0], OUT[1]) || 1e-6;
+        sx += OUT[0]/sp; sy += OUT[1]/sp;
+        nx += OUT[0]*0.0022; ny += OUT[1]*0.0022;
+        if(nx<0) nx+=1; else if(nx>1) nx-=1;
+        if(ny<0) ny+=1; else if(ny>1) ny-=1;
+        F[i*2]=nx; F[i*2+1]=ny;
+        ctx.fillStyle = rgba(C.cream, Math.min(1, 0.25 + sp*0.38));
+        ctx.fillRect(nx*PW - 1.4, ny*H - 1.4, 2.8, 2.8);
+      }
+      phiF = Math.hypot(sx,sy)/N_F;
+      ctx.restore(); ctx.globalCompositeOperation = 'source-over';
+
+      /* --- right panel: the sheet. Advected, then sprung back to its
+             packing site: a monolayer shears and jams, it does not disperse. */
+      ctx.save(); ctx.beginPath(); ctx.rect(PW,0,PW,H); ctx.clip();
+      ctx.globalCompositeOperation = 'lighter';
+      let kx=0, ky=0;
+      for(const cc of CELLS){
+        sampleField(cc.x, cc.y, 0.62, OUT);
+        const sp = Math.hypot(OUT[0], OUT[1]) || 1e-6;
+        kx += OUT[0]/sp; ky += OUT[1]/sp;
+        cc.x += OUT[0]*0.0016 + (cc.hx - cc.x)*0.020;
+        cc.y += OUT[1]*0.0016 + (cc.hy - cc.y)*0.020;
+        if(cc.x<-0.04||cc.x>1.04||cc.y<-0.04||cc.y>1.04){ cc.x=cc.hx; cc.y=cc.hy; }
+        const px = PW + cc.x*PW, py = cc.y*H;
+        ctx.strokeStyle = rgba(C.orange, 0.10 + 0.34*Math.min(1, sp*0.55));
+        ctx.lineWidth = 1.5;
+        hexPath(ctx, px, py, 21*(1 - 0.10*Math.min(1, sp*0.5))); ctx.stroke();
+        ctx.fillStyle = rgba('236,178,110', Math.min(1, 0.24 + sp*0.30));
+        ctx.beginPath(); ctx.arc(px, py, 2.3, 0, 6.2832); ctx.fill();
+      }
+      phiS = Math.hypot(kx,ky)/CELLS.length;
+      ctx.restore(); ctx.globalCompositeOperation = 'source-over';
+
+      /* --- the identical quiver, sweeping in across both panels at once --- */
+      if(showQuiver){
+        const QX = 17, QY = 10;
+        ctx.lineWidth = 2.3;
+        for(let qx=0; qx<QX; qx++){
+          const nx = (qx+0.5)/QX;
+          const sweep = REDUCE ? 1 : Math.max(0, Math.min(1, (el - 1.6 - nx*0.85)/0.55));
+          if(sweep <= 0) continue;
+          for(let qy=0; qy<QY; qy++){
+            const ny = (qy+0.5)/QY;
+            sampleField(nx, ny, 0.62, OUT);
+            const mag = Math.hypot(OUT[0], OUT[1]);
+            const a = sweep * Math.min(1, 0.34 + mag*0.40) * 0.95;
+            ctx.strokeStyle = ctx.fillStyle = rgba(C.cream, a);
+            arrow(ctx, nx*PW,      ny*H, OUT[0], OUT[1], 48, 0.34);
+            arrow(ctx, PW + nx*PW, ny*H, OUT[0], OUT[1], 48, 0.34);
+          }
+        }
+        /* the field's zeros, marked identically on both sides */
+        const dAl = REDUCE ? 1 : Math.max(0, Math.min(1, (el - 3.2)/0.7));
+        if(dAl > 0){
+          ctx.lineWidth = 2;
+          for(let v=0; v<VORT.length; v++){
+            for(const ox of [0, PW]){
+              ctx.save(); ctx.beginPath(); ctx.rect(ox,0,PW,H); ctx.clip();
+              const dx = ox + VX[v]*PW, dy = VY[v]*H;
+              ctx.strokeStyle = rgba(C.cream, dAl*0.85);
+              ctx.beginPath(); ctx.arc(dx, dy, 19, 0, 6.2832); ctx.stroke();
+              ctx.fillStyle = rgba(C.cream, dAl);
+              ctx.beginPath(); ctx.arc(dx, dy, 3.4, 0, 6.2832); ctx.fill();
+              ctx.restore();
+            }
+          }
+        }
+      }
+      const a = document.getElementById('phi-flock'), b = document.getElementById('phi-sheet');
+      if(a){ a.textContent = phiF.toFixed(3); b.textContent = phiS.toFixed(3); }
+    }
+  };
+};
+
+VIZ['eroom'] = function(cv){
+  const W = cv.width, H = cv.height, ctx = cv.getContext('2d');
+  const L = 104, R = W - 150, T = 78, B = H - 78;
+  const X0 = 1950, X1 = 2020, XEND = 2018, XBREAK = 2010;
+  const Y0 = 0.1, Y1 = 100;
+
+  const px = yr  => L + (yr - X0)/(X1 - X0) * (R - L);
+  const py = val => B - (Math.log10(val) - Math.log10(Y0)) /
+                        (Math.log10(Y1) - Math.log10(Y0)) * (B - T);
+
+  /* the 2012 relationship: halving every ~9 years */
+  const trend = yr => 50 * Math.pow(2, -(yr - X0)/9);
+  /* the 2020 correction: +0.7 NME per $bn above that trend by 2018 */
+  const GAIN = 0.7;
+  const actual = yr => yr <= XBREAK
+      ? trend(yr)
+      : trend(yr) + GAIN * smoothstep(XBREAK, XEND, yr);
+
+  return {
+    printAt: 6.4,                    /* after the turn and its label land */
+    reset(){ ctx.clearRect(0,0,W,H); },
+    frame(el){
+      const t = REDUCE ? 8 : el;
+      ctx.clearRect(0,0,W,H);
+      ctx.fillStyle = C.groundAlt; ctx.fillRect(0,0,W,H);
+
+      /* --- recessive grid, log decades only --- */
+      ctx.font = '400 15px "DM Mono", monospace';
+      ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+      for(const val of [0.1, 1, 10, 100]){
+        const y = py(val);
+        ctx.strokeStyle = rgba(C.cream, 0.09); ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(L, y); ctx.lineTo(R, y); ctx.stroke();
+        ctx.fillStyle = rgba(C.cream, 0.42);
+        ctx.fillText(val < 1 ? '0.1' : String(val), L - 16, y);
+      }
+      ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+      ctx.strokeStyle = rgba(C.cream, 0.20); ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(L, B); ctx.lineTo(R, B); ctx.stroke();
+      for(let yr = X0; yr <= X1; yr += 10){
+        const x = px(yr);
+        ctx.strokeStyle = rgba(C.cream, 0.20);
+        ctx.beginPath(); ctx.moveTo(x, B); ctx.lineTo(x, B + 7); ctx.stroke();
+        ctx.fillStyle = rgba(C.cream, 0.42);
+        ctx.fillText(String(yr), x, B + 16);
+      }
+
+      /* --- the sixty-year decline, drawing itself --- */
+      const gDecline = REDUCE ? 1 : Math.max(0, Math.min(1, (t - 0.4)/2.2));
+      const yrA = X0 + (XBREAK - X0)*gDecline;
+      ctx.strokeStyle = rgba(C.orange, 1);
+      ctx.lineWidth = 2.5; ctx.lineJoin = ctx.lineCap = 'round';
+      ctx.beginPath();
+      for(let yr = X0; yr <= yrA; yr += 0.5){
+        const x = px(yr), y = py(actual(yr));
+        yr === X0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+      }
+      ctx.stroke();
+
+      /* --- the counterfactual: the old trend, continued --- */
+      const gGhost = REDUCE ? 1 : Math.max(0, Math.min(1, (t - 2.9)/1.0));
+      if(gGhost > 0){
+        ctx.save();
+        ctx.setLineDash([7, 8]);
+        ctx.strokeStyle = rgba(C.cream, 0.34 * gGhost);
+        ctx.lineWidth = 1.6;
+        ctx.beginPath();
+        for(let yr = XBREAK; yr <= XBREAK + (XEND - XBREAK)*gGhost; yr += 0.5){
+          const x = px(yr), y = py(trend(yr));
+          yr === XBREAK ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+        }
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      /* --- and the turn --- */
+      const gTurn = REDUCE ? 1 : Math.max(0, Math.min(1, (t - 3.3)/1.4));
+      if(gTurn > 0){
+        ctx.strokeStyle = rgba(C.orange, 1); ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        for(let yr = XBREAK; yr <= XBREAK + (XEND - XBREAK)*gTurn; yr += 0.25){
+          const x = px(yr), y = py(actual(yr));
+          yr === XBREAK ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+        }
+        ctx.stroke();
+      }
+
+      /* --- the inflection, and the detail that wins the argument --- */
+      const gMark = REDUCE ? 1 : Math.max(0, Math.min(1, (t - 2.5)/0.7));
+      if(gMark > 0){
+        const bx = px(XBREAK);
+        ctx.save();
+        ctx.setLineDash([3, 6]);
+        ctx.strokeStyle = rgba(C.cream, 0.30 * gMark); ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(bx, T + 44); ctx.lineTo(bx, py(trend(XBREAK)) - 12); ctx.stroke();
+        ctx.restore();
+        ctx.fillStyle = rgba(C.orange, gMark);
+        ctx.beginPath(); ctx.arc(bx, py(actual(XBREAK)), 5, 0, 6.2832); ctx.fill();
+        ctx.font = '400 15px "DM Mono", monospace';
+        ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+        ctx.fillStyle = rgba(C.cream, 0.72 * gMark);
+        ctx.fillText("EROOM'S LAW PUBLISHED", bx, T + 26);
+        ctx.fillStyle = rgba(C.cream, 0.44 * gMark);
+        ctx.fillText('WITH DATA UP TO 2010', bx, T + 46);
+      }
+
+      /* --- the gap between the two lines, said once --- */
+      if(gTurn >= 1){
+        const fade = Math.min(1, (t - 4.9)/0.7);
+        if(fade > 0){
+          const ex = px(XEND), ey = py(actual(XEND));
+          ctx.fillStyle = rgba(C.orange, fade);
+          ctx.beginPath(); ctx.arc(ex, ey, 5, 0, 6.2832); ctx.fill();
+          ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+          ctx.font = '700 30px "Bricolage Grotesque", sans-serif';
+          ctx.fillStyle = rgba(C.cream, fade);
+          ctx.fillText('+0.7', ex + 18, ey - 12);
+          ctx.font = '400 15px "DM Mono", monospace';
+          ctx.fillStyle = rgba(C.cream, fade*0.58);
+          ctx.fillText('NEW MOLECULAR', ex + 18, ey + 10);
+          ctx.fillText('ENTITIES PER $BN,', ex + 18, ey + 30);
+          ctx.fillText('BY 2018', ex + 18, ey + 50);
+        }
+      }
+
+      /* --- title and sources. One series, so no legend box. --- */
+      ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+      ctx.font = '400 17px "DM Mono", monospace';
+      ctx.fillStyle = rgba(C.cream, 0.62);
+      ctx.fillText('NEW MOLECULAR ENTITIES PER $1BN R&D, INFLATION-ADJUSTED', L - 44, 38);
+      ctx.font = '400 14px "DM Sans", sans-serif';
+      ctx.fillStyle = rgba(C.cream, 0.34);
+      ctx.fillText('Scannell et al., Nat Rev Drug Discov 2012 (decline) · Ringel, Scannell, Baedeker & Schulze, Nat Rev Drug Discov 2020 (the break)',
+                   L - 44, H - 26);
+    }
+  };
+};
+
+VIZ['heuristics'] = function(cv){
+  const W = cv.width, H = cv.height, ctx = cv.getContext('2d');
+  const COLS = 9, ROWS = 3, N = COLS * ROWS;
+  const cw = W / COLS, ch = H / ROWS;
+  const rnd = mkRnd(778899);
+
+  /* each analyst is a root-to-leaf route through three binary choices */
+  const PEOPLE = [];
+  for(let i = 0; i < N; i++){
+    PEOPLE.push({
+      route: [rnd() < 0.5 ? 0 : 1, rnd() < 0.5 ? 0 : 1, rnd() < 0.5 ? 0 : 1],
+      lag:   rnd()
+    });
+  }
+  /* the ones whose data had your shape. Fixed, not random, so the same
+     analysts light every run. */
+  const MATCHED = new Set([3, 7, 11, 14, 20, 24]);
+
+  /* node positions inside one cell, three levels deep */
+  function nodes(cx, cy, w, h){
+    const lv = [[0], [-1, 1], [-1.7, -0.6, 0.6, 1.7]];
+    const out = [];
+    for(let d = 0; d < 3; d++){
+      const y = cy + h * (0.34 - d * 0.24);
+      out.push(lv[d].map(o => [cx + o * w * 0.16, y]));
+    }
+    return out;
+  }
+
+  return {
+    printAt: 5.4,
+    reset(){ ctx.clearRect(0, 0, W, H); },
+    frame(el){
+      const t = REDUCE ? 6 : el;
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = C.ground; ctx.fillRect(0, 0, W, H);   /* else it prints white */
+
+      for(let i = 0; i < N; i++){
+        const p = PEOPLE[i];
+        const cx = (i % COLS + 0.5) * cw, cy = (Math.floor(i / COLS) + 0.5) * ch;
+        const nd = nodes(cx, cy, cw, ch);
+
+        const appear = REDUCE ? 1 : Math.max(0, Math.min(1, (t - 0.2 - p.lag * 0.9) / 0.5));
+        if(appear <= 0) continue;
+
+        /* the choices everyone faces: drawn faint, identical in every cell */
+        ctx.strokeStyle = rgba(C.cream, 0.16 * appear);
+        ctx.lineWidth = 1.2;
+        for(let d = 0; d < 2; d++){
+          nd[d].forEach((a, k) => {
+            ctx.beginPath();
+            ctx.moveTo(a[0], a[1]);
+            ctx.lineTo(nd[d + 1][k * 2][0], nd[d + 1][k * 2][1]);
+            ctx.moveTo(a[0], a[1]);
+            ctx.lineTo(nd[d + 1][k * 2 + 1][0], nd[d + 1][k * 2 + 1][1]);
+            ctx.stroke();
+          });
+        }
+
+        /* the route this person took: that is the judgment */
+        const lit = MATCHED.has(i)
+          ? (REDUCE ? 1 : Math.max(0, Math.min(1, (t - 2.6 - (i % 5) * 0.22) / 0.5)))
+          : 0;
+        const col = lit > 0 ? C.orange : C.cream;
+        ctx.strokeStyle = rgba(col, (0.40 + 0.55 * lit) * appear);
+        ctx.lineWidth = lit > 0 ? 2.4 : 1.7;
+        ctx.beginPath();
+        let idx = 0;
+        ctx.moveTo(nd[0][0][0], nd[0][0][1]);
+        for(let d = 0; d < 2; d++){
+          idx = idx * 2 + p.route[d];
+          ctx.lineTo(nd[d + 1][idx][0], nd[d + 1][idx][1]);
+        }
+        ctx.stroke();
+        ctx.fillStyle = rgba(col, (0.42 + 0.55 * lit) * appear);
+        ctx.beginPath();
+        ctx.arc(nd[2][idx][0], nd[2][idx][1], lit > 0 ? 4.2 : 2.8, 0, 6.2832);
+        ctx.fill();
+      }
+
+      /* say once what the lit ones are */
+      const lab = REDUCE ? 1 : Math.max(0, Math.min(1, (t - 4.0) / 0.7));
+      if(lab > 0){
+        ctx.font = '400 17px "DM Mono", monospace';
+        ctx.textAlign = 'right';
+        ctx.fillStyle = rgba(C.orange, lab);
+        ctx.fillText('WORKED DATA SHAPED LIKE YOURS', W - 6, H - 10);
+      }
+    }
+  };
+};
+
+
+/* =========================================================================
+   RUNTIME
+   The deck mounts every figure once against a fixed 1920x1080 stage. Here
+   the canvases are sized from their own layout box instead, so each visual
+   lays out at the size it is actually drawn at and its type stays the size
+   it was authored at. Figures run only while on screen.
+   ========================================================================= */
+(function(){
+  'use strict';
+
+  var figures = [];
+
+  /* Size a canvas backing store from its box. field-split draws no text, so
+     it can take the device pixel ratio and be crisp; the two chart figures
+     draw labels at authored point sizes, which would shrink to half size on
+     a 2x screen if their geometry were laid out in device pixels. */
+  function sizeCanvas(cv){
+    var box = cv.getBoundingClientRect();
+    if(!box.width) return false;
+    if(cv.hasAttribute('data-fixed')) return true;   /* authored frame; CSS scales it */
+    var aspect = parseFloat(cv.dataset.aspect || '0');
+    var cssW = box.width;
+    var cssH = aspect ? cssW / aspect : box.height;
+    if(!cssH) return false;
+    var crisp = cv.dataset.viz === 'field-split';
+    var s = crisp ? Math.min(devicePixelRatio || 1, 2) : 1;
+    var w = Math.round(cssW * s), h = Math.round(cssH * s);
+    if(cv.width === w && cv.height === h) return true;
+    cv.width = w; cv.height = h;
+    if(aspect) cv.style.height = cssH + 'px';
+    return true;
+  }
+
+  function mount(cv){
+    var make = VIZ[cv.dataset.viz];
+    if(!make || !sizeCanvas(cv)) return null;
+    return { cv: cv, inst: make(cv), running: false, t0: null };
+  }
+
+  function mountAll(){
+    figures = [];
+    [].forEach.call(document.querySelectorAll('canvas[data-viz]'), function(cv){
+      var f = mount(cv);
+      if(f) figures.push(f);
+    });
+  }
+
+  /* --- run a figure only while its band is on screen --- */
+  var seen = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      var f = figures.filter(function(x){ return x.cv === e.target; })[0];
+      if(!f) return;
+      if(e.isIntersecting){
+        if(!f.running){ f.running = true; f.t0 = null; }
+      } else {
+        f.running = false;
+      }
+    });
+  }, { rootMargin: '120px 0px' });
+
+  function observeAll(){
+    figures.forEach(function(f){ seen.observe(f.cv); });
+  }
+
+  /* one loop for the whole page; parked figures cost nothing */
+  requestAnimationFrame(function tick(ts){
+    for(var i = 0; i < figures.length; i++){
+      var f = figures[i];
+      if(!f.running) continue;
+      if(f.t0 === null) f.t0 = ts;
+      f.inst.frame((ts - f.t0) / 1000 + TOFF);
+    }
+    requestAnimationFrame(tick);
+  });
+
+  /* Geometry is computed at construction from cv.width/cv.height, so a
+     resize that changes the box needs the figures rebuilt, not just resized. */
+  var rt;
+  addEventListener('resize', function(){
+    clearTimeout(rt);
+    rt = setTimeout(function(){
+      seen.disconnect();
+      mountAll();
+      observeAll();
+    }, 220);
+  });
+
+  /* Every figure draws its own labels, and at least one of them lays out
+     against DM Mono's exact metrics. Drawing before the webfont arrives
+     measures a fallback instead and pushes that text off the canvas, so the
+     figures wait for the fonts rather than for the document. */
+  function start(){
+    mountAll();
+    observeAll();
+
+    sweep();
+
+    /* ?t=<seconds> freezes every figure at a settled moment, for stills and
+       visual checks. Carried over from the deck's PDF export path. */
+    if(TOFF){
+      figures.forEach(function(f){
+        f.running = false;
+        f.inst.reset && f.inst.reset();
+        for(var k = 90; k >= 0; k--) f.inst.frame(TOFF - k * 0.016);
+      });
+    }
+  }
+
+  if(document.fonts && document.fonts.ready){
+    document.fonts.ready.then(start, start);
+  } else {
+    start();
+  }
+
+  /* --- band entrance: the deck's `.slide.visible`, driven by scroll --- */
+  var bandList = [].slice.call(document.querySelectorAll('.band'));
+
+  function show(b){
+    if(b.classList.contains('visible')) return;
+    b.classList.add('visible');
+    bands.unobserve(b);
+  }
+
+  var bands = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting) show(e.target); });
+  }, { threshold: 0.16, rootMargin: '0px 0px -60px 0px' });
+
+  bandList.forEach(function(b){ bands.observe(b); });
+
+  /* A browser does not compute intersections for a tab it has never rendered,
+     so a page opened in a background tab can reach first paint with nothing
+     revealed and no figure running. Every band's copy lives inside .reveal, so
+     that would be a blank page. Sweep the geometry directly whenever the tab
+     could have changed state, and treat the observer as the fast path rather
+     than the only one. */
+  function sweep(){
+    for(var i = 0; i < bandList.length; i++){
+      var r = bandList[i].getBoundingClientRect();
+      if(r.top < innerHeight - 60 && r.bottom > 0) show(bandList[i]);
+    }
+    figures.forEach(function(f){
+      var r = f.cv.getBoundingClientRect();
+      var on = r.top < innerHeight + 120 && r.bottom > -120;
+      if(on && !f.running){ f.running = true; f.t0 = null; }
+      else if(!on && f.running){ f.running = false; }
+    });
+  }
+
+  sweep();
+  addEventListener('load', sweep);
+  addEventListener('visibilitychange', function(){ if(!document.hidden) sweep(); });
+  setTimeout(sweep, 500);
+})();
+</script>
 </body>
 </html>
