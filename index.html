@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Manifoldwerks — Biology is not that creative</title>
-<meta name="description" content="Manifoldwerks builds the AI co-scientist that constructs a model of your system, not a report about it.">
-<meta property="og:title" content="Manifoldwerks — Biology is not that creative">
-<meta property="og:description" content="Manifoldwerks builds the AI co-scientist that constructs a model of your system, not a report about it.">
+<title>Manifoldwerks — More discovery. Together.</title>
+<meta name="description" content="Manifoldwerks builds co-science: a world of analysis workflows, narrowed to your data and seeded by every scientist who uses it.">
+<meta property="og:title" content="Manifoldwerks — More discovery. Together.">
+<meta property="og:description" content="Manifoldwerks builds co-science: a world of analysis workflows, narrowed to your data and seeded by every scientist who uses it.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://manifoldwerks.com/">
 
@@ -257,19 +257,8 @@ ul.ticks li::before{content:"—";position:absolute;left:0;top:0;
 .fig-scroll{overflow-x:auto;overscroll-behavior-x:contain}
 /* a figure whose composition is authored at a fixed frame: scale the element,
    never re-lay-out the drawing, or its pinned annotations fall off the edge */
-.fig--fixed{width:100%;max-width:1020px;min-width:720px;height:auto}
+.fig--wide{width:100%;min-width:720px;height:auto}
 .fig-cap{margin-top:22px}
-
-/* ===========================================================================
-   THE PRODUCT PLATE — the terminal recording. Rendered text, so it stays
-   sharp; the hairline keeps it a plate rather than a screenshot.
-
-   The recording itself is out until the rename lands; see the marked slot in
-   the product band. This rule stays so putting it back is one element.
-   =========================================================================== */
-.demo{display:block;width:100%;height:auto;margin-top:clamp(2rem,4vw,3rem);
-  border:1px solid var(--bd-cream)}
-.dark .demo,.void .demo{border-color:var(--bd-dark)}
 
 /* ===========================================================================
    MOTION — one orchestrated reveal per band, staggered.
@@ -290,38 +279,15 @@ html.js .band.visible .reveal:nth-child(5){transition-delay:.38s}
 html.js .band.visible .reveal:nth-child(6){transition-delay:.46s}
 html.js .band.visible .r-late{transition-delay:1.2s}
 html.js .band.visible .r-late2{transition-delay:1.4s}
+/* .reveal.r-turn, not .r-turn: the nth-child stagger outranks a bare class */
+html.js .band.visible .reveal.r-turn{transition-delay:4.9s}
 
-/* --- the turn: "Pipelines" is struck through, then dims; "Models" lands after.
-       The rule draws left to right, so the correction happens on screen. --- */
-@keyframes riseIn{from{opacity:0;transform:translateY(26px)} to{opacity:1;transform:none}}
-@keyframes strikeThrough{from{transform:scaleX(0)} to{transform:scaleX(1)}}
-@keyframes struckOut{
-  0%{opacity:0;transform:translateY(26px);color:var(--ink-cream)}
-  16%{opacity:1;transform:none;color:var(--ink-cream)}
-  58%{opacity:1;color:var(--ink-cream)}
-  100%{opacity:1;color:rgba(240,232,210,.24)}
-}
-.strike{position:relative;display:inline-block;color:rgba(240,232,210,.24)}
-.strike::after{content:"";position:absolute;left:-.02em;right:-.02em;top:.46em;
-  height:.055em;background:var(--accent);transform-origin:0 50%}
-html.js .strike{opacity:0;color:var(--ink-cream)}
-html.js .strike::after{transform:scaleX(0)}
-html.js .band.visible .strike{animation:struckOut 3.1s var(--ease) .15s forwards}
-html.js .band.visible .strike::after{animation:strikeThrough .62s var(--ease) 1.15s forwards}
-html.js .after-strike{opacity:0}
-html.js .band.visible .after-strike{animation:riseIn .9s var(--ease) 2.15s forwards}
 
 /* Reduced motion, print, and ?still=1 all resolve to the finished state. */
 @media (prefers-reduced-motion:reduce){
   html.js .reveal{opacity:1!important;transform:none!important;transition:none!important}
-  html.js .strike,html.js .after-strike{opacity:1!important;animation:none!important}
-  html.js .strike{color:rgba(240,232,210,.24)!important}
-  html.js .strike::after{transform:scaleX(1)!important;animation:none!important}
 }
 html.settled .reveal{opacity:1!important;transform:none!important;transition:none!important}
-html.settled .strike,html.settled .after-strike{opacity:1!important;animation:none!important}
-html.settled .strike{color:rgba(240,232,210,.24)!important}
-html.settled .strike::after{transform:scaleX(1)!important;animation:none!important}
 
 /* ===========================================================================
    PRINT — resolve every entrance to its finished state.
@@ -330,17 +296,14 @@ html.settled .strike::after{transform:scaleX(1)!important;animation:none!importa
   html{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .band{break-inside:avoid;page-break-inside:avoid}
   .reveal{opacity:1!important;transform:none!important;transition:none!important}
-  .strike,.after-strike{opacity:1!important;transform:none!important;animation:none!important}
-  .strike{color:rgba(240,232,210,.24)!important}
-  .strike::after{transform:scaleX(1)!important;animation:none!important}
 }
 </style>
 </head>
 <body>
 
 <!-- ═══════════════════════════════════════════════════════════════════════
-     01 — THESIS. One job: plant the claim and say whose it is. No subhead
-     and no examples — the measurement below does the showing.
+     01 — TITLE. The company, the promise, the product. The vector field runs
+     quietly underneath; it gets its own band further down.
      ═══════════════════════════════════════════════════════════════════════ -->
 <section class="band void" id="top" style="min-height:100svh;display:flex;flex-direction:column;justify-content:center">
   <div class="field-cover" aria-hidden="true">
@@ -348,21 +311,103 @@ html.settled .strike::after{transform:scaleX(1)!important;animation:none!importa
   </div>
   <div class="scrim scrim-void" aria-hidden="true"></div>
   <div class="inner">
-    <h1 class="reveal">Biology is not <span class="stress">that</span> creative.</h1>
-    <p class="reveal lead" style="margin-top:clamp(2rem,4vw,3.2rem);color:var(--ink-cream-2)">
-      Manifoldwerks
+    <h1 class="display reveal">Manifoldwerks<span style="color:var(--accent)">.</span></h1>
+    <p class="pull reveal" style="margin-top:clamp(1.6rem,3.4vw,2.8rem);font-size:clamp(1.6rem,3.6vw,3rem);color:var(--ink-cream-2)">
+      More discovery. <em>Together.</em>
+    </p>
+    <p class="lead reveal" style="margin-top:clamp(3rem,7vw,5rem);color:var(--ink-cream-2)">
+      Introducing co-science
     </p>
   </div>
 </section>
 
 
 <!-- ═══════════════════════════════════════════════════════════════════════
-     02 — THE MEASUREMENT. The claim becomes checkable on screen rather than
-     asserted. One field, two parameter regimes, identical quiver on both
-     halves: the arrows are literally the same arrows. That identity is the
-     argument, and it costs no photograph to make.
+     02 — THE CURVE. The question, and nothing else. The close shows this
+     same figure again with one line added.
      ═══════════════════════════════════════════════════════════════════════ -->
-<section class="band dark" id="measurement" style="min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:clamp(7rem,16vh,11rem)">
+<section class="band dark" id="cures">
+  <div class="inner">
+    <div class="chrome"><span class="label">The problem</span><span class="label">01</span></div>
+    <div class="head">
+      <h2 class="reveal" style="max-width:20ch">Cures keep getting harder to find.</h2>
+      <p class="lead reveal" style="margin-top:26px;max-width:52ch;color:var(--ink-cream-2)">
+        Up close, it is one scientist, one week, and an analysis that never had a chance.
+      </p>
+    </div>
+    <div class="fig-scroll reveal" style="margin-top:clamp(2.5rem,5vw,3.5rem)">
+      <canvas class="fig fig--wide" data-viz="eroom" data-fixed data-opt='{"timeline":true,"quiet":true}'
+              width="1640" height="540"></canvas>
+    </div>
+    <div class="footband">
+      <span class="pull">We spend more looking every year, and find less. <em>The methods are sound &mdash; so why?</em></span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     03 — WHY. Too much happens alone. The street stays dark, then lights
+     outward from the one window that never went out, and the turn lands.
+     ═══════════════════════════════════════════════════════════════════════ -->
+<section class="band void" id="alone">
+  <div class="inner">
+    <div class="chrome" style="border-bottom-color:var(--bd-dark)"><span class="label">Why</span><span class="label">02</span></div>
+    <div class="head">
+      <h2 class="reveal">Too much happens alone.</h2>
+      <p class="lead reveal" style="margin-top:26px;max-width:52ch;color:rgba(240,232,210,.72)">
+        Somewhere, someone has already found the way forward.
+        The scientist who needs it is working by herself.
+      </p>
+    </div>
+    <div class="fig-scroll reveal" style="margin-top:clamp(2.5rem,5vw,3.5rem)">
+      <canvas class="fig fig--wide" data-viz="labs" data-fixed width="1680" height="430"></canvas>
+    </div>
+    <h2 class="reveal r-turn" style="margin-top:clamp(2rem,4vw,3rem);color:var(--accent)">You&rsquo;re not alone anymore.</h2>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     04 — THE AMBITION. One line, no numbers, and the picture.
+     ═══════════════════════════════════════════════════════════════════════ -->
+<section class="band void" id="ambition">
+  <div class="inner">
+    <h1 class="reveal" style="max-width:22ch">We&rsquo;re building the world&rsquo;s biggest team of scientists<span style="color:var(--accent)">.</span></h1>
+    <div class="fig-scroll reveal r-late" style="margin-top:clamp(2rem,4vw,3rem)">
+      <canvas class="fig fig--wide" data-viz="world" data-fixed width="1680" height="600"></canvas>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     05 — PRODUCT. A world of workflows, narrowed to yours. Drawn, not
+     described: three givens cut the field and one survivor is recommended.
+     ═══════════════════════════════════════════════════════════════════════ -->
+<section class="band dark" id="product">
+  <div class="inner">
+    <div class="chrome"><span class="label">co-science</span><span class="label">03</span></div>
+    <div class="head">
+      <h2 class="reveal">A world of workflows. <em>Narrowed to yours.</em></h2>
+    </div>
+    <div class="fig-scroll reveal" style="margin-top:clamp(2.5rem,5vw,3.5rem)">
+      <canvas class="fig fig--wide" data-viz="exchange" data-fixed width="1640" height="600"></canvas>
+    </div>
+    <div class="footband" style="flex-wrap:wrap;align-items:center">
+      <span class="pull">No proprietary data leaves the lab.</span>
+      <span class="pull" style="color:var(--accent);font-size:clamp(1.1rem,2vw,1.6rem)">Seeded by every scientist using co-science.</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     06 — THE SAME DANCE. Why a workflow travels between fields. One field,
+     two parameter regimes, identical quiver on both halves: the arrows are
+     literally the same arrows.
+     ═══════════════════════════════════════════════════════════════════════ -->
+<section class="band dark" id="same-dance" style="min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:clamp(7rem,16vh,11rem)">
   <div class="field-cover" aria-hidden="true">
     <canvas data-viz="field-split"></canvas>
   </div>
@@ -395,166 +440,26 @@ html.settled .strike::after{transform:scaleX(1)!important;animation:none!importa
 
 
 <!-- ═══════════════════════════════════════════════════════════════════════
-     03 — THE THESIS PAYOFF. The measurement generalises, and that has a
-     consequence: findings blink on in rooms nobody is watching.
+     07 — CLOSE. The same curve, taken further. Say it, then stop.
      ═══════════════════════════════════════════════════════════════════════ -->
-<section class="band void" id="consequence">
+<section class="band dark" id="contact">
   <div class="inner">
-    <p class="lead reveal" style="max-width:52ch;color:rgba(240,232,210,.68)">
-      A flock, a foam and a sheet of skin cells all jam and flow by the same rule.
-    </p>
-    <hr class="rule reveal" style="margin-top:clamp(1.6rem,3vw,2.2rem)">
-    <p class="pull reveal" style="margin-top:clamp(1.6rem,3vw,2rem);font-size:clamp(1.6rem,3.6vw,3rem);max-width:24ch;line-height:1.18">
-      So the answer to your problem is probably already sitting in
-      <em>somebody else's data</em>.
-    </p>
-  </div>
-</section>
-
-
-<!-- ═══════════════════════════════════════════════════════════════════════
-     04 — THE HUMAN HEURISTIC. The other half. 03 says the data exists
-     somewhere; this says the judgment does too, and was never written down.
-     ═══════════════════════════════════════════════════════════════════════ -->
-<section class="band dark" id="judgment">
-  <div class="inner">
-    <div class="chrome"><span class="label">The other half</span><span class="label">02</span></div>
     <div class="head">
-      <h2 class="reveal" style="max-width:20ch">And in somebody's head.</h2>
-      <p class="lead muted reveal" style="margin-top:28px;max-width:52ch">
-        What makes an expert is the judgment about what to run next. It never makes it into the paper.
-      </p>
-    </div>
-    <div class="fig-scroll reveal" style="margin-top:clamp(2.5rem,5vw,4rem)">
-      <canvas class="fig" data-viz="heuristics" data-aspect="4" style="min-width:680px"></canvas>
-    </div>
-    <div class="footband">
-      <span class="pull">Now imagine <em>all of them</em> looking at your data.</span>
-    </div>
-  </div>
-</section>
-
-
-<!-- ═══════════════════════════════════════════════════════════════════════
-     05 — WHY NOW. Better information already turned this curve once, and the
-     three facts beside the chart say why the next increment has to come from
-     expertise rather than headcount.
-     ═══════════════════════════════════════════════════════════════════════ -->
-<section class="band dark" id="why-now">
-  <div class="inner">
-    <div class="chrome"><span class="label">Why now</span><span class="label">03</span></div>
-    <div class="head">
-      <div class="kicker reveal">Eroom's law, and what broke it</div>
-      <h2 class="reveal" style="margin-top:18px">Better information already broke the curve once.</h2>
+      <h2 class="reveal">More discovery. <em>Together.</em></h2>
     </div>
     <div class="fig-scroll reveal" style="margin-top:clamp(2.5rem,5vw,3.5rem)">
-      <canvas class="fig fig--fixed" data-viz="eroom" data-fixed width="1020" height="452"></canvas>
-    </div>
-    <div class="row reveal" style="margin-top:clamp(2.5rem,5vw,3.5rem)">
-      <div class="col cell">
-        <div class="stat" style="font-size:clamp(2rem,3.6vw,2.9rem)">1000&times;</div>
-        <p class="body muted" style="margin-top:2px">cheaper per cell than a decade ago</p>
-      </div>
-      <div class="col cell">
-        <div class="stat" style="font-size:clamp(2rem,3.6vw,2.9rem)">1.2%</div>
-        <p class="body muted" style="margin-top:2px">a year: how fast the people who interpret it grow</p>
-      </div>
-      <div class="col cell">
-        <div class="stat" style="font-size:clamp(2rem,3.6vw,2.9rem)">Fading</div>
-        <p class="body muted" style="margin-top:2px">the 2010s gains, as they are absorbed</p>
-      </div>
+      <canvas class="fig fig--wide" data-viz="eroom" data-fixed data-opt='{"timeline":true,"further":true,"quiet":"half"}'
+              width="1640" height="540"></canvas>
     </div>
     <div class="footband">
-      <span class="pull">What broke the law was better information. <em>That is the business we are in.</em></span>
+      <span class="pull">Better information bent this curve once. <em>That is the business we are in.</em></span>
     </div>
-  </div>
-</section>
-
-
-<!-- ═══════════════════════════════════════════════════════════════════════
-     06 — THE CATEGORY ERROR. Everyone is solving a data-analysis problem
-     when this is a modelling problem. Two words, one struck through.
-     ═══════════════════════════════════════════════════════════════════════ -->
-<section class="band void" id="the-turn" style="min-height:88svh;display:flex;flex-direction:column;justify-content:center">
-  <div class="inner">
-    <div class="display"><span class="strike">Pipelines.</span></div>
-    <div class="display after-strike" style="margin-top:14px">Models.</div>
-    <p class="lead reveal" style="margin-top:clamp(3rem,7vw,5.5rem);max-width:48ch;color:rgba(240,232,210,.62)">
-      Everyone is racing to pick the right method. That was never the problem.
-    </p>
-    <div class="footband" style="border-top-color:rgba(240,232,210,.12)">
-      <span class="pull">A report tells you what happened. <em>A model tells you what happens next.</em></span>
-    </div>
-  </div>
-</section>
-
-
-<!-- ═══════════════════════════════════════════════════════════════════════
-     07 — PRODUCT. The tonal break. Cream paper, and the terminal recording
-     as the plate: rendered text, so it stays sharp at any size.
-     ═══════════════════════════════════════════════════════════════════════ -->
-<section class="band cream" id="product">
-  <div class="inner">
-    <div class="chrome"><span class="label">The product</span><span class="label">04</span></div>
-    <div class="head">
-      <h2 class="reveal">The AI co-scientist that builds the model.</h2>
-      <p class="lead reveal" style="margin-top:26px;max-width:56ch;color:var(--ink-dark-2)">
-        Drop your data in. It reads the actual geometry and constructs a living, simulatable
-        model of your system. Perturb it. Ask it what to run next. Prove it wrong.
-      </p>
-    </div>
-    <div class="row reveal" style="margin-top:clamp(2.5rem,5vw,3.5rem)">
-      <div class="col cell">
-        <h3>The wrong analyses are ruled out on day one</h3>
-        <p class="body muted" style="margin-top:12px">Shape constrains behaviour. Get the geometry right and most of the methods that could not have worked are gone before you run one.</p>
-      </div>
-      <div class="col cell">
-        <h3>Weeks to an afternoon</h3>
-        <p class="body muted" style="margin-top:12px">The judgment about what to run next arrives with the data, not three meetings later.</p>
-      </div>
-      <div class="col cell">
-        <h3>Your data never leaves your machine</h3>
-        <p class="body muted" style="margin-top:12px">What travels is the geometry.</p>
-      </div>
-    </div>
-    <!-- THE PRODUCT PLATE goes here — the terminal recording, once the rename
-         has landed and it can be re-captured. Drop it straight back in as:
-
-           <img class="demo reveal" src="assets/demo.gif" width="1680" height="640"
-                loading="lazy"
-                alt="A session: fit a model to the data, perturb it, and ask what to run next.">
-
-         The .demo rule is still in the stylesheet, so nothing else has to
-         change. Set width/height to the file's real pixel size — the earlier
-         capture was 1680x640, and declaring the wrong ratio renders it
-         stretched. If it lands as a video rather than a gif, .demo styles a
-         <video> the same way. -->
-    <div class="footband">
-      <span class="pull">A small solution space is one you can map. <em>A map shows you what nature hasn't built yet.</em></span>
-    </div>
-  </div>
-</section>
-
-
-<!-- ═══════════════════════════════════════════════════════════════════════
-     08 — CLOSE. Chromeless. Say it, then stop.
-     ═══════════════════════════════════════════════════════════════════════ -->
-<section class="band dark" id="contact" style="min-height:84svh;display:flex;flex-direction:column;justify-content:center">
-  <div class="field-cover" aria-hidden="true">
-    <canvas data-viz="field-split" data-opt='{"quiver":false,"flock":620}' style="opacity:.22"></canvas>
-  </div>
-  <div class="scrim scrim-soft" aria-hidden="true"></div>
-  <div class="inner">
-    <h2 class="reveal" style="font-size:clamp(2.2rem,5.6vw,4.4rem)">Nature repeats her best ideas.</h2>
-    <h2 class="reveal" style="font-size:clamp(2.2rem,5.6vw,4.4rem);color:var(--accent);margin-top:clamp(1rem,2vw,1.9rem)">We find yours.</h2>
     <p class="reveal" style="margin-top:clamp(3rem,7vw,5rem)">
       <a class="lead" href="mailto:cesar.valdez@mila.quebec" style="font-family:var(--f-mono);letter-spacing:.02em">cesar.valdez@mila.quebec</a>
     </p>
-  </div>
-  <div class="inner" style="margin-top:clamp(3.5rem,8vw,6rem)">
-    <div class="footband" style="margin-top:0">
+    <div class="footband" style="margin-top:clamp(3.5rem,8vw,6rem)">
       <span class="label">Manifoldwerks</span>
-      <span class="label">In use in labs at Yale and Mila</span>
+      <span class="label">co-science</span>
     </div>
   </div>
 </section>
@@ -576,6 +481,8 @@ const VIZ = {};
 const REDUCE = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 /* ?t=<seconds> freezes every visual at a settled moment. Used for stills,
    PDF export and visual checks; zero while presenting. */
+/* set around printing, so transparent figures do not flatten onto white */
+let PRINTING = false;
 const TOFF = parseFloat(new URLSearchParams(location.search).get('t') || '0') || 0;
 
 /* deterministic PRNG — the composition is identical on every load */
@@ -768,10 +675,48 @@ VIZ['field-split'] = function(cv){
   };
 };
 
+/* =========================================================================
+   6. EROOM'S LAW, AND THE BREAK
+   -------------------------------------------------------------------------
+   New molecular entities approved per $1bn of inflation-adjusted R&D.
+
+   Two sourced claims, drawn as one line:
+
+     1950-2010  Scannell et al., Nat Rev Drug Discov 11, 191-200 (2012).
+                Approvals per dollar halved roughly every nine years. On a
+                log axis that relationship is a straight line, which is the
+                finding — this is NOT a re-digitisation of their scatter.
+
+     2010-2018  Ringel, Scannell, Baedeker & Schulze, Nat Rev Drug Discov 19,
+                833-834 (2020), "Breaking Eroom's Law". The trend changed
+                around 2010, reaching an additional 0.7 NME launches per $bn
+                per year by 2018 (P < 1.5e-10). The dashed line continues the
+                old trend so the gap between them is the claim.
+
+   The inflection is annotated with the detail that does the work in the
+   room: the original law was published with data only up to 2010.
+   ========================================================================= */
 VIZ['eroom'] = function(cv){
   const W = cv.width, H = cv.height, ctx = cv.getContext('2d');
+  /* decline:true stops the visual at the sixty-year fall — no counterfactual,
+     no turn, no annotation. It used to open the deck; both showings in the
+     arc now draw the full figure, and only the close adds further:true.
+     Kept as an option. */
+  const opt = JSON.parse(cv.dataset.opt || '{}');
+  const DECLINE = opt.decline === true;
+  /* further:true is the closing slide only: after the turn lands, a dotted
+     line leaves the last data point and keeps climbing. */
+  const FURTHER = opt.further === true && !DECLINE;
+  const TIMELINE = opt.timeline === true || FURTHER;
+  /* quiet:true is the opening slide — the line, the dots and the axis, and no
+     text on the plot at all. A pitch reviewer found the chart too dense to
+     read live, and every annotation on it is something the presenter says out
+     loud anyway. quiet:'half' keeps the numbers the close argues from (+0.7,
+     the present marker) and drops only the publication label. */
+  const QUIET = opt.quiet === true;
+  const HALF  = QUIET || opt.quiet === 'half';
   const L = 104, R = W - 150, T = 78, B = H - 78;
-  const X0 = 1950, X1 = 2020, XEND = 2018, XBREAK = 2010;
+  const X0 = 1950, X1 = TIMELINE ? 2030 : 2020, XEND = 2018, XBREAK = 2010;
   const Y0 = 0.1, Y1 = 100;
 
   const px = yr  => L + (yr - X0)/(X1 - X0) * (R - L);
@@ -787,10 +732,10 @@ VIZ['eroom'] = function(cv){
       : trend(yr) + GAIN * smoothstep(XBREAK, XEND, yr);
 
   return {
-    printAt: 6.4,                    /* after the turn and its label land */
+    printAt: DECLINE ? 2.9 : TIMELINE ? 8.6 : 6.4,  /* after the last mark lands */
     reset(){ ctx.clearRect(0,0,W,H); },
     frame(el){
-      const t = REDUCE ? 8 : el;
+      const t = REDUCE ? 9 : el;
       ctx.clearRect(0,0,W,H);
       ctx.fillStyle = C.groundAlt; ctx.fillRect(0,0,W,H);
 
@@ -801,7 +746,7 @@ VIZ['eroom'] = function(cv){
         const y = py(val);
         ctx.strokeStyle = rgba(C.cream, 0.09); ctx.lineWidth = 1;
         ctx.beginPath(); ctx.moveTo(L, y); ctx.lineTo(R, y); ctx.stroke();
-        ctx.fillStyle = rgba(C.cream, 0.42);
+        ctx.fillStyle = rgba(C.cream, 0.60);
         ctx.fillText(val < 1 ? '0.1' : String(val), L - 16, y);
       }
       ctx.textAlign = 'center'; ctx.textBaseline = 'top';
@@ -811,7 +756,7 @@ VIZ['eroom'] = function(cv){
         const x = px(yr);
         ctx.strokeStyle = rgba(C.cream, 0.20);
         ctx.beginPath(); ctx.moveTo(x, B); ctx.lineTo(x, B + 7); ctx.stroke();
-        ctx.fillStyle = rgba(C.cream, 0.42);
+        ctx.fillStyle = rgba(C.cream, 0.60);
         ctx.fillText(String(yr), x, B + 16);
       }
 
@@ -828,7 +773,7 @@ VIZ['eroom'] = function(cv){
       ctx.stroke();
 
       /* --- the counterfactual: the old trend, continued --- */
-      const gGhost = REDUCE ? 1 : Math.max(0, Math.min(1, (t - 2.9)/1.0));
+      const gGhost = DECLINE ? 0 : REDUCE ? 1 : Math.max(0, Math.min(1, (t - 2.9)/1.0));
       if(gGhost > 0){
         ctx.save();
         ctx.setLineDash([7, 8]);
@@ -844,7 +789,7 @@ VIZ['eroom'] = function(cv){
       }
 
       /* --- and the turn --- */
-      const gTurn = REDUCE ? 1 : Math.max(0, Math.min(1, (t - 3.3)/1.4));
+      const gTurn = DECLINE ? 0 : REDUCE ? 1 : Math.max(0, Math.min(1, (t - 3.3)/1.4));
       if(gTurn > 0){
         ctx.strokeStyle = rgba(C.orange, 1); ctx.lineWidth = 2.5;
         ctx.beginPath();
@@ -856,22 +801,26 @@ VIZ['eroom'] = function(cv){
       }
 
       /* --- the inflection, and the detail that wins the argument --- */
-      const gMark = REDUCE ? 1 : Math.max(0, Math.min(1, (t - 2.5)/0.7));
+      const gMark = DECLINE ? 0 : REDUCE ? 1 : Math.max(0, Math.min(1, (t - 2.5)/0.7));
       if(gMark > 0){
         const bx = px(XBREAK);
-        ctx.save();
-        ctx.setLineDash([3, 6]);
-        ctx.strokeStyle = rgba(C.cream, 0.30 * gMark); ctx.lineWidth = 1;
-        ctx.beginPath(); ctx.moveTo(bx, T + 44); ctx.lineTo(bx, py(trend(XBREAK)) - 12); ctx.stroke();
-        ctx.restore();
+        if(!HALF){
+          ctx.save();
+          ctx.setLineDash([3, 6]);
+          ctx.strokeStyle = rgba(C.cream, 0.30 * gMark); ctx.lineWidth = 1;
+          ctx.beginPath(); ctx.moveTo(bx, T + 44); ctx.lineTo(bx, py(trend(XBREAK)) - 12); ctx.stroke();
+          ctx.restore();
+        }
         ctx.fillStyle = rgba(C.orange, gMark);
         ctx.beginPath(); ctx.arc(bx, py(actual(XBREAK)), 5, 0, 6.2832); ctx.fill();
-        ctx.font = '400 15px "DM Mono", monospace';
-        ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
-        ctx.fillStyle = rgba(C.cream, 0.72 * gMark);
-        ctx.fillText("EROOM'S LAW PUBLISHED", bx, T + 26);
-        ctx.fillStyle = rgba(C.cream, 0.44 * gMark);
-        ctx.fillText('WITH DATA UP TO 2010', bx, T + 46);
+        if(!HALF){
+          ctx.font = '400 15px "DM Mono", monospace';
+          ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+          ctx.fillStyle = rgba(C.cream, 0.72 * gMark);
+          ctx.fillText("EROOM'S LAW PUBLISHED", bx, T + 26);
+          ctx.fillStyle = rgba(C.cream, 0.44 * gMark);
+          ctx.fillText('WITH DATA UP TO 2010', bx, T + 46);
+        }
       }
 
       /* --- the gap between the two lines, said once --- */
@@ -881,119 +830,661 @@ VIZ['eroom'] = function(cv){
           const ex = px(XEND), ey = py(actual(XEND));
           ctx.fillStyle = rgba(C.orange, fade);
           ctx.beginPath(); ctx.arc(ex, ey, 5, 0, 6.2832); ctx.fill();
-          ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
-          ctx.font = '700 30px "Bricolage Grotesque", sans-serif';
-          ctx.fillStyle = rgba(C.cream, fade);
-          ctx.fillText('+0.7', ex + 18, ey - 12);
-          ctx.font = '400 15px "DM Mono", monospace';
-          ctx.fillStyle = rgba(C.cream, fade*0.58);
-          ctx.fillText('NEW MOLECULAR', ex + 18, ey + 10);
-          ctx.fillText('ENTITIES PER $BN,', ex + 18, ey + 30);
-          ctx.fillText('BY 2018', ex + 18, ey + 50);
+          if(!QUIET){
+            ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+            ctx.font = '700 30px "Bricolage Grotesque", sans-serif';
+            ctx.fillStyle = rgba(C.cream, fade);
+            /* on the close the dotted line leaves up and to the right, so the
+               label drops into the gap it describes, between the two line ends */
+            const ly = TIMELINE ? (ey + py(trend(XEND)))/2 + 4 : ey - 12;
+            ctx.fillText('+0.7', ex + 18, ly);
+            ctx.font = '400 15px "DM Mono", monospace';
+            ctx.fillStyle = rgba(C.cream, fade*0.58);
+            ctx.fillText('NEW MOLECULAR', ex + 18, ly + 22);
+            ctx.fillText('ENTITIES PER $BN,', ex + 18, ly + 42);
+            ctx.fillText('BY 2018', ex + 18, ly + 62);
+          }
+        }
+      }
+
+      /* Both bookends share an explicitly illustrative continuation to 2030.
+         Hold the 2018 value: no invented present-day measurements or decay.
+         Only the close adds the ambition from the present marker. */
+      if(TIMELINE && gTurn >= 1){
+        const X26 = 2026, XFAR = 2030;
+        const V18 = actual(XEND), V26 = V18;
+        const fadeOut = yr => V18;
+        const rise = yr => V26 * Math.pow(1.28, yr - X26);
+        const dotted = (from, to, f, g, color = C.orange) => {
+          if(g <= 0) return;
+          ctx.save();
+          ctx.setLineDash([1, 9]); ctx.lineCap = 'round';
+          ctx.strokeStyle = rgba(color, 0.75); ctx.lineWidth = 3.2;
+          ctx.beginPath();
+          const end = from + (to - from) * g;
+          for(let yr = from; yr <= end + 1e-6; yr += 0.2){
+            const x = px(yr), y = py(f(yr));
+            yr === from ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+          }
+          ctx.stroke(); ctx.restore();
+        };
+        /* 2018 -> 2030: illustrative hold, identical on both slides */
+        dotted(XEND, XFAR, fadeOut, REDUCE ? 1 : Math.max(0, Math.min(1, (t - 5.6)/0.7)), C.cream);
+        ctx.font = '400 14px "DM Mono", monospace';
+        ctx.textAlign = 'right'; ctx.textBaseline = 'alphabetic';
+        ctx.fillStyle = rgba(C.cream, 0.60);
+        ctx.fillText('2018–2030: ILLUSTRATIVE HOLD', R, T + 85);
+        /* 2026: us */
+        const gWe = REDUCE ? 1 : Math.max(0, Math.min(1, (t - 6.3)/0.4));
+        if(gWe > 0){
+          const wx = px(X26), wy = py(V26);
+          if(!QUIET){
+            ctx.save(); ctx.setLineDash([3, 6]);
+            ctx.strokeStyle = rgba(C.cream, 0.30 * gWe); ctx.lineWidth = 1;
+            ctx.beginPath(); ctx.moveTo(wx, wy - 14); ctx.lineTo(wx, T + 56); ctx.stroke();
+            ctx.restore();
+          }
+          ctx.fillStyle = rgba(C.orange, gWe);
+          ctx.beginPath(); ctx.arc(wx, wy, 5, 0, 6.2832); ctx.fill();
+          if(!QUIET){
+            ctx.font = '400 15px "DM Mono", monospace';
+            ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+            ctx.fillStyle = rgba(C.cream, 0.80 * gWe);
+            ctx.fillText('PRESENT', wx, T + 38);
+            ctx.fillStyle = rgba(C.cream, 0.50 * gWe);
+            ctx.fillText('2026', wx, T + 18);
+          }
+        }
+        /* 2026 onward: the part we are here to draw */
+        const gUp = !FURTHER ? 0 : REDUCE ? 1 : Math.max(0, Math.min(1, (t - 6.7)/1.1));
+        dotted(X26, XFAR, rise, gUp);
+        if(gUp >= 1){
+          const lf = REDUCE ? 1 : Math.max(0, Math.min(1, (t - 7.8)/0.5));
+          if(lf > 0){
+            const x2 = px(XFAR), y2 = py(rise(XFAR));
+            const x1 = px(XFAR - 0.6), y1 = py(rise(XFAR - 0.6));
+            const dx = x2 - x1, dy = y2 - y1, m = Math.hypot(dx, dy);
+            const ux = dx/m, uy = dy/m, hl = 15, hw = 7;
+            ctx.fillStyle = rgba(C.orange, 0.95 * lf);
+            ctx.beginPath();
+            ctx.moveTo(x2 + ux*4, y2 + uy*4);
+            ctx.lineTo(x2 - ux*hl - uy*hw, y2 - uy*hl + ux*hw);
+            ctx.lineTo(x2 - ux*hl + uy*hw, y2 - uy*hl - ux*hw);
+            ctx.closePath(); ctx.fill();
+            ctx.font = '400 15px "DM Mono", monospace';
+            ctx.textAlign = 'right'; ctx.textBaseline = 'alphabetic';
+            ctx.fillStyle = rgba(C.cream, 0.72 * lf);
+            ctx.fillText('OUR AMBITION', x2 - 22, y2 - 12);
+          }
         }
       }
 
       /* --- title and sources. One series, so no legend box. --- */
       ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
       ctx.font = '400 17px "DM Mono", monospace';
-      ctx.fillStyle = rgba(C.cream, 0.62);
-      ctx.fillText('NEW MOLECULAR ENTITIES PER $1BN R&D, INFLATION-ADJUSTED', L - 44, 38);
+      ctx.fillStyle = rgba(C.cream, 0.80);
+      ctx.fillText(opt.title || 'NEW MOLECULAR ENTITIES PER $1BN R&D, INFLATION-ADJUSTED', L - 44, 38);
       ctx.font = '400 14px "DM Sans", sans-serif';
-      ctx.fillStyle = rgba(C.cream, 0.34);
-      ctx.fillText('Scannell et al., Nat Rev Drug Discov 2012 (decline) · Ringel, Scannell, Baedeker & Schulze, Nat Rev Drug Discov 2020 (the break)',
-                   L - 44, H - 26);
+      ctx.fillStyle = rgba(C.cream, 0.52);
+      /* the opening slide withholds the turn, so it must not cite it — the
+         source line would give away the answer the slide is asking for */
+      ctx.fillText(DECLINE
+        ? 'Scannell, Blanckley, Boldon & Warrington, Nat Rev Drug Discov 2012'
+        : 'Scannell et al., Nat Rev Drug Discov 2012 (decline) · Ringel, Scannell, Baedeker & Schulze, Nat Rev Drug Discov 2020 (the break)',
+        L - 44, H - 26);
     }
   };
 };
 
-VIZ['heuristics'] = function(cv){
+/* =========================================================================
+   7. LABS  —  "already sitting in somebody else's data"
+   -------------------------------------------------------------------------
+   A street of dark lab buildings. Most windows never light. A handful blink
+   briefly and go out again — findings that surface in one lab and are seen
+   by nobody. One window keeps returning: dim, irregular, never steady, and
+   never quite off. That one is labelled.
+
+   The flicker is deterministic (a fixed phase per window, no randomness at
+   runtime) so the composition is identical on every run and in every export.
+   ========================================================================= */
+VIZ['labs'] = function(cv){
   const W = cv.width, H = cv.height, ctx = cv.getContext('2d');
-  const COLS = 9, ROWS = 3, N = COLS * ROWS;
-  const cw = W / COLS, ch = H / ROWS;
-  const rnd = mkRnd(778899);
+  const rnd = mkRnd(515151);
 
-  /* each analyst is a root-to-leaf route through three binary choices */
-  const PEOPLE = [];
-  for(let i = 0; i < N; i++){
-    PEOPLE.push({
-      route: [rnd() < 0.5 ? 0 : 1, rnd() < 0.5 ? 0 : 1, rnd() < 0.5 ? 0 : 1],
-      lag:   rnd()
-    });
-  }
-  /* the ones whose data had your shape. Fixed, not random, so the same
-     analysts light every run. */
-  const MATCHED = new Set([3, 7, 11, 14, 20, 24]);
-
-  /* node positions inside one cell, three levels deep */
-  function nodes(cx, cy, w, h){
-    const lv = [[0], [-1, 1], [-1.7, -0.6, 0.6, 1.7]];
-    const out = [];
-    for(let d = 0; d < 3; d++){
-      const y = cy + h * (0.34 - d * 0.24);
-      out.push(lv[d].map(o => [cx + o * w * 0.16, y]));
+  /* Four application areas, with room for projector-readable labels. */
+  const BASE = H - 62;
+  const NAMES = ['ONCOLOGY', 'IMMUNOLOGY', 'NEUROSCIENCE', 'CELL THERAPIES'];
+  const HEIGHTS = [254, 318, 270, 296];
+  const slot = W / NAMES.length;
+  const B = NAMES.map((name, i) => ({
+    x: slot * (i + 0.5) - 116, w: 232, h: HEIGHTS[i],
+    cols: 6, rows: Math.floor((HEIGHTS[i] - 34) / 32), name, win: []
+  }));
+  /* --- windows --- */
+  const WIN = [];
+  for(const b of B){
+    const pad = 16;
+    const gw = (b.w - pad*2) / b.cols, gh = (b.h - 30) / b.rows;
+    for(let r=0;r<b.rows;r++) for(let c=0;c<b.cols;c++){
+      const w = {
+        x: b.x + pad + c*gw + 2,
+        y: BASE - b.h + 20 + r*gh,
+        w: gw - 7, h: Math.min(15, gh - 8),
+        phase: rnd()*6.2832,
+        rate: 0.22 + rnd()*0.5,
+        /* a small minority ever light at all */
+        live: rnd() < 0.13
+      };
+      b.win.push(w); WIN.push(w);
     }
-    return out;
+  }
+  /* --- the one that matters: a mid-height window, right of centre --- */
+  const target = B[Math.floor(B.length*0.62)];
+  const HERO = target.win[Math.floor(target.win.length*0.42)];
+  HERO.live = false;
+
+  /* Labels name initial application areas, not customers or modalities. */
+
+  /* --- distance from the one window that never goes fully out, so the
+         street lights outward from it: the field joining her, in order. --- */
+  const hx0 = HERO.x + HERO.w/2, hy0 = HERO.y + HERO.h/2;
+  let maxD = 1;
+  for(const w of WIN){ w.d = Math.hypot(w.x + w.w/2 - hx0, w.y + w.h/2 - hy0); maxD = Math.max(maxD, w.d); }
+  for(const w of WIN) w.d /= maxD;
+
+  return {
+    printAt: 7.4,                    /* the street lit, the turn landed */
+    reset(){ ctx.clearRect(0,0,W,H); },
+    frame(el){
+      const t = REDUCE ? 7.5 : el;
+      ctx.clearRect(0,0,W,H);
+      ctx.fillStyle = '#0A0F0C'; ctx.fillRect(0,0,W,H);   /* the void ground */
+
+      /* --- buildings: outline only, no fill. The street stays dark. --- */
+      for(const b of B){
+        ctx.strokeStyle = rgba(C.cream, 0.26);
+        ctx.lineWidth = 1.5;
+        ctx.strokeRect(b.x, BASE - b.h, b.w, b.h);
+      }
+      /* ground line */
+      ctx.strokeStyle = rgba(C.cream, 0.34); ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(0, BASE); ctx.lineTo(W, BASE); ctx.stroke();
+
+      /* --- the street lights, outward from the one window that never went
+             fully out. This is the old room slide folded in: dark towers,
+             then a whole field lit, and the turn line arrives with it. --- */
+      const fill = REDUCE ? 1 : smoothstep(4.6, 7.0, t);
+
+      /* --- ordinary windows: a brief blink, then dark again --- */
+      for(const w of WIN){
+        if(w === HERO) continue;
+        let a = 0.075;
+        if(w.live){
+          const s = Math.sin(t*w.rate + w.phase);
+          if(s > 0.86) a = 0.075 + (s - 0.86)/0.14 * 0.42;   /* short, low blink */
+        }
+        const on = fill > 0 ? smoothstep(w.d, w.d + 0.16, fill) : 0;
+        if(on > 0) a = Math.max(a, on * (0.30 + 0.16 * (0.5 + 0.5*Math.sin(t*w.rate + w.phase))));
+        ctx.fillStyle = rgba(C.cream, a);
+        ctx.fillRect(w.x, w.y, w.w, w.h);
+        /* warmth added rather than painted, so a lit street reads as one glow
+           instead of a grid of squares */
+        if(on > 0.02){
+          ctx.globalCompositeOperation = 'lighter';
+          ctx.fillStyle = rgba(C.orange, on * 0.26);
+          ctx.fillRect(w.x - 1, w.y - 1, w.w + 2, w.h + 2);
+          ctx.globalCompositeOperation = 'source-over';
+        }
+      }
+
+      /* --- the discovery: dim, latent, intermittent, never fully out --- */
+      const breathe = 0.34 + 0.20*Math.sin(t*0.75);
+      const blip    = Math.pow(Math.max(0, Math.sin(t*1.9 + 0.6)), 9) * 0.42;
+      const lull    = Math.sin(t*0.31) < -0.72 ? 0.35 : 1;    /* it goes quiet, then returns */
+      const aH      = Math.min(1, (breathe + blip) * lull);
+
+      const gx = HERO.x - HERO.w*0.20, gy = HERO.y - HERO.h*0.24;
+      const gw = HERO.w*1.40, gh = HERO.h*1.48;
+      ctx.save();
+      ctx.shadowColor = rgba(C.orange, aH * 0.9);
+      ctx.shadowBlur = 34;
+      ctx.fillStyle = rgba(C.orange, aH);
+      ctx.fillRect(gx, gy, gw, gh);
+      ctx.restore();
+
+      /* --- leader and label, drawn in canvas so they cannot drift --- */
+      const lx = HERO.x + HERO.w/2, ly = HERO.y - HERO.h*0.24 - 8;
+      const lift = REDUCE ? 1 : Math.max(0, Math.min(1, (el - 1.4)/0.8));
+
+      /* One large, high-contrast label directly beneath each building. */
+      if(lift > 0){
+        ctx.font = '500 28px "DM Mono", monospace';
+        ctx.letterSpacing = '0px';
+        ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+        for(const b of B){
+          ctx.fillStyle = rgba(C.cream, 0.90 * lift);
+          ctx.fillText(b.name, b.x + b.w/2, BASE + 42);
+        }
+      }
+      if(lift > 0){
+        const topY = BASE - target.h - 54;
+        ctx.strokeStyle = rgba(C.cream, 0.42 * lift); ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(lx, ly); ctx.lineTo(lx, topY + 10); ctx.stroke();
+        ctx.font = '400 17px "DM Mono", monospace';
+        ctx.textAlign = 'center';
+        ctx.fillStyle = rgba(C.cream, 0.88 * lift);
+        ctx.fillText('YOUR NEXT DISCOVERY', lx, topY);
+      }
+    }
+  };
+};
+
+
+/* =========================================================================
+   WORLD  —  the ambition: the field, on one team
+   -------------------------------------------------------------------------
+   The four named areas are the ones the product slide uses, so a room that
+   sees them here recognises them there. Everything beyond them is unnamed on
+   purpose: the claim is the size of the team, not a list of customers.
+   ========================================================================= */
+VIZ['world'] = function(cv){
+  const W = cv.width, H = cv.height, ctx = cv.getContext('2d');
+  const rnd = mkRnd(4242);
+  const CX = W / 2, CY = H / 2 + 6;
+  /* Node geometry is COPIED from VIZ['exchange'] — same radius, same figure
+     scale, same glyph pair, same label offsets — so the room recognises this
+     picture when it turns up inside the product a slide later. Change one,
+     change both. */
+  const R = 70;
+  const NAMED = [
+    {x: CX - 210, y: CY - 130, name: 'ONCOLOGY'      },
+    {x: CX + 210, y: CY - 130, name: 'IMMUNOLOGY'    },
+    {x: CX - 210, y: CY + 130, name: 'NEUROSCIENCE'  },
+    {x: CX + 210, y: CY + 130, name: 'CELL THERAPIES'}
+  ];
+  /* everyone else: deterministic, well clear of the labelled four */
+  const FIELD = Array.from({length: 38}, (_, i) => {
+    const a = (i / 38) * 6.2832 + rnd() * 0.09;
+    let rx = 470 + rnd() * 300, ry = 168 + rnd() * 66;
+    const rad = 9 + rnd() * 7;
+    let x = CX + Math.cos(a) * rx, y = CY + Math.sin(a) * ry;
+    /* a small lab sitting on a labelled one reads as a mistake, so push it out */
+    for(let guard = 0; guard < 6; guard++){
+      const clash = NAMED.some(n => {
+        const ly = n.y < CY ? n.y - 96 : n.y + 92;       /* where its label sits */
+        return Math.hypot(n.x - x, n.y - y) < R + 64 ||
+               (Math.abs(n.x - x) < 150 && Math.abs(ly - y) < 34);
+      });
+      if(!clash) break;
+      rx += 90; ry += 34;
+      x = CX + Math.cos(a) * rx; y = CY + Math.sin(a) * ry;
+    }
+    /* nothing may hang off the edge of the figure */
+    y = Math.max(rad + 10, Math.min(H - rad - 10, y));
+    x = Math.max(rad + 10, Math.min(W - rad - 10, x));
+    return {x, y, r: rad, at: i / 38};
+  });
+
+  function shape(kind, cx, cy, s){
+    ctx.beginPath();
+    if(kind === 'tri'){
+      ctx.moveTo(cx, cy - s); ctx.lineTo(cx + s * 0.92, cy + s * 0.72);
+      ctx.lineTo(cx - s * 0.92, cy + s * 0.72); ctx.closePath();
+    } else { hexPath(ctx, cx, cy, s * 0.95); }
+    ctx.stroke();
+  }
+  function figure(cx, cy, s){
+    ctx.beginPath(); ctx.arc(cx, cy - 30 * s, 24 * s, 0, 6.2832); ctx.stroke();
+    ctx.beginPath(); ctx.arc(cx, cy + 60 * s, 52 * s, Math.PI * 1.18, Math.PI * 1.82); ctx.stroke();
   }
 
   return {
-    printAt: 5.4,
+    printAt: 5.2,
     reset(){ ctx.clearRect(0, 0, W, H); },
     frame(el){
       const t = REDUCE ? 6 : el;
+      /* transparent on screen so the slide's own ground shows; painted only
+         for print, where a transparent canvas would flatten onto white */
       ctx.clearRect(0, 0, W, H);
-      ctx.fillStyle = C.ground; ctx.fillRect(0, 0, W, H);   /* else it prints white */
+      if(PRINTING){ ctx.fillStyle = '#0A0F0C'; ctx.fillRect(0, 0, W, H); }
+      ctx.lineJoin = ctx.lineCap = 'round';
 
-      for(let i = 0; i < N; i++){
-        const p = PEOPLE[i];
-        const cx = (i % COLS + 0.5) * cw, cy = (Math.floor(i / COLS) + 0.5) * ch;
-        const nd = nodes(cx, cy, cw, ch);
+      const core  = smoothstep(0.2, 0.9, t);   /* the middle               */
+      const named = smoothstep(0.9, 2.0, t);   /* the four we start in     */
+      const field = smoothstep(1.7, 4.3, t);   /* everyone else, outward   */
+      const warm  = smoothstep(3.2, 5.0, t);   /* the whole thing connected*/
 
-        const appear = REDUCE ? 1 : Math.max(0, Math.min(1, (t - 0.2 - p.lag * 0.9) / 0.5));
-        if(appear <= 0) continue;
-
-        /* the choices everyone faces: drawn faint, identical in every cell */
-        ctx.strokeStyle = rgba(C.cream, 0.16 * appear);
+      /* every lab past the four: the line arrives, then the lab does */
+      FIELD.forEach(f => {
+        const g = smoothstep(f.at * 0.72, f.at * 0.72 + 0.28, field);
+        if(g <= 0) return;
+        ctx.strokeStyle = rgba(C.orange, (0.10 + 0.16 * warm) * g);
         ctx.lineWidth = 1.2;
-        for(let d = 0; d < 2; d++){
-          nd[d].forEach((a, k) => {
-            ctx.beginPath();
-            ctx.moveTo(a[0], a[1]);
-            ctx.lineTo(nd[d + 1][k * 2][0], nd[d + 1][k * 2][1]);
-            ctx.moveTo(a[0], a[1]);
-            ctx.lineTo(nd[d + 1][k * 2 + 1][0], nd[d + 1][k * 2 + 1][1]);
-            ctx.stroke();
-          });
-        }
+        ctx.beginPath(); ctx.moveTo(CX, CY);
+        ctx.lineTo(CX + (f.x - CX) * g, CY + (f.y - CY) * g); ctx.stroke();
+        ctx.strokeStyle = rgba(C.cream, (0.36 + 0.24 * warm) * g); ctx.lineWidth = 1.8;
+        ctx.beginPath(); ctx.arc(f.x, f.y, f.r * g, 0, 6.2832); ctx.stroke();
+      });
 
-        /* the route this person took: that is the judgment */
-        const lit = MATCHED.has(i)
-          ? (REDUCE ? 1 : Math.max(0, Math.min(1, (t - 2.6 - (i % 5) * 0.22) / 0.5)))
-          : 0;
-        const col = lit > 0 ? C.orange : C.cream;
-        ctx.strokeStyle = rgba(col, (0.40 + 0.55 * lit) * appear);
-        ctx.lineWidth = lit > 0 ? 2.4 : 1.7;
+      /* the four named areas, drawn exactly as the product slide draws them */
+      NAMED.forEach((n, i) => {
+        const g = smoothstep(i * 0.16, i * 0.16 + 0.55, named);
+        if(g <= 0) return;
+        const dx = n.x - CX, dy = n.y - CY, m = Math.hypot(dx, dy);
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = rgba(C.orange, (0.18 + 0.62 * warm) * g);
+        ctx.beginPath(); ctx.moveTo(CX, CY);
+        ctx.lineTo(n.x - dx / m * R, n.y - dy / m * R); ctx.stroke();
+        ctx.strokeStyle = rgba(C.cream, 0.65 * g);
+        ctx.beginPath(); ctx.arc(n.x, n.y, R, 0, 6.2832); ctx.stroke();
+        ctx.lineWidth = 2.4;
+        ctx.strokeStyle = rgba(C.cream, 0.72 * g);
+        figure(n.x, n.y - 16, 0.44);
+        ctx.strokeStyle = rgba(C.orange, (0.35 + 0.6 * warm) * g);
+        shape('tri', n.x - 23, n.y + 30, 12);
+        ctx.strokeStyle = rgba(C.cream, 0.55 * g);
+        shape('hex', n.x + 23, n.y + 30, 12);
+        ctx.font = '500 20px "DM Mono", monospace';
+        ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+        ctx.fillStyle = rgba(C.cream, 0.90 * g);
+        ctx.fillText(n.name, n.x, n.y < CY ? n.y - 90 : n.y + 99);
+      });
+
+      /* the middle, as on the product slide: one point everything reaches */
+      if(core > 0){
+        ctx.fillStyle = rgba(C.orange, 0.95 * core);
+        ctx.beginPath(); ctx.arc(CX, CY, 7, 0, 6.2832); ctx.fill();
+      }
+    }
+  };
+};
+
+/* =========================================================================
+   10. EXCHANGE  —  slide "Your next experiment, with the whole field behind it"
+   -------------------------------------------------------------------------
+   Lineage: a terminal recording nobody could read, then a reviewer's sketch
+   of two labs trading a method across a gap, then this. The two-lab version
+   never said co-science was software, and captions saying so were too much
+   to read, so the left lab became the app itself.
+
+   The product, drawn rather than described. On the left, the app a
+   scientist runs on her own data: YOUR DATA on one side, NEXT EXPERIMENT on
+   the other. On the right, other labs, stacked, with the experiments they
+   have already worked through.
+
+   Two things cross the gap, one each way, on separate lanes. A summary of
+   her data goes out — drawn as her triangle — and lights the labs where the
+   same triangle has turned up before. The method that worked there comes
+   back and picks her next experiment. An earlier version showed only the
+   method crossing, which was not true: something computed from her data
+   does leave. A picture a diligent reader can catch out costs more than
+   any tangent.
+
+   Seven mono labels and nothing else to read. The options are lab glyphs
+   and blank bars: a terminal recording of the real tool was cut for being
+   unreadable at projection size, and a mock interface full of words would
+   fail the same way.
+   ========================================================================= */
+VIZ['exchange'] = function(cv){
+  const W = cv.width, H = cv.height, ctx = cv.getContext('2d');
+  const rnd = mkRnd(90210);
+
+  /* ONE WINDOW. The scientist's own half on the left, the field of candidate
+     workflows on the right. The labs network that used to sit beside this is
+     gone: the slide before carries the team, and repeating it here made the
+     room read two arguments at once. The nod to those scientists lands where
+     it actually matters — on the workflow that gets recommended. */
+  const AX0 = 2, AX1 = W - 4, AY0 = 14, AY1 = H - 14, BAR = 52, SPLIT = 556;
+  /* the three givens, one per row, labelled down the left edge */
+  const GY = [196, 322, 452];
+  const MET = [0.82, 0.44, 0.63];        /* schematic bars, not real values   */
+  /* the counter. COUNT[0] is the only sourced figure on this slide: the
+     single-cell analysis tools tracked by scRNA-tools. The reductions are
+     illustrative. Change COUNT[0] alone if our own catalogue is the number. */
+  const COUNT = [1855, 612, 88, 12];
+  const OX0 = 600, OX1 = W - 60, SLOT = OX1 - 44, OH = 42;
+  /* What survives all three cuts. Fourteen, not three: three is a shortlist
+     the expert in the room already has, and the claim is that the field is
+     bigger than anyone's repertoire. One of the fourteen is recommended. */
+  const NSURV = 12, PICK = 5, SY0 = 174, SGAP = 26;
+
+  const CLOUD = Array.from({length: 13}, () => ({
+    dx: (rnd() - 0.5) * 70, dy: (rnd() - 0.5) * 56
+  }));
+  /* The field being chosen from. Rows are illustrative; the counter carries
+     the number and no row is ever counted out loud. Fourteen of them survive
+     every cut, and they spread out into a readable list as the rest fade. */
+  const NROW = 62;
+  const CAND = Array.from({length: NROW}, (_, i) => {
+    const surv = i % Math.floor(NROW / NSURV) === 1 ? true : false;
+    return {y: 150 + (530 - 150) * i / (NROW - 1),
+            w: 150 + rnd() * 300, by: i % 3, surv};
+  });
+  /* keep exactly NSURV survivors, and give each its slot in the final list */
+  (() => {
+    let n = 0;
+    CAND.forEach(r => { if(r.surv && n < NSURV) r.slot = n++; else r.surv = false; });
+    for(let i = 0; n < NSURV && i < CAND.length; i++)
+      if(!CAND[i].surv){ CAND[i].surv = true; CAND[i].slot = n++; }
+  })();
+
+  function shape(kind, cx, cy, s){
+    ctx.beginPath();
+    if(kind === 'tri'){
+      ctx.moveTo(cx, cy - s); ctx.lineTo(cx + s * 0.92, cy + s * 0.72);
+      ctx.lineTo(cx - s * 0.92, cy + s * 0.72); ctx.closePath();
+    } else if(kind === 'rect'){
+      ctx.rect(cx - s * 0.88, cy - s * 0.68, s * 1.76, s * 1.36);
+    } else { hexPath(ctx, cx, cy, s * 0.95); }
+    ctx.stroke();
+  }
+  function figure(cx, cy, s){
+    ctx.beginPath(); ctx.arc(cx, cy - 30 * s, 24 * s, 0, 6.2832); ctx.stroke();
+    ctx.beginPath(); ctx.arc(cx, cy + 60 * s, 52 * s, Math.PI * 1.18, Math.PI * 1.82); ctx.stroke();
+  }
+  /* lab glyphs, so a row reads as "an experiment" without a word on it */
+  function glyph(kind, cx, cy){
+    ctx.beginPath();
+    if(kind === 'flask'){
+      ctx.moveTo(cx - 6, cy - 20); ctx.lineTo(cx - 6, cy - 6);
+      ctx.lineTo(cx - 18, cy + 18); ctx.lineTo(cx + 18, cy + 18);
+      ctx.lineTo(cx + 6, cy - 6); ctx.lineTo(cx + 6, cy - 20);
+      ctx.moveTo(cx - 10, cy - 20); ctx.lineTo(cx + 10, cy - 20);
+    } else if(kind === 'dish'){
+      ctx.arc(cx, cy, 22, 0, 6.2832);
+      ctx.moveTo(cx + 13, cy); ctx.arc(cx, cy, 13, 0, 6.2832);
+    } else {                                        /* a well plate */
+      ctx.rect(cx - 22, cy - 16, 44, 32);
+      for(let i = 0; i < 3; i++) for(let j = 0; j < 2; j++){
+        const x = cx - 12 + i * 12, y = cy - 6 + j * 12;
+        ctx.moveTo(x + 3.5, y); ctx.arc(x, y, 3.5, 0, 6.2832);
+      }
+    }
+    ctx.stroke();
+  }
+  function label(text, x, y, a, align, col, size){
+    ctx.font = '400 ' + (size || 17) + 'px "DM Mono", monospace';
+    ctx.letterSpacing = '2px';
+    ctx.textAlign = align || 'left'; ctx.textBaseline = 'alphabetic';
+    ctx.fillStyle = rgba(col || C.cream, a);
+    ctx.fillText(text, x, y);
+    ctx.letterSpacing = '0px';
+  }
+
+  return {
+    printAt: 9.4,
+    reset(){ ctx.clearRect(0, 0, W, H); },
+    frame(el){
+      const t = REDUCE ? 10 : el;
+      /* transparent on screen so the slide's vignette shows; painted for
+         print, where a transparent canvas flattens onto white */
+      ctx.clearRect(0, 0, W, H);
+      if(PRINTING){ ctx.fillStyle = C.ground; ctx.fillRect(0, 0, W, H); }
+      ctx.lineJoin = ctx.lineCap = 'round';
+
+      const room  = smoothstep(0.2, 1.0, t);   /* the window                   */
+      const ftype = smoothstep(1.0, 1.6, t);   /* given: what kind of file      */
+      /* each cut gets over a second of its own: the whole argument of the
+         slide is watching the field fall, and it cannot be watched fast */
+      const CULL  = [smoothstep(1.8, 3.0, t),
+                     smoothstep(4.1, 5.3, t),
+                     smoothstep(6.0, 7.2, t)];
+      const data  = smoothstep(3.0, 3.5, t);   /* given: the data itself        */
+      const calc  = smoothstep(3.5, 4.0, t);   /* what it turns out to look like*/
+      const metr  = smoothstep(5.3, 5.9, t);   /* given: the numbers            */
+      const grow  = smoothstep(7.3, 8.0, t);   /* what is left becomes readable */
+      const rec   = smoothstep(8.1, 8.9, t);   /* and where it has worked before*/
+
+      /* ---------------- the window ---------------- */
+      ctx.lineWidth = 1.5;
+      ctx.strokeStyle = rgba(C.cream, 0.40 * room);
+      ctx.strokeRect(AX0, AY0, AX1 - AX0, AY1 - AY0);
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = rgba(C.cream, 0.20 * room);
+      ctx.beginPath();
+      ctx.moveTo(AX0, AY0 + BAR); ctx.lineTo(AX1, AY0 + BAR);
+      ctx.moveTo(SPLIT, AY0 + BAR); ctx.lineTo(SPLIT, AY1);
+      ctx.stroke();
+      if(room > 0){
+        ctx.font = '500 20px "DM Mono", monospace';
+        ctx.letterSpacing = '3px';
+        ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+        ctx.fillStyle = rgba(C.cream, 0.88 * room);
+        ctx.fillText('CO-SCIENCE', AX0 + 28, AY0 + BAR / 2 + 1);
+        ctx.letterSpacing = '0px';
+        ctx.strokeStyle = rgba(C.cream, 0.70 * room); ctx.lineWidth = 2;
+        figure(AX1 - 40, AY0 + BAR / 2 + 6, 0.36);
+        /* whose window this is. It has to say a field, because the whole
+           point of the recommendation below is that it comes from another
+           one: her lab is oncology, the workflow was proven in immunology. */
+        label('ONCOLOGY LAB', AX1 - 84, AY0 + BAR / 2 + 7, 0.70 * room, 'right');
+        label('PRIVATE DATA', AX0 + 32, AY0 + BAR + 46, 0.62 * room);
+        label('CANDIDATE WORKFLOWS', SPLIT + 44, AY0 + BAR + 46, 0.82 * room);
+        /* the count, falling as each given rules the field down */
+        let left = COUNT[0];
+        for(let c = 0; c < 3; c++) left += (COUNT[c + 1] - COUNT[c]) * CULL[c];
+        ctx.font = '500 34px "DM Mono", monospace';
+        ctx.textAlign = 'right'; ctx.textBaseline = 'alphabetic';
+        ctx.fillStyle = rgba(C.orange, 0.95 * room);
+        ctx.fillText(Math.round(left).toLocaleString('en-US'), OX1, AY0 + BAR + 52);
+      }
+
+      /* ---------------- the givens ---------------- */
+      if(ftype > 0){
+        label('FILE TYPE', 32, GY[0] + 6, 0.62 * ftype);
+        const fx = 232, fy = GY[0], w = 34, h = 44, fold = 13;
+        ctx.strokeStyle = rgba(C.cream, 0.60 * ftype); ctx.lineWidth = 2;
         ctx.beginPath();
-        let idx = 0;
-        ctx.moveTo(nd[0][0][0], nd[0][0][1]);
-        for(let d = 0; d < 2; d++){
-          idx = idx * 2 + p.route[d];
-          ctx.lineTo(nd[d + 1][idx][0], nd[d + 1][idx][1]);
+        ctx.moveTo(fx - w/2, fy - h/2); ctx.lineTo(fx + w/2 - fold, fy - h/2);
+        ctx.lineTo(fx + w/2, fy - h/2 + fold); ctx.lineTo(fx + w/2, fy + h/2);
+        ctx.lineTo(fx - w/2, fy + h/2); ctx.closePath(); ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(fx + w/2 - fold, fy - h/2); ctx.lineTo(fx + w/2 - fold, fy - h/2 + fold);
+        ctx.lineTo(fx + w/2, fy - h/2 + fold); ctx.stroke();
+        label('.h5ad', fx + 38, fy + 7, 0.78 * ftype, 'left', C.orange);
+      }
+      if(data > 0){
+        label('DATA', 32, GY[1] + 6, 0.62 * data);
+        ctx.fillStyle = rgba(C.cream, 0.55 * data);
+        CLOUD.forEach(d => {
+          ctx.beginPath(); ctx.arc(216 + d.dx * 0.62, GY[1] + d.dy * 0.62, 2.6, 0, 6.2832); ctx.fill();
+        });
+      }
+      if(calc > 0){
+        ctx.strokeStyle = rgba(C.cream, 0.50 * calc); ctx.lineWidth = 2;
+        ctx.fillStyle = rgba(C.cream, 0.50 * calc);
+        arrow(ctx, 296, GY[1], 1, 0, 46 * calc, 0.34);
+        if(calc > 0.35){
+          const a = smoothstep(0.35, 1, calc);
+          ctx.strokeStyle = rgba(C.orange, 0.50 + 0.45 * a); ctx.lineWidth = 3.2;
+          shape('tri', 392, GY[1] + 5, 30 * a);
         }
+      }
+      if(metr > 0){
+        label('METRICS', 32, GY[2] + 6, 0.62 * metr);
+        const MX = 216, MW = 168;
+        MET.forEach((v, i) => {
+          const y = GY[2] - 17 + i * 17, g = smoothstep(i * 0.18, i * 0.18 + 0.5, metr);
+          if(g <= 0) return;
+          ctx.strokeStyle = rgba(C.cream, 0.20 * g); ctx.lineWidth = 5;
+          ctx.beginPath(); ctx.moveTo(MX, y); ctx.lineTo(MX + MW, y); ctx.stroke();
+          ctx.strokeStyle = rgba(C.orange, 0.85 * g);
+          ctx.beginPath(); ctx.moveTo(MX, y); ctx.lineTo(MX + MW * v * g, y); ctx.stroke();
+        });
+      }
+      /* one arrow per given, so a still says which given did which cut */
+      GY.forEach((y, i) => {
+        const g = CULL[i];
+        if(g <= 0) return;
+        ctx.strokeStyle = rgba(C.cream, 0.34 * g); ctx.lineWidth = 1.6;
+        ctx.fillStyle = rgba(C.cream, 0.34 * g);
+        arrow(ctx, SPLIT + 6, y, 1, 0, 58 * g, 0.30);
+      });
+
+      /* ---------------- the field, and what each cut takes out ------------- */
+      CAND.forEach((r, i) => {
+        const a = smoothstep(i * 0.012, i * 0.012 + 0.3, room);
+        if(a <= 0 || r.surv) return;
+        const k = CULL[r.by];
+        ctx.lineWidth = 5.5 - 3.4 * k;
+        ctx.strokeStyle = rgba(C.cream, (0.20 - 0.155 * k) * a);
+        ctx.beginPath();
+        ctx.moveTo(OX0 + 24, r.y); ctx.lineTo(OX0 + 24 + r.w * (1 - 0.45 * k), r.y);
         ctx.stroke();
-        ctx.fillStyle = rgba(col, (0.42 + 0.55 * lit) * appear);
-        ctx.beginPath();
-        ctx.arc(nd[2][idx][0], nd[2][idx][1], lit > 0 ? 4.2 : 2.8, 0, 6.2832);
-        ctx.fill();
-      }
+      });
 
-      /* say once what the lit ones are */
-      const lab = REDUCE ? 1 : Math.max(0, Math.min(1, (t - 4.0) / 0.7));
-      if(lab > 0){
-        ctx.font = '400 17px "DM Mono", monospace';
-        ctx.textAlign = 'right';
-        ctx.fillStyle = rgba(C.orange, lab);
-        ctx.fillText('WORKED DATA SHAPED LIKE YOURS', W - 6, H - 10);
-      }
+      /* ---------------- what survives, spreading into a readable list ------ */
+      CAND.forEach((r, i) => {
+        if(!r.surv) return;
+        const a = smoothstep(i * 0.012, i * 0.012 + 0.3, room);
+        if(a <= 0) return;
+        const isRec = r.slot === PICK;
+        const on = isRec ? rec : 0;
+        /* the list opens up to make room for the recommendation */
+        const shift = (r.slot < PICK ? -18 : r.slot > PICK ? 46 : 0) * rec;
+        const y = r.y + (SY0 + r.slot * SGAP + shift - r.y) * grow;
+        const h = 6 + (OH - 6) * on;
+        const g = 0.4 + 0.6 * grow;
+
+        if(on > 0){
+          ctx.fillStyle = C.ground; ctx.fillRect(OX0, y - h/2, OX1 - OX0, h);
+          ctx.fillStyle = rgba(C.orange, 0.12 * on);
+          ctx.fillRect(OX0, y - h/2, OX1 - OX0, h);
+          ctx.lineWidth = 2.4;
+          ctx.strokeStyle = rgba(C.orange, 0.30 + 0.62 * on);
+          ctx.strokeRect(OX0, y - h/2, OX1 - OX0, h);
+        }
+        /* a survivor reads as a workflow: a title bar and a shorter one under
+           it. The recommendation keeps its bars clear of its own furniture. */
+        const bx = OX0 + 24 + 200 * on;
+        ctx.fillStyle = rgba(C.cream, (on > 0 ? 0.66 : 0.46) * a * g);
+        ctx.fillRect(bx, y - (on > 0 ? 9 : 3), 250 + r.w * 0.22, 6);
+        /* only the recommendation carries a second line: twelve rows with two
+           bars each read as twenty-four rows, which undoes the count */
+        if(on > 0){
+          ctx.fillStyle = rgba(C.cream, 0.34 * a * g);
+          ctx.fillRect(bx, y + 5, 150 + r.w * 0.1, 5);
+        }
+
+        if(on > 0){
+          label('RECOMMENDED', OX0 + 18, y + 6, 0.95 * on, 'left', C.orange);
+          ctx.lineWidth = 2;
+          ctx.strokeStyle = rgba(C.orange, 0.50 + 0.45 * on);
+          glyph('plate', OX0 + 180, y);
+          ctx.strokeStyle = rgba(C.orange, 0.95 * on); ctx.lineWidth = 2.6;
+          ctx.beginPath(); ctx.arc(SLOT, y, 13, 0, 6.2832); ctx.stroke();
+          ctx.beginPath();
+          ctx.moveTo(SLOT - 6, y + 1); ctx.lineTo(SLOT - 1.5, y + 5.5);
+          ctx.lineTo(SLOT + 6.5, y - 4.5); ctx.stroke();
+          /* under it: who has already run it, and where. The nod to the team */
+          const cy = y + OH / 2 + 22;
+          ctx.fillStyle = C.ground; ctx.fillRect(OX0, cy - 15, 700, 30);
+          ctx.strokeStyle = rgba(C.cream, 0.62 * on); ctx.lineWidth = 1.7;
+          for(let k = 0; k < 3; k++) figure(OX0 + 34 + k * 32, cy + 2, 0.25);
+          label('PROVEN IN', OX0 + 140, cy + 5, 0.62 * on, 'left', C.cream, 16);
+          label('IMMUNOLOGY AND NEUROSCIENCE', OX0 + 262, cy + 5, 0.92 * on, 'left', C.orange, 16);
+        }
+      });
     }
   };
 };
@@ -1106,6 +1597,18 @@ VIZ['heuristics'] = function(cv){
       });
     }
   }
+
+  /* Printing captures every figure, not just the ones on screen, each at the
+     instant that represents it. The transparent ones paint their ground. */
+  addEventListener('afterprint', function(){ PRINTING = false; });
+  addEventListener('beforeprint', function(){
+    PRINTING = true;
+    figures.forEach(function(f){
+      var at = f.inst.printAt || 4.2;
+      f.inst.reset && f.inst.reset();
+      for(var k = 90; k >= 0; k--) f.inst.frame(at - k * 0.016);
+    });
+  });
 
   if(document.fonts && document.fonts.ready){
     document.fonts.ready.then(start, start);
