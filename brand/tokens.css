@@ -1,0 +1,51 @@
+/* mnfldwrks design tokens — mirrors project/tokens.json in the mnfldwrks design system.
+   Colour: two grounds (paper, sand), one ink, one stitched accent (cherry).
+   Dark mode is the same workshop with the lights off. */
+:root{
+  --mw-paper:#f4eee1;
+  --mw-paper-raised:#fbf8f1;
+  --mw-ink:#1f1b16;
+  --mw-ink-muted:#5c564c;
+  --mw-rule:#cfc4ae;
+  --mw-sand:#d8c9a8;
+  --mw-sand-deep:#b9a57e;
+  --mw-cherry:#a3202a;
+  --mw-cherry-deep:#7d1820;
+  --mw-patina:#3f5b4f;
+  --mw-brass:#9a7632;
+
+  --mw-font-display:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --mw-font-serif:"Newsreader",Georgia,serif;
+  --mw-font-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+
+  --mw-space-1:4px;
+  --mw-space-2:8px;
+  --mw-space-3:16px;
+  --mw-space-4:24px;
+  --mw-space-5:48px;
+  --mw-space-6:96px;
+
+  --mw-radius-0:0px;
+  --mw-radius-1:2px;
+  --mw-radius-plate:10px;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --mw-paper:#17140f;
+    --mw-paper-raised:#221e18;
+    --mw-ink:#efe6d4;
+    --mw-ink-muted:#a89f8f;
+    --mw-rule:#3a342b;
+    --mw-sand:#c9b994;
+    --mw-sand-deep:#8f7d58;
+    --mw-cherry:#e05a60;
+    --mw-cherry-deep:#b8323b;
+    --mw-patina:#7fa595;
+    --mw-brass:#c9a35a;
+  }
+}
+
+/* Type styles from the design system */
+.mw-label{font-family:var(--mw-font-mono);font-weight:600;font-size:14px;line-height:16px;letter-spacing:.01em;text-transform:lowercase}
+.mw-wordmark{font-family:var(--mw-font-display);font-weight:800;font-size:32px;line-height:32px;letter-spacing:.04em;text-transform:uppercase}
+.mw-plate{font-family:var(--mw-font-display);font-weight:600;font-size:11px;line-height:14px;letter-spacing:.18em;text-transform:uppercase}

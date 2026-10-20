@@ -9,6 +9,9 @@
 <meta property="og:description" content="Manifoldwerks builds co-science: a world of analysis workflows, narrowed to your data and seeded by every scientist who uses it.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://manifoldwerks.com/">
+<link rel="icon" href="/brand/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/brand/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/brand/apple-touch-icon.png">
 
 <!-- Google tag (gtag.js) — production hostnames only. Local checks are served
      from localhost, and the ?still= / ?t= capture URLs get reloaded a lot, so
@@ -159,6 +162,13 @@ a:hover{border-bottom-color:var(--accent)}
 
 /* --- the 32px orange rule that sits under a kicker --- */
 .rule{width:32px;height:1px;background:var(--accent);margin:20px 0 0;border:none}
+
+/* --- the Steps mark (brand/steps-mark.svg, inlined so it takes currentColor) --- */
+.mark{display:block;width:1em;height:1em;flex:none}
+.hero-mark{font-size:clamp(3.4rem,8vw,6rem);color:var(--ink-cream);margin-bottom:clamp(1.4rem,3vw,2.4rem)}
+.lockup{display:inline-flex;align-items:center;gap:.9em}
+.footband:has(.lockup){align-items:center}
+.lockup .mark{font-size:1.9em;color:var(--ink-cream-2)}
 
 /* ===========================================================================
    CHROME — a mono label pair, separated by a hairline. Cover, quote and
@@ -311,6 +321,7 @@ html.settled .reveal{opacity:1!important;transform:none!important;transition:non
   </div>
   <div class="scrim scrim-void" aria-hidden="true"></div>
   <div class="inner">
+    <div class="hero-mark reveal"><svg class="mark" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-linecap="round" role="img" aria-label="Manifoldwerks mark"><circle cx="32" cy="32" r="25" stroke-width="3.5"/><path d="M9.93 43.74A25 10 -28 0 1 54.07 20.26" stroke-width="2.4" stroke-dasharray="0 4.6"/><path d="M54.07 20.26A25 10 -28 0 1 9.93 43.74" stroke-width="2"/><g fill="currentColor" stroke="none"><circle cx="12.86" cy="46.05" r="1.8"/><circle cx="21.41" cy="46.31" r="2.6"/><circle cx="32.79" cy="42.73" r="3.4"/><circle cx="43.96" cy="36.28" r="4.2"/><circle cx="51.93" cy="28.68" r="5"/></g></svg></div>
     <h1 class="display reveal">Manifoldwerks<span style="color:var(--accent)">.</span></h1>
     <p class="pull reveal" style="margin-top:clamp(1.6rem,3.4vw,2.8rem);font-size:clamp(1.6rem,3.6vw,3rem);color:var(--ink-cream-2)">
       More discovery. <em>Together.</em>
@@ -455,10 +466,10 @@ html.settled .reveal{opacity:1!important;transform:none!important;transition:non
       <span class="pull">Better information bent this curve once. <em>That is the business we are in.</em></span>
     </div>
     <p class="reveal" style="margin-top:clamp(3rem,7vw,5rem)">
-      <a class="lead" href="mailto:cesar.valdez@mila.quebec" style="font-family:var(--f-mono);letter-spacing:.02em">cesar.valdez@mila.quebec</a>
+      <a class="lead" href="mailto:cesar@manifoldwerks.com" style="font-family:var(--f-mono);letter-spacing:.02em">cesar@manifoldwerks.com</a>
     </p>
     <div class="footband" style="margin-top:clamp(3.5rem,8vw,6rem)">
-      <span class="label">Manifoldwerks</span>
+      <span class="lockup"><svg class="mark" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-linecap="round" role="img" aria-label="Manifoldwerks mark"><circle cx="32" cy="32" r="25" stroke-width="3.5"/><path d="M9.93 43.74A25 10 -28 0 1 54.07 20.26" stroke-width="2.4" stroke-dasharray="0 4.6"/><path d="M54.07 20.26A25 10 -28 0 1 9.93 43.74" stroke-width="2"/><g fill="currentColor" stroke="none"><circle cx="12.86" cy="46.05" r="1.8"/><circle cx="21.41" cy="46.31" r="2.6"/><circle cx="32.79" cy="42.73" r="3.4"/><circle cx="43.96" cy="36.28" r="4.2"/><circle cx="51.93" cy="28.68" r="5"/></g></svg><span class="label">Manifoldwerks</span></span>
       <span class="label">co-science</span>
     </div>
   </div>
