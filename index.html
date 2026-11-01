@@ -357,15 +357,11 @@ html.settled .reveal{opacity:1!important;transform:none!important;transition:non
 <section class="band" id="week">
   <div class="inner">
     <div class="head">
-      <h2 style="max-width:18ch">Today that question costs a week.</h2>
+      <h2 style="max-width:18ch">Today the answer costs a week.</h2>
+      <p class="lead" style="max-width:56ch">Dozens of plots. One tool after another. And an expert’s eye that reads shapes with models in their head. Each model holds only so far.</p>
     </div>
-    <div class="row" style="margin-top:clamp(2.5rem,5vw,3.5rem)">
-      <div class="col cell">
-        <p class="lead">Dozens of 2D plots. One tool after another. The computational biologist who could tell you is booked until spring.</p>
-      </div>
-      <div class="col cell">
-        <p class="lead">Glasswerk runs the workflow an expert would start with, on your own machine, and shows every step, setting and caveat. When a question needs a method it does not have, <em>it says so</em> instead of guessing.</p>
-      </div>
+    <div class="fig-scroll" style="margin-top:clamp(2.5rem,5vw,3.5rem)">
+      <canvas class="fig fig--wide" data-viz="tolerance" data-fixed data-opt='{"theme":"light"}' width="1680" height="560"></canvas>
     </div>
   </div>
 </section>
@@ -572,8 +568,8 @@ function mkRnd(seed){
 
 /* ---------------------------------------------------------------- palette */
 const PAL = {
-  light:{ground:'244,238,225', groundRaised:'251,248,241', ink:'31,27,22', inkMuted:'92,86,76', rule:'207,196,174', flock:'45,90,135', sheet:'105,60,30', arrow:'45,150,165', brass:'154,118,50'},
-  dark: {ground:'23,20,15',    groundRaised:'34,30,24',    ink:'239,230,212', inkMuted:'168,159,143', rule:'58,52,43', flock:'116,160,208', sheet:'162,108,76', arrow:'95,198,214', brass:'201,163,90'}
+  light:{ground:'244,238,225', groundRaised:'251,248,241', ink:'31,27,22', inkMuted:'92,86,76', rule:'207,196,174', flock:'45,90,135', sheet:'105,60,30', arrow:'45,150,165', brass:'154,118,50', cherry:'163,32,42', panel:'251,248,241'},
+  dark: {ground:'23,20,15',    groundRaised:'34,30,24',    ink:'239,230,212', inkMuted:'168,159,143', rule:'58,52,43', flock:'116,160,208', sheet:'162,108,76', arrow:'95,198,214', brass:'201,163,90', cherry:'224,90,96', panel:'34,30,24'}
 };
 const rgba = (t,a) => 'rgba(' + t + ',' + a.toFixed(3) + ')';
 
@@ -635,6 +631,67 @@ function hexPath(ctx, cx, cy, r){
   ctx.closePath();
 }
 const smoothstep = (a,b,x) => { const t = Math.max(0, Math.min(1, (x-a)/(b-a))); return t*t*(3-2*t); };
+const clamp01 = x => Math.max(0, Math.min(1, x));
+/* helpers shared with the deck figures ported below */
+function gauss(rnd){ let u = 0, v = 0; while(u === 0) u = rnd(); while(v === 0) v = rnd(); return Math.sqrt(-2*Math.log(u))*Math.cos(6.2831853*v); }
+function ground(ctx, W, H, rgbTriple){ ctx.fillStyle = 'rgb(' + rgbTriple + ')'; ctx.fillRect(0, 0, W, H); }
+const FONT = {
+  body: s => s + 'px "Archivo", sans-serif',
+  bold: s => '700 ' + s + 'px "Archivo", sans-serif',
+  mono: s => s + 'px "IBM Plex Mono", monospace',
+  monob: s => '600 ' + s + 'px "IBM Plex Mono", monospace'
+};
+
+/* =========================================================================
+   TOLERANCE  —  band "Today the answer costs a week". Ported from the
+   Kindler talk. One group of cells slowly changes: it stretches into a
+   path, then the path splits. The expert's reading holds across a range
+   and then flips. The ranges and their edges are illustrative. Loops.
+   ========================================================================= */
+VIZ['tolerance'] = function(cv){
+  const W = cv.width, H = cv.height, ctx = cv.getContext('2d');
+  const opt = JSON.parse(cv.dataset.opt || '{}');
+  const P = PAL[opt.theme === 'light' ? 'light' : 'dark'];
+  const rnd = mkRnd(33), N = 340;
+  const pts = Array.from({length:N}, () => ({u:rnd(), v:gauss(rnd), w:gauss(rnd), s: rnd() < .5 ? -1 : 1}));
+  const READS = [{l:'cluster', a:0, b:.33}, {l:'trajectory', a:.33, b:.68}, {l:'branching', a:.68, b:1}];
+  const bw = 980, px = 1060, pw = W - 1060;
+  const PERIOD = 12;                       /* seconds: 8.5 of change, then a hold, then again */
+  return {
+    printAt: 6.4,
+    frame(t){
+      ground(ctx, W, H, P.ground);
+      const al = REDUCE ? .5 : clamp01(((t + .4) % PERIOD - .8)/8.5);
+      const L = .04 + .62*smoothstep(0, .6, al);
+      const br = smoothstep(.55, .95, al);
+      for(const p of pts){
+        let x = .5 + (p.u - .5)*L + p.w*.035;
+        let y = .5 + p.v*.05 + .06*Math.sin((p.u - .5)*3)*smoothstep(.1, .6, al);
+        if(p.u > .5) y += p.s*br*(p.u - .5)*.75;
+        ctx.fillStyle = rgba(P.ink, .82);
+        ctx.beginPath(); ctx.arc(x*bw, y*H, 4.4, 0, 6.283); ctx.fill();
+      }
+      ctx.textAlign = 'left'; ctx.fillStyle = rgba(P.inkMuted, 1); ctx.font = FONT.mono(20);
+      ctx.fillText("the expert’s read", px, 40);
+      const cur = READS.find(r => al < r.b) || READS[2];
+      ctx.fillStyle = rgba(P.cherry, 1); ctx.font = FONT.bold(76);
+      ctx.fillText(cur.l, px, 130);
+      const ax0 = px, aw = pw - 20, ay = 250;
+      ctx.fillStyle = rgba(P.inkMuted, 1); ctx.font = FONT.mono(18);
+      ctx.fillText('how far the shape has changed  →', ax0, ay - 24);
+      READS.forEach((r, i) => {
+        const y = ay + 30 + i*76, on = r === cur;
+        ctx.fillStyle = rgba(P.ink, on ? .95 : .4); ctx.font = FONT.monob(24);
+        ctx.fillText(r.l, ax0, y);
+        ctx.fillStyle = rgba(P.ink, on ? .9 : .16);
+        ctx.fillRect(ax0 + aw*r.a, y + 14, aw*(r.b - r.a) - 6, 14);
+      });
+      const mx = ax0 + aw*al;
+      ctx.strokeStyle = rgba(P.ink, .9); ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.moveTo(mx, ay + 2); ctx.lineTo(mx, ay + 30 + 2*76 + 36); ctx.stroke();
+    }
+  };
+};
 
 /* =========================================================================
    1. FIELD SPLIT  —  band "Nature repeats her best ideas"
