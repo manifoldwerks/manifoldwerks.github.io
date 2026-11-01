@@ -137,6 +137,14 @@ a:hover{border-bottom-color:var(--cherry)}
 .btn-primary{background:var(--cherry);border-color:var(--cherry);color:#f4eee1}
 .btn-primary:hover{background:var(--cherry-deep);border-color:var(--cherry-deep)}
 .plate{background:var(--paper-raised);border:1px solid var(--rule);padding:24px}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:18px 24px;max-width:56rem}
+.fields label{display:block;font-family:var(--f-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-muted)}
+.fields .wide{grid-column:1 / -1}
+.fields input,.fields select,.fields textarea{display:block;width:100%;margin-top:8px;padding:12px;
+  font-family:var(--f-body);font-size:1.05rem;color:var(--ink);background:var(--paper-raised);
+  border:1px solid var(--rule);border-radius:0;appearance:none;-webkit-appearance:none}
+.fields input:focus,.fields select:focus,.fields textarea:focus{outline:none;border-color:var(--ink)}
+@media (max-width:56rem){.fields{grid-template-columns:1fr}}
 .facts{display:grid;grid-template-columns:max-content 1fr;column-gap:32px;max-width:var(--measure)}
 .facts dt,.facts dd{padding:16px 0;border-top:1px solid var(--hair);margin:0}
 .facts dt{align-self:center}
@@ -471,26 +479,31 @@ html.settled .reveal{opacity:1!important;transform:none!important;transition:non
 
 
 <!-- ═══════════════════════════════════════════════════════════════════════
-     07 — CLOSE. The same curve, taken further. Say it, then stop.
+     08 — CLOSE. The curve, quiet, behind the invite form.
      ═══════════════════════════════════════════════════════════════════════ -->
-<section class="band dark" id="contact">
+<section class="band dark" id="invite">
+  <div class="field-cover" aria-hidden="true" style="opacity:.18;display:flex;align-items:center">
+    <canvas class="fig fig--wide" data-viz="eroom" data-fixed data-opt='{"timeline":true,"further":true,"quiet":true,"mute":true}' width="1640" height="540" style="position:static;transform:none"></canvas>
+  </div>
   <div class="inner">
+    <div class="chrome"><span class="label">Early access</span><span class="label">06</span></div>
     <div class="head">
-      <h2 class="reveal">More discovery. <em>Together.</em></h2>
+      <h2 class="reveal">Request an invite.</h2>
     </div>
-    <div class="fig-scroll reveal" style="margin-top:clamp(2.5rem,5vw,3.5rem)">
-      <canvas class="fig fig--wide" data-viz="eroom" data-fixed data-opt='{"timeline":true,"further":true,"quiet":"half"}'
-              width="1640" height="540"></canvas>
-    </div>
-    <div class="footband">
-      <span class="pull">Better information bent this curve once. <em>That is the business we are in.</em></span>
-    </div>
-    <p class="reveal" style="margin-top:clamp(3rem,7vw,5rem)">
-      <a class="lead" href="mailto:cesar@manifoldwerks.com" style="font-family:var(--f-mono);letter-spacing:.02em">cesar@manifoldwerks.com</a>
-    </p>
-    <div class="footband" style="margin-top:clamp(3.5rem,8vw,6rem)">
-      <span class="lockup"><svg class="mark" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-linecap="round" role="img" aria-label="Manifoldwerks mark"><circle cx="32" cy="32" r="25" stroke-width="3.5"/><path d="M9.93 43.74A25 10 -28 0 1 54.07 20.26" stroke-width="2.4" stroke-dasharray="0 4.6"/><path d="M54.07 20.26A25 10 -28 0 1 9.93 43.74" stroke-width="2"/><g fill="currentColor" stroke="none"><circle cx="12.86" cy="46.05" r="1.8"/><circle cx="21.41" cy="46.31" r="2.6"/><circle cx="32.79" cy="42.73" r="3.4"/><circle cx="43.96" cy="36.28" r="4.2"/><circle cx="51.93" cy="28.68" r="5"/></g></svg><span class="label">Manifoldwerks</span></span>
-      <span class="label">co-science</span>
+    <form id="invite-form" class="reveal" method="POST" action="" novalidate style="margin-top:clamp(2rem,4vw,3rem)">
+      <div class="fields">
+        <label>Name<input type="text" name="name" required autocomplete="name"></label>
+        <label>Email<input type="email" name="email" required autocomplete="email"></label>
+        <label>Lab or company<input type="text" name="org" autocomplete="organization"></label>
+        <label>Data type<select name="data"><option>Single-cell RNA</option><option>Spatial</option><option>Other</option></select></label>
+        <label class="wide">One line on the question you want answered<textarea name="question" rows="2"></textarea></label>
+      </div>
+      <p style="margin-top:22px"><button class="btn btn-primary" type="submit">Request an invite</button></p>
+      <p id="form-status" class="label" aria-live="polite" style="margin-top:14px;text-transform:none;letter-spacing:0;font-size:.85rem"></p>
+    </form>
+    <div class="footband" style="margin-top:clamp(3.5rem,8vw,6rem);flex-wrap:wrap">
+      <span class="label">MANIFOLDWERKS · Montréal · San Francisco · <a href="mailto:cesar@manifoldwerks.com">cesar@manifoldwerks.com</a> · <a href="https://github.com/latent-reasoning-works/manyruns" target="_blank" rel="noopener">GitHub</a></span>
+      <span class="label">Engine by LatentReasoning.works</span>
     </div>
   </div>
 </section>
@@ -526,8 +539,6 @@ const PAL = {
   light:{ground:'244,238,225', groundRaised:'251,248,241', ink:'31,27,22', inkMuted:'92,86,76', rule:'207,196,174', flock:'45,90,135', sheet:'105,60,30', arrow:'45,150,165', brass:'154,118,50'},
   dark: {ground:'23,20,15',    groundRaised:'34,30,24',    ink:'239,230,212', inkMuted:'168,159,143', rule:'58,52,43', flock:'116,160,208', sheet:'162,108,76', arrow:'95,198,214', brass:'201,163,90'}
 };
-/* TEMPORARY until every canvas reads PAL: removed in Task 6 */
-const C = {ground:'#17140f', groundAlt:'#221e18', cream:PAL.dark.ink, orange:PAL.dark.brass, wood:PAL.dark.brass, white:'255,255,255'};
 const rgba = (t,a) => 'rgba(' + t + ',' + a.toFixed(3) + ')';
 
 /* =========================================================================
@@ -739,6 +750,9 @@ VIZ['eroom'] = function(cv){
      arc now draw the full figure, and only the close adds further:true.
      Kept as an option. */
   const opt = JSON.parse(cv.dataset.opt || '{}');
+  const P = PAL[opt.theme === 'light' ? 'light' : 'dark'];
+  /* mute:true draws the curve and nothing written: a background figure behind copy */
+  if(opt.mute === true){ ctx.fillText = function(){}; ctx.strokeText = function(){}; }
   const DECLINE = opt.decline === true;
   /* further:true is the closing slide only: after the turn lands, a dotted
      line leaves the last data point and keeps climbing. */
@@ -773,33 +787,33 @@ VIZ['eroom'] = function(cv){
     frame(el){
       const t = REDUCE ? 9 : el;
       ctx.clearRect(0,0,W,H);
-      ctx.fillStyle = C.groundAlt; ctx.fillRect(0,0,W,H);
+      ctx.fillStyle = 'rgb(' + P.groundRaised + ')'; ctx.fillRect(0,0,W,H);
 
       /* --- recessive grid, log decades only --- */
-      ctx.font = '400 15px "DM Mono", monospace';
+      ctx.font = '400 15px "IBM Plex Mono", monospace';
       ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
       for(const val of [0.1, 1, 10, 100]){
         const y = py(val);
-        ctx.strokeStyle = rgba(C.cream, 0.09); ctx.lineWidth = 1;
+        ctx.strokeStyle = rgba(P.ink, 0.09); ctx.lineWidth = 1;
         ctx.beginPath(); ctx.moveTo(L, y); ctx.lineTo(R, y); ctx.stroke();
-        ctx.fillStyle = rgba(C.cream, 0.60);
+        ctx.fillStyle = rgba(P.ink, 0.60);
         ctx.fillText(val < 1 ? '0.1' : String(val), L - 16, y);
       }
       ctx.textAlign = 'center'; ctx.textBaseline = 'top';
-      ctx.strokeStyle = rgba(C.cream, 0.20); ctx.lineWidth = 1;
+      ctx.strokeStyle = rgba(P.ink, 0.20); ctx.lineWidth = 1;
       ctx.beginPath(); ctx.moveTo(L, B); ctx.lineTo(R, B); ctx.stroke();
       for(let yr = X0; yr <= X1; yr += 10){
         const x = px(yr);
-        ctx.strokeStyle = rgba(C.cream, 0.20);
+        ctx.strokeStyle = rgba(P.ink, 0.20);
         ctx.beginPath(); ctx.moveTo(x, B); ctx.lineTo(x, B + 7); ctx.stroke();
-        ctx.fillStyle = rgba(C.cream, 0.60);
+        ctx.fillStyle = rgba(P.ink, 0.60);
         ctx.fillText(String(yr), x, B + 16);
       }
 
       /* --- the sixty-year decline, drawing itself --- */
       const gDecline = REDUCE ? 1 : Math.max(0, Math.min(1, (t - 0.4)/2.2));
       const yrA = X0 + (XBREAK - X0)*gDecline;
-      ctx.strokeStyle = rgba(C.orange, 1);
+      ctx.strokeStyle = rgba(P.brass, 1);
       ctx.lineWidth = 2.5; ctx.lineJoin = ctx.lineCap = 'round';
       ctx.beginPath();
       for(let yr = X0; yr <= yrA; yr += 0.5){
@@ -813,7 +827,7 @@ VIZ['eroom'] = function(cv){
       if(gGhost > 0){
         ctx.save();
         ctx.setLineDash([7, 8]);
-        ctx.strokeStyle = rgba(C.cream, 0.34 * gGhost);
+        ctx.strokeStyle = rgba(P.ink, 0.34 * gGhost);
         ctx.lineWidth = 1.6;
         ctx.beginPath();
         for(let yr = XBREAK; yr <= XBREAK + (XEND - XBREAK)*gGhost; yr += 0.5){
@@ -827,7 +841,7 @@ VIZ['eroom'] = function(cv){
       /* --- and the turn --- */
       const gTurn = DECLINE ? 0 : REDUCE ? 1 : Math.max(0, Math.min(1, (t - 3.3)/1.4));
       if(gTurn > 0){
-        ctx.strokeStyle = rgba(C.orange, 1); ctx.lineWidth = 2.5;
+        ctx.strokeStyle = rgba(P.brass, 1); ctx.lineWidth = 2.5;
         ctx.beginPath();
         for(let yr = XBREAK; yr <= XBREAK + (XEND - XBREAK)*gTurn; yr += 0.25){
           const x = px(yr), y = py(actual(yr));
@@ -843,18 +857,18 @@ VIZ['eroom'] = function(cv){
         if(!HALF){
           ctx.save();
           ctx.setLineDash([3, 6]);
-          ctx.strokeStyle = rgba(C.cream, 0.30 * gMark); ctx.lineWidth = 1;
+          ctx.strokeStyle = rgba(P.ink, 0.30 * gMark); ctx.lineWidth = 1;
           ctx.beginPath(); ctx.moveTo(bx, T + 44); ctx.lineTo(bx, py(trend(XBREAK)) - 12); ctx.stroke();
           ctx.restore();
         }
-        ctx.fillStyle = rgba(C.orange, gMark);
+        ctx.fillStyle = rgba(P.brass, gMark);
         ctx.beginPath(); ctx.arc(bx, py(actual(XBREAK)), 5, 0, 6.2832); ctx.fill();
         if(!HALF){
-          ctx.font = '400 15px "DM Mono", monospace';
+          ctx.font = '400 15px "IBM Plex Mono", monospace';
           ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
-          ctx.fillStyle = rgba(C.cream, 0.72 * gMark);
+          ctx.fillStyle = rgba(P.ink, 0.72 * gMark);
           ctx.fillText("EROOM'S LAW PUBLISHED", bx, T + 26);
-          ctx.fillStyle = rgba(C.cream, 0.44 * gMark);
+          ctx.fillStyle = rgba(P.ink, 0.44 * gMark);
           ctx.fillText('WITH DATA UP TO 2010', bx, T + 46);
         }
       }
@@ -864,18 +878,18 @@ VIZ['eroom'] = function(cv){
         const fade = Math.min(1, (t - 4.9)/0.7);
         if(fade > 0){
           const ex = px(XEND), ey = py(actual(XEND));
-          ctx.fillStyle = rgba(C.orange, fade);
+          ctx.fillStyle = rgba(P.brass, fade);
           ctx.beginPath(); ctx.arc(ex, ey, 5, 0, 6.2832); ctx.fill();
           if(!QUIET){
             ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
-            ctx.font = '700 30px "Bricolage Grotesque", sans-serif';
-            ctx.fillStyle = rgba(C.cream, fade);
+            ctx.font = '700 30px "Archivo", sans-serif';
+            ctx.fillStyle = rgba(P.ink, fade);
             /* on the close the dotted line leaves up and to the right, so the
                label drops into the gap it describes, between the two line ends */
             const ly = TIMELINE ? (ey + py(trend(XEND)))/2 + 4 : ey - 12;
             ctx.fillText('+0.7', ex + 18, ly);
-            ctx.font = '400 15px "DM Mono", monospace';
-            ctx.fillStyle = rgba(C.cream, fade*0.58);
+            ctx.font = '400 15px "IBM Plex Mono", monospace';
+            ctx.fillStyle = rgba(P.ink, fade*0.58);
             ctx.fillText('NEW MOLECULAR', ex + 18, ly + 22);
             ctx.fillText('ENTITIES PER $BN,', ex + 18, ly + 42);
             ctx.fillText('BY 2018', ex + 18, ly + 62);
@@ -891,7 +905,7 @@ VIZ['eroom'] = function(cv){
         const V18 = actual(XEND), V26 = V18;
         const fadeOut = yr => V18;
         const rise = yr => V26 * Math.pow(1.28, yr - X26);
-        const dotted = (from, to, f, g, color = C.orange) => {
+        const dotted = (from, to, f, g, color = P.brass) => {
           if(g <= 0) return;
           ctx.save();
           ctx.setLineDash([1, 9]); ctx.lineCap = 'round';
@@ -905,10 +919,10 @@ VIZ['eroom'] = function(cv){
           ctx.stroke(); ctx.restore();
         };
         /* 2018 -> 2030: illustrative hold, identical on both slides */
-        dotted(XEND, XFAR, fadeOut, REDUCE ? 1 : Math.max(0, Math.min(1, (t - 5.6)/0.7)), C.cream);
-        ctx.font = '400 14px "DM Mono", monospace';
+        dotted(XEND, XFAR, fadeOut, REDUCE ? 1 : Math.max(0, Math.min(1, (t - 5.6)/0.7)), P.ink);
+        ctx.font = '400 14px "IBM Plex Mono", monospace';
         ctx.textAlign = 'right'; ctx.textBaseline = 'alphabetic';
-        ctx.fillStyle = rgba(C.cream, 0.60);
+        ctx.fillStyle = rgba(P.ink, 0.60);
         ctx.fillText('2018–2030: ILLUSTRATIVE HOLD', R, T + 85);
         /* 2026: us */
         const gWe = REDUCE ? 1 : Math.max(0, Math.min(1, (t - 6.3)/0.4));
@@ -916,18 +930,18 @@ VIZ['eroom'] = function(cv){
           const wx = px(X26), wy = py(V26);
           if(!QUIET){
             ctx.save(); ctx.setLineDash([3, 6]);
-            ctx.strokeStyle = rgba(C.cream, 0.30 * gWe); ctx.lineWidth = 1;
+            ctx.strokeStyle = rgba(P.ink, 0.30 * gWe); ctx.lineWidth = 1;
             ctx.beginPath(); ctx.moveTo(wx, wy - 14); ctx.lineTo(wx, T + 56); ctx.stroke();
             ctx.restore();
           }
-          ctx.fillStyle = rgba(C.orange, gWe);
+          ctx.fillStyle = rgba(P.brass, gWe);
           ctx.beginPath(); ctx.arc(wx, wy, 5, 0, 6.2832); ctx.fill();
           if(!QUIET){
-            ctx.font = '400 15px "DM Mono", monospace';
+            ctx.font = '400 15px "IBM Plex Mono", monospace';
             ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
-            ctx.fillStyle = rgba(C.cream, 0.80 * gWe);
+            ctx.fillStyle = rgba(P.ink, 0.80 * gWe);
             ctx.fillText('PRESENT', wx, T + 38);
-            ctx.fillStyle = rgba(C.cream, 0.50 * gWe);
+            ctx.fillStyle = rgba(P.ink, 0.50 * gWe);
             ctx.fillText('2026', wx, T + 18);
           }
         }
@@ -941,15 +955,15 @@ VIZ['eroom'] = function(cv){
             const x1 = px(XFAR - 0.6), y1 = py(rise(XFAR - 0.6));
             const dx = x2 - x1, dy = y2 - y1, m = Math.hypot(dx, dy);
             const ux = dx/m, uy = dy/m, hl = 15, hw = 7;
-            ctx.fillStyle = rgba(C.orange, 0.95 * lf);
+            ctx.fillStyle = rgba(P.brass, 0.95 * lf);
             ctx.beginPath();
             ctx.moveTo(x2 + ux*4, y2 + uy*4);
             ctx.lineTo(x2 - ux*hl - uy*hw, y2 - uy*hl + ux*hw);
             ctx.lineTo(x2 - ux*hl + uy*hw, y2 - uy*hl - ux*hw);
             ctx.closePath(); ctx.fill();
-            ctx.font = '400 15px "DM Mono", monospace';
+            ctx.font = '400 15px "IBM Plex Mono", monospace';
             ctx.textAlign = 'right'; ctx.textBaseline = 'alphabetic';
-            ctx.fillStyle = rgba(C.cream, 0.72 * lf);
+            ctx.fillStyle = rgba(P.ink, 0.72 * lf);
             ctx.fillText('OUR AMBITION', x2 - 22, y2 - 12);
           }
         }
@@ -957,11 +971,11 @@ VIZ['eroom'] = function(cv){
 
       /* --- title and sources. One series, so no legend box. --- */
       ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
-      ctx.font = '400 17px "DM Mono", monospace';
-      ctx.fillStyle = rgba(C.cream, 0.80);
+      ctx.font = '400 17px "IBM Plex Mono", monospace';
+      ctx.fillStyle = rgba(P.ink, 0.80);
       ctx.fillText(opt.title || 'NEW MOLECULAR ENTITIES PER $1BN R&D, INFLATION-ADJUSTED', L - 44, 38);
-      ctx.font = '400 14px "DM Sans", sans-serif';
-      ctx.fillStyle = rgba(C.cream, 0.52);
+      ctx.font = '400 14px "Newsreader", sans-serif';
+      ctx.fillStyle = rgba(P.ink, 0.52);
       /* the opening slide withholds the turn, so it must not cite it — the
          source line would give away the answer the slide is asking for */
       ctx.fillText(DECLINE
@@ -973,560 +987,6 @@ VIZ['eroom'] = function(cv){
 };
 
 /* =========================================================================
-   7. LABS  —  "already sitting in somebody else's data"
-   -------------------------------------------------------------------------
-   A street of dark lab buildings. Most windows never light. A handful blink
-   briefly and go out again — findings that surface in one lab and are seen
-   by nobody. One window keeps returning: dim, irregular, never steady, and
-   never quite off. That one is labelled.
-
-   The flicker is deterministic (a fixed phase per window, no randomness at
-   runtime) so the composition is identical on every run and in every export.
-   ========================================================================= */
-VIZ['labs'] = function(cv){
-  const W = cv.width, H = cv.height, ctx = cv.getContext('2d');
-  const rnd = mkRnd(515151);
-
-  /* Four application areas, with room for projector-readable labels. */
-  const BASE = H - 62;
-  const NAMES = ['ONCOLOGY', 'IMMUNOLOGY', 'NEUROSCIENCE', 'CELL THERAPIES'];
-  const HEIGHTS = [254, 318, 270, 296];
-  const slot = W / NAMES.length;
-  const B = NAMES.map((name, i) => ({
-    x: slot * (i + 0.5) - 116, w: 232, h: HEIGHTS[i],
-    cols: 6, rows: Math.floor((HEIGHTS[i] - 34) / 32), name, win: []
-  }));
-  /* --- windows --- */
-  const WIN = [];
-  for(const b of B){
-    const pad = 16;
-    const gw = (b.w - pad*2) / b.cols, gh = (b.h - 30) / b.rows;
-    for(let r=0;r<b.rows;r++) for(let c=0;c<b.cols;c++){
-      const w = {
-        x: b.x + pad + c*gw + 2,
-        y: BASE - b.h + 20 + r*gh,
-        w: gw - 7, h: Math.min(15, gh - 8),
-        phase: rnd()*6.2832,
-        rate: 0.22 + rnd()*0.5,
-        /* a small minority ever light at all */
-        live: rnd() < 0.13
-      };
-      b.win.push(w); WIN.push(w);
-    }
-  }
-  /* --- the one that matters: a mid-height window, right of centre --- */
-  const target = B[Math.floor(B.length*0.62)];
-  const HERO = target.win[Math.floor(target.win.length*0.42)];
-  HERO.live = false;
-
-  /* Labels name initial application areas, not customers or modalities. */
-
-  /* --- distance from the one window that never goes fully out, so the
-         street lights outward from it: the field joining her, in order. --- */
-  const hx0 = HERO.x + HERO.w/2, hy0 = HERO.y + HERO.h/2;
-  let maxD = 1;
-  for(const w of WIN){ w.d = Math.hypot(w.x + w.w/2 - hx0, w.y + w.h/2 - hy0); maxD = Math.max(maxD, w.d); }
-  for(const w of WIN) w.d /= maxD;
-
-  return {
-    printAt: 7.4,                    /* the street lit, the turn landed */
-    reset(){ ctx.clearRect(0,0,W,H); },
-    frame(el){
-      const t = REDUCE ? 7.5 : el;
-      ctx.clearRect(0,0,W,H);
-      ctx.fillStyle = '#0A0F0C'; ctx.fillRect(0,0,W,H);   /* the void ground */
-
-      /* --- buildings: outline only, no fill. The street stays dark. --- */
-      for(const b of B){
-        ctx.strokeStyle = rgba(C.cream, 0.26);
-        ctx.lineWidth = 1.5;
-        ctx.strokeRect(b.x, BASE - b.h, b.w, b.h);
-      }
-      /* ground line */
-      ctx.strokeStyle = rgba(C.cream, 0.34); ctx.lineWidth = 1;
-      ctx.beginPath(); ctx.moveTo(0, BASE); ctx.lineTo(W, BASE); ctx.stroke();
-
-      /* --- the street lights, outward from the one window that never went
-             fully out. This is the old room slide folded in: dark towers,
-             then a whole field lit, and the turn line arrives with it. --- */
-      const fill = REDUCE ? 1 : smoothstep(4.6, 7.0, t);
-
-      /* --- ordinary windows: a brief blink, then dark again --- */
-      for(const w of WIN){
-        if(w === HERO) continue;
-        let a = 0.075;
-        if(w.live){
-          const s = Math.sin(t*w.rate + w.phase);
-          if(s > 0.86) a = 0.075 + (s - 0.86)/0.14 * 0.42;   /* short, low blink */
-        }
-        const on = fill > 0 ? smoothstep(w.d, w.d + 0.16, fill) : 0;
-        if(on > 0) a = Math.max(a, on * (0.30 + 0.16 * (0.5 + 0.5*Math.sin(t*w.rate + w.phase))));
-        ctx.fillStyle = rgba(C.cream, a);
-        ctx.fillRect(w.x, w.y, w.w, w.h);
-        /* warmth added rather than painted, so a lit street reads as one glow
-           instead of a grid of squares */
-        if(on > 0.02){
-          ctx.globalCompositeOperation = 'lighter';
-          ctx.fillStyle = rgba(C.orange, on * 0.26);
-          ctx.fillRect(w.x - 1, w.y - 1, w.w + 2, w.h + 2);
-          ctx.globalCompositeOperation = 'source-over';
-        }
-      }
-
-      /* --- the discovery: dim, latent, intermittent, never fully out --- */
-      const breathe = 0.34 + 0.20*Math.sin(t*0.75);
-      const blip    = Math.pow(Math.max(0, Math.sin(t*1.9 + 0.6)), 9) * 0.42;
-      const lull    = Math.sin(t*0.31) < -0.72 ? 0.35 : 1;    /* it goes quiet, then returns */
-      const aH      = Math.min(1, (breathe + blip) * lull);
-
-      const gx = HERO.x - HERO.w*0.20, gy = HERO.y - HERO.h*0.24;
-      const gw = HERO.w*1.40, gh = HERO.h*1.48;
-      ctx.save();
-      ctx.shadowColor = rgba(C.orange, aH * 0.9);
-      ctx.shadowBlur = 34;
-      ctx.fillStyle = rgba(C.orange, aH);
-      ctx.fillRect(gx, gy, gw, gh);
-      ctx.restore();
-
-      /* --- leader and label, drawn in canvas so they cannot drift --- */
-      const lx = HERO.x + HERO.w/2, ly = HERO.y - HERO.h*0.24 - 8;
-      const lift = REDUCE ? 1 : Math.max(0, Math.min(1, (el - 1.4)/0.8));
-
-      /* One large, high-contrast label directly beneath each building. */
-      if(lift > 0){
-        ctx.font = '500 28px "DM Mono", monospace';
-        ctx.letterSpacing = '0px';
-        ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
-        for(const b of B){
-          ctx.fillStyle = rgba(C.cream, 0.90 * lift);
-          ctx.fillText(b.name, b.x + b.w/2, BASE + 42);
-        }
-      }
-      if(lift > 0){
-        const topY = BASE - target.h - 54;
-        ctx.strokeStyle = rgba(C.cream, 0.42 * lift); ctx.lineWidth = 1;
-        ctx.beginPath(); ctx.moveTo(lx, ly); ctx.lineTo(lx, topY + 10); ctx.stroke();
-        ctx.font = '400 17px "DM Mono", monospace';
-        ctx.textAlign = 'center';
-        ctx.fillStyle = rgba(C.cream, 0.88 * lift);
-        ctx.fillText('YOUR NEXT DISCOVERY', lx, topY);
-      }
-    }
-  };
-};
-
-
-/* =========================================================================
-   WORLD  —  the ambition: the field, on one team
-   -------------------------------------------------------------------------
-   The four named areas are the ones the product slide uses, so a room that
-   sees them here recognises them there. Everything beyond them is unnamed on
-   purpose: the claim is the size of the team, not a list of customers.
-   ========================================================================= */
-VIZ['world'] = function(cv){
-  const W = cv.width, H = cv.height, ctx = cv.getContext('2d');
-  const rnd = mkRnd(4242);
-  const CX = W / 2, CY = H / 2 + 6;
-  /* Node geometry is COPIED from VIZ['exchange'] — same radius, same figure
-     scale, same glyph pair, same label offsets — so the room recognises this
-     picture when it turns up inside the product a slide later. Change one,
-     change both. */
-  const R = 70;
-  const NAMED = [
-    {x: CX - 210, y: CY - 130, name: 'ONCOLOGY'      },
-    {x: CX + 210, y: CY - 130, name: 'IMMUNOLOGY'    },
-    {x: CX - 210, y: CY + 130, name: 'NEUROSCIENCE'  },
-    {x: CX + 210, y: CY + 130, name: 'CELL THERAPIES'}
-  ];
-  /* everyone else: deterministic, well clear of the labelled four */
-  const FIELD = Array.from({length: 38}, (_, i) => {
-    const a = (i / 38) * 6.2832 + rnd() * 0.09;
-    let rx = 470 + rnd() * 300, ry = 168 + rnd() * 66;
-    const rad = 9 + rnd() * 7;
-    let x = CX + Math.cos(a) * rx, y = CY + Math.sin(a) * ry;
-    /* a small lab sitting on a labelled one reads as a mistake, so push it out */
-    for(let guard = 0; guard < 6; guard++){
-      const clash = NAMED.some(n => {
-        const ly = n.y < CY ? n.y - 96 : n.y + 92;       /* where its label sits */
-        return Math.hypot(n.x - x, n.y - y) < R + 64 ||
-               (Math.abs(n.x - x) < 150 && Math.abs(ly - y) < 34);
-      });
-      if(!clash) break;
-      rx += 90; ry += 34;
-      x = CX + Math.cos(a) * rx; y = CY + Math.sin(a) * ry;
-    }
-    /* nothing may hang off the edge of the figure */
-    y = Math.max(rad + 10, Math.min(H - rad - 10, y));
-    x = Math.max(rad + 10, Math.min(W - rad - 10, x));
-    return {x, y, r: rad, at: i / 38};
-  });
-
-  function shape(kind, cx, cy, s){
-    ctx.beginPath();
-    if(kind === 'tri'){
-      ctx.moveTo(cx, cy - s); ctx.lineTo(cx + s * 0.92, cy + s * 0.72);
-      ctx.lineTo(cx - s * 0.92, cy + s * 0.72); ctx.closePath();
-    } else { hexPath(ctx, cx, cy, s * 0.95); }
-    ctx.stroke();
-  }
-  function figure(cx, cy, s){
-    ctx.beginPath(); ctx.arc(cx, cy - 30 * s, 24 * s, 0, 6.2832); ctx.stroke();
-    ctx.beginPath(); ctx.arc(cx, cy + 60 * s, 52 * s, Math.PI * 1.18, Math.PI * 1.82); ctx.stroke();
-  }
-
-  return {
-    printAt: 5.2,
-    reset(){ ctx.clearRect(0, 0, W, H); },
-    frame(el){
-      const t = REDUCE ? 6 : el;
-      /* transparent on screen so the slide's own ground shows; painted only
-         for print, where a transparent canvas would flatten onto white */
-      ctx.clearRect(0, 0, W, H);
-      if(PRINTING){ ctx.fillStyle = '#0A0F0C'; ctx.fillRect(0, 0, W, H); }
-      ctx.lineJoin = ctx.lineCap = 'round';
-
-      const core  = smoothstep(0.2, 0.9, t);   /* the middle               */
-      const named = smoothstep(0.9, 2.0, t);   /* the four we start in     */
-      const field = smoothstep(1.7, 4.3, t);   /* everyone else, outward   */
-      const warm  = smoothstep(3.2, 5.0, t);   /* the whole thing connected*/
-
-      /* every lab past the four: the line arrives, then the lab does */
-      FIELD.forEach(f => {
-        const g = smoothstep(f.at * 0.72, f.at * 0.72 + 0.28, field);
-        if(g <= 0) return;
-        ctx.strokeStyle = rgba(C.orange, (0.10 + 0.16 * warm) * g);
-        ctx.lineWidth = 1.2;
-        ctx.beginPath(); ctx.moveTo(CX, CY);
-        ctx.lineTo(CX + (f.x - CX) * g, CY + (f.y - CY) * g); ctx.stroke();
-        ctx.strokeStyle = rgba(C.cream, (0.36 + 0.24 * warm) * g); ctx.lineWidth = 1.8;
-        ctx.beginPath(); ctx.arc(f.x, f.y, f.r * g, 0, 6.2832); ctx.stroke();
-      });
-
-      /* the four named areas, drawn exactly as the product slide draws them */
-      NAMED.forEach((n, i) => {
-        const g = smoothstep(i * 0.16, i * 0.16 + 0.55, named);
-        if(g <= 0) return;
-        const dx = n.x - CX, dy = n.y - CY, m = Math.hypot(dx, dy);
-        ctx.lineWidth = 2;
-        ctx.strokeStyle = rgba(C.orange, (0.18 + 0.62 * warm) * g);
-        ctx.beginPath(); ctx.moveTo(CX, CY);
-        ctx.lineTo(n.x - dx / m * R, n.y - dy / m * R); ctx.stroke();
-        ctx.strokeStyle = rgba(C.cream, 0.65 * g);
-        ctx.beginPath(); ctx.arc(n.x, n.y, R, 0, 6.2832); ctx.stroke();
-        ctx.lineWidth = 2.4;
-        ctx.strokeStyle = rgba(C.cream, 0.72 * g);
-        figure(n.x, n.y - 16, 0.44);
-        ctx.strokeStyle = rgba(C.orange, (0.35 + 0.6 * warm) * g);
-        shape('tri', n.x - 23, n.y + 30, 12);
-        ctx.strokeStyle = rgba(C.cream, 0.55 * g);
-        shape('hex', n.x + 23, n.y + 30, 12);
-        ctx.font = '500 20px "DM Mono", monospace';
-        ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
-        ctx.fillStyle = rgba(C.cream, 0.90 * g);
-        ctx.fillText(n.name, n.x, n.y < CY ? n.y - 90 : n.y + 99);
-      });
-
-      /* the middle, as on the product slide: one point everything reaches */
-      if(core > 0){
-        ctx.fillStyle = rgba(C.orange, 0.95 * core);
-        ctx.beginPath(); ctx.arc(CX, CY, 7, 0, 6.2832); ctx.fill();
-      }
-    }
-  };
-};
-
-/* =========================================================================
-   10. EXCHANGE  —  slide "Your next experiment, with the whole field behind it"
-   -------------------------------------------------------------------------
-   Lineage: a terminal recording nobody could read, then a reviewer's sketch
-   of two labs trading a method across a gap, then this. The two-lab version
-   never said co-science was software, and captions saying so were too much
-   to read, so the left lab became the app itself.
-
-   The product, drawn rather than described. On the left, the app a
-   scientist runs on her own data: YOUR DATA on one side, NEXT EXPERIMENT on
-   the other. On the right, other labs, stacked, with the experiments they
-   have already worked through.
-
-   Two things cross the gap, one each way, on separate lanes. A summary of
-   her data goes out — drawn as her triangle — and lights the labs where the
-   same triangle has turned up before. The method that worked there comes
-   back and picks her next experiment. An earlier version showed only the
-   method crossing, which was not true: something computed from her data
-   does leave. A picture a diligent reader can catch out costs more than
-   any tangent.
-
-   Seven mono labels and nothing else to read. The options are lab glyphs
-   and blank bars: a terminal recording of the real tool was cut for being
-   unreadable at projection size, and a mock interface full of words would
-   fail the same way.
-   ========================================================================= */
-VIZ['exchange'] = function(cv){
-  const W = cv.width, H = cv.height, ctx = cv.getContext('2d');
-  const rnd = mkRnd(90210);
-
-  /* ONE WINDOW. The scientist's own half on the left, the field of candidate
-     workflows on the right. The labs network that used to sit beside this is
-     gone: the slide before carries the team, and repeating it here made the
-     room read two arguments at once. The nod to those scientists lands where
-     it actually matters — on the workflow that gets recommended. */
-  const AX0 = 2, AX1 = W - 4, AY0 = 14, AY1 = H - 14, BAR = 52, SPLIT = 556;
-  /* the three givens, one per row, labelled down the left edge */
-  const GY = [196, 322, 452];
-  const MET = [0.82, 0.44, 0.63];        /* schematic bars, not real values   */
-  /* the counter. COUNT[0] is the only sourced figure on this slide: the
-     single-cell analysis tools tracked by scRNA-tools. The reductions are
-     illustrative. Change COUNT[0] alone if our own catalogue is the number. */
-  const COUNT = [1855, 612, 88, 12];
-  const OX0 = 600, OX1 = W - 60, SLOT = OX1 - 44, OH = 42;
-  /* What survives all three cuts. Fourteen, not three: three is a shortlist
-     the expert in the room already has, and the claim is that the field is
-     bigger than anyone's repertoire. One of the fourteen is recommended. */
-  const NSURV = 12, PICK = 5, SY0 = 174, SGAP = 26;
-
-  const CLOUD = Array.from({length: 13}, () => ({
-    dx: (rnd() - 0.5) * 70, dy: (rnd() - 0.5) * 56
-  }));
-  /* The field being chosen from. Rows are illustrative; the counter carries
-     the number and no row is ever counted out loud. Fourteen of them survive
-     every cut, and they spread out into a readable list as the rest fade. */
-  const NROW = 62;
-  const CAND = Array.from({length: NROW}, (_, i) => {
-    const surv = i % Math.floor(NROW / NSURV) === 1 ? true : false;
-    return {y: 150 + (530 - 150) * i / (NROW - 1),
-            w: 150 + rnd() * 300, by: i % 3, surv};
-  });
-  /* keep exactly NSURV survivors, and give each its slot in the final list */
-  (() => {
-    let n = 0;
-    CAND.forEach(r => { if(r.surv && n < NSURV) r.slot = n++; else r.surv = false; });
-    for(let i = 0; n < NSURV && i < CAND.length; i++)
-      if(!CAND[i].surv){ CAND[i].surv = true; CAND[i].slot = n++; }
-  })();
-
-  function shape(kind, cx, cy, s){
-    ctx.beginPath();
-    if(kind === 'tri'){
-      ctx.moveTo(cx, cy - s); ctx.lineTo(cx + s * 0.92, cy + s * 0.72);
-      ctx.lineTo(cx - s * 0.92, cy + s * 0.72); ctx.closePath();
-    } else if(kind === 'rect'){
-      ctx.rect(cx - s * 0.88, cy - s * 0.68, s * 1.76, s * 1.36);
-    } else { hexPath(ctx, cx, cy, s * 0.95); }
-    ctx.stroke();
-  }
-  function figure(cx, cy, s){
-    ctx.beginPath(); ctx.arc(cx, cy - 30 * s, 24 * s, 0, 6.2832); ctx.stroke();
-    ctx.beginPath(); ctx.arc(cx, cy + 60 * s, 52 * s, Math.PI * 1.18, Math.PI * 1.82); ctx.stroke();
-  }
-  /* lab glyphs, so a row reads as "an experiment" without a word on it */
-  function glyph(kind, cx, cy){
-    ctx.beginPath();
-    if(kind === 'flask'){
-      ctx.moveTo(cx - 6, cy - 20); ctx.lineTo(cx - 6, cy - 6);
-      ctx.lineTo(cx - 18, cy + 18); ctx.lineTo(cx + 18, cy + 18);
-      ctx.lineTo(cx + 6, cy - 6); ctx.lineTo(cx + 6, cy - 20);
-      ctx.moveTo(cx - 10, cy - 20); ctx.lineTo(cx + 10, cy - 20);
-    } else if(kind === 'dish'){
-      ctx.arc(cx, cy, 22, 0, 6.2832);
-      ctx.moveTo(cx + 13, cy); ctx.arc(cx, cy, 13, 0, 6.2832);
-    } else {                                        /* a well plate */
-      ctx.rect(cx - 22, cy - 16, 44, 32);
-      for(let i = 0; i < 3; i++) for(let j = 0; j < 2; j++){
-        const x = cx - 12 + i * 12, y = cy - 6 + j * 12;
-        ctx.moveTo(x + 3.5, y); ctx.arc(x, y, 3.5, 0, 6.2832);
-      }
-    }
-    ctx.stroke();
-  }
-  function label(text, x, y, a, align, col, size){
-    ctx.font = '400 ' + (size || 17) + 'px "DM Mono", monospace';
-    ctx.letterSpacing = '2px';
-    ctx.textAlign = align || 'left'; ctx.textBaseline = 'alphabetic';
-    ctx.fillStyle = rgba(col || C.cream, a);
-    ctx.fillText(text, x, y);
-    ctx.letterSpacing = '0px';
-  }
-
-  return {
-    printAt: 9.4,
-    reset(){ ctx.clearRect(0, 0, W, H); },
-    frame(el){
-      const t = REDUCE ? 10 : el;
-      /* transparent on screen so the slide's vignette shows; painted for
-         print, where a transparent canvas flattens onto white */
-      ctx.clearRect(0, 0, W, H);
-      if(PRINTING){ ctx.fillStyle = C.ground; ctx.fillRect(0, 0, W, H); }
-      ctx.lineJoin = ctx.lineCap = 'round';
-
-      const room  = smoothstep(0.2, 1.0, t);   /* the window                   */
-      const ftype = smoothstep(1.0, 1.6, t);   /* given: what kind of file      */
-      /* each cut gets over a second of its own: the whole argument of the
-         slide is watching the field fall, and it cannot be watched fast */
-      const CULL  = [smoothstep(1.8, 3.0, t),
-                     smoothstep(4.1, 5.3, t),
-                     smoothstep(6.0, 7.2, t)];
-      const data  = smoothstep(3.0, 3.5, t);   /* given: the data itself        */
-      const calc  = smoothstep(3.5, 4.0, t);   /* what it turns out to look like*/
-      const metr  = smoothstep(5.3, 5.9, t);   /* given: the numbers            */
-      const grow  = smoothstep(7.3, 8.0, t);   /* what is left becomes readable */
-      const rec   = smoothstep(8.1, 8.9, t);   /* and where it has worked before*/
-
-      /* ---------------- the window ---------------- */
-      ctx.lineWidth = 1.5;
-      ctx.strokeStyle = rgba(C.cream, 0.40 * room);
-      ctx.strokeRect(AX0, AY0, AX1 - AX0, AY1 - AY0);
-      ctx.lineWidth = 1;
-      ctx.strokeStyle = rgba(C.cream, 0.20 * room);
-      ctx.beginPath();
-      ctx.moveTo(AX0, AY0 + BAR); ctx.lineTo(AX1, AY0 + BAR);
-      ctx.moveTo(SPLIT, AY0 + BAR); ctx.lineTo(SPLIT, AY1);
-      ctx.stroke();
-      if(room > 0){
-        ctx.font = '500 20px "DM Mono", monospace';
-        ctx.letterSpacing = '3px';
-        ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
-        ctx.fillStyle = rgba(C.cream, 0.88 * room);
-        ctx.fillText('CO-SCIENCE', AX0 + 28, AY0 + BAR / 2 + 1);
-        ctx.letterSpacing = '0px';
-        ctx.strokeStyle = rgba(C.cream, 0.70 * room); ctx.lineWidth = 2;
-        figure(AX1 - 40, AY0 + BAR / 2 + 6, 0.36);
-        /* whose window this is. It has to say a field, because the whole
-           point of the recommendation below is that it comes from another
-           one: her lab is oncology, the workflow was proven in immunology. */
-        label('ONCOLOGY LAB', AX1 - 84, AY0 + BAR / 2 + 7, 0.70 * room, 'right');
-        label('PRIVATE DATA', AX0 + 32, AY0 + BAR + 46, 0.62 * room);
-        label('CANDIDATE WORKFLOWS', SPLIT + 44, AY0 + BAR + 46, 0.82 * room);
-        /* the count, falling as each given rules the field down */
-        let left = COUNT[0];
-        for(let c = 0; c < 3; c++) left += (COUNT[c + 1] - COUNT[c]) * CULL[c];
-        ctx.font = '500 34px "DM Mono", monospace';
-        ctx.textAlign = 'right'; ctx.textBaseline = 'alphabetic';
-        ctx.fillStyle = rgba(C.orange, 0.95 * room);
-        ctx.fillText(Math.round(left).toLocaleString('en-US'), OX1, AY0 + BAR + 52);
-      }
-
-      /* ---------------- the givens ---------------- */
-      if(ftype > 0){
-        label('FILE TYPE', 32, GY[0] + 6, 0.62 * ftype);
-        const fx = 232, fy = GY[0], w = 34, h = 44, fold = 13;
-        ctx.strokeStyle = rgba(C.cream, 0.60 * ftype); ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.moveTo(fx - w/2, fy - h/2); ctx.lineTo(fx + w/2 - fold, fy - h/2);
-        ctx.lineTo(fx + w/2, fy - h/2 + fold); ctx.lineTo(fx + w/2, fy + h/2);
-        ctx.lineTo(fx - w/2, fy + h/2); ctx.closePath(); ctx.stroke();
-        ctx.beginPath();
-        ctx.moveTo(fx + w/2 - fold, fy - h/2); ctx.lineTo(fx + w/2 - fold, fy - h/2 + fold);
-        ctx.lineTo(fx + w/2, fy - h/2 + fold); ctx.stroke();
-        label('.h5ad', fx + 38, fy + 7, 0.78 * ftype, 'left', C.orange);
-      }
-      if(data > 0){
-        label('DATA', 32, GY[1] + 6, 0.62 * data);
-        ctx.fillStyle = rgba(C.cream, 0.55 * data);
-        CLOUD.forEach(d => {
-          ctx.beginPath(); ctx.arc(216 + d.dx * 0.62, GY[1] + d.dy * 0.62, 2.6, 0, 6.2832); ctx.fill();
-        });
-      }
-      if(calc > 0){
-        ctx.strokeStyle = rgba(C.cream, 0.50 * calc); ctx.lineWidth = 2;
-        ctx.fillStyle = rgba(C.cream, 0.50 * calc);
-        arrow(ctx, 296, GY[1], 1, 0, 46 * calc, 0.34);
-        if(calc > 0.35){
-          const a = smoothstep(0.35, 1, calc);
-          ctx.strokeStyle = rgba(C.orange, 0.50 + 0.45 * a); ctx.lineWidth = 3.2;
-          shape('tri', 392, GY[1] + 5, 30 * a);
-        }
-      }
-      if(metr > 0){
-        label('METRICS', 32, GY[2] + 6, 0.62 * metr);
-        const MX = 216, MW = 168;
-        MET.forEach((v, i) => {
-          const y = GY[2] - 17 + i * 17, g = smoothstep(i * 0.18, i * 0.18 + 0.5, metr);
-          if(g <= 0) return;
-          ctx.strokeStyle = rgba(C.cream, 0.20 * g); ctx.lineWidth = 5;
-          ctx.beginPath(); ctx.moveTo(MX, y); ctx.lineTo(MX + MW, y); ctx.stroke();
-          ctx.strokeStyle = rgba(C.orange, 0.85 * g);
-          ctx.beginPath(); ctx.moveTo(MX, y); ctx.lineTo(MX + MW * v * g, y); ctx.stroke();
-        });
-      }
-      /* one arrow per given, so a still says which given did which cut */
-      GY.forEach((y, i) => {
-        const g = CULL[i];
-        if(g <= 0) return;
-        ctx.strokeStyle = rgba(C.cream, 0.34 * g); ctx.lineWidth = 1.6;
-        ctx.fillStyle = rgba(C.cream, 0.34 * g);
-        arrow(ctx, SPLIT + 6, y, 1, 0, 58 * g, 0.30);
-      });
-
-      /* ---------------- the field, and what each cut takes out ------------- */
-      CAND.forEach((r, i) => {
-        const a = smoothstep(i * 0.012, i * 0.012 + 0.3, room);
-        if(a <= 0 || r.surv) return;
-        const k = CULL[r.by];
-        ctx.lineWidth = 5.5 - 3.4 * k;
-        ctx.strokeStyle = rgba(C.cream, (0.20 - 0.155 * k) * a);
-        ctx.beginPath();
-        ctx.moveTo(OX0 + 24, r.y); ctx.lineTo(OX0 + 24 + r.w * (1 - 0.45 * k), r.y);
-        ctx.stroke();
-      });
-
-      /* ---------------- what survives, spreading into a readable list ------ */
-      CAND.forEach((r, i) => {
-        if(!r.surv) return;
-        const a = smoothstep(i * 0.012, i * 0.012 + 0.3, room);
-        if(a <= 0) return;
-        const isRec = r.slot === PICK;
-        const on = isRec ? rec : 0;
-        /* the list opens up to make room for the recommendation */
-        const shift = (r.slot < PICK ? -18 : r.slot > PICK ? 46 : 0) * rec;
-        const y = r.y + (SY0 + r.slot * SGAP + shift - r.y) * grow;
-        const h = 6 + (OH - 6) * on;
-        const g = 0.4 + 0.6 * grow;
-
-        if(on > 0){
-          ctx.fillStyle = C.ground; ctx.fillRect(OX0, y - h/2, OX1 - OX0, h);
-          ctx.fillStyle = rgba(C.orange, 0.12 * on);
-          ctx.fillRect(OX0, y - h/2, OX1 - OX0, h);
-          ctx.lineWidth = 2.4;
-          ctx.strokeStyle = rgba(C.orange, 0.30 + 0.62 * on);
-          ctx.strokeRect(OX0, y - h/2, OX1 - OX0, h);
-        }
-        /* a survivor reads as a workflow: a title bar and a shorter one under
-           it. The recommendation keeps its bars clear of its own furniture. */
-        const bx = OX0 + 24 + 200 * on;
-        ctx.fillStyle = rgba(C.cream, (on > 0 ? 0.66 : 0.46) * a * g);
-        ctx.fillRect(bx, y - (on > 0 ? 9 : 3), 250 + r.w * 0.22, 6);
-        /* only the recommendation carries a second line: twelve rows with two
-           bars each read as twenty-four rows, which undoes the count */
-        if(on > 0){
-          ctx.fillStyle = rgba(C.cream, 0.34 * a * g);
-          ctx.fillRect(bx, y + 5, 150 + r.w * 0.1, 5);
-        }
-
-        if(on > 0){
-          label('RECOMMENDED', OX0 + 18, y + 6, 0.95 * on, 'left', C.orange);
-          ctx.lineWidth = 2;
-          ctx.strokeStyle = rgba(C.orange, 0.50 + 0.45 * on);
-          glyph('plate', OX0 + 180, y);
-          ctx.strokeStyle = rgba(C.orange, 0.95 * on); ctx.lineWidth = 2.6;
-          ctx.beginPath(); ctx.arc(SLOT, y, 13, 0, 6.2832); ctx.stroke();
-          ctx.beginPath();
-          ctx.moveTo(SLOT - 6, y + 1); ctx.lineTo(SLOT - 1.5, y + 5.5);
-          ctx.lineTo(SLOT + 6.5, y - 4.5); ctx.stroke();
-          /* under it: who has already run it, and where. The nod to the team */
-          const cy = y + OH / 2 + 22;
-          ctx.fillStyle = C.ground; ctx.fillRect(OX0, cy - 15, 700, 30);
-          ctx.strokeStyle = rgba(C.cream, 0.62 * on); ctx.lineWidth = 1.7;
-          for(let k = 0; k < 3; k++) figure(OX0 + 34 + k * 32, cy + 2, 0.25);
-          label('PROVEN IN', OX0 + 140, cy + 5, 0.62 * on, 'left', C.cream, 16);
-          label('IMMUNOLOGY AND NEUROSCIENCE', OX0 + 262, cy + 5, 0.92 * on, 'left', C.orange, 16);
-        }
-      });
-    }
-  };
-};
-
-
-/* =========================================================================
    RUNTIME
    The deck mounts every figure once against a fixed 1920x1080 stage. Here
    the canvases are sized from their own layout box instead, so each visual
@@ -1535,6 +995,36 @@ VIZ['exchange'] = function(cv){
    ========================================================================= */
 (function(){
   'use strict';
+
+  /* ---------------------------------------------------------------- invite form
+     Formspree-style plain-POST URL. Empty: the form opens a prefilled mail instead. */
+  var FORM_ENDPOINT = '';
+  var FORM_LABELS = {name:'Name', email:'Email', org:'Lab or company', data:'Data type', question:'Question'};
+  function inviteFields(form){
+    var out = {};
+    Object.keys(FORM_LABELS).forEach(function(k){ out[k] = (form.elements[k] && form.elements[k].value || '').trim(); });
+    return out;
+  }
+  function inviteMailto(fields){
+    var body = Object.keys(FORM_LABELS).map(function(k){ return FORM_LABELS[k] + ': ' + fields[k]; }).join('\n');
+    return 'mailto:cesar@manifoldwerks.com?subject=' + encodeURIComponent('Glasswerk invite request') +
+           '&body=' + encodeURIComponent(body);
+  }
+  function submitInvite(ev){
+    ev.preventDefault();
+    var form = ev.target, status = document.getElementById('form-status');
+    var fields = inviteFields(form);
+    if(!fields.email){ status.textContent = 'An email address is needed so we can reply.'; return; }
+    var byMail = function(){ location.href = inviteMailto(fields); };
+    if(!FORM_ENDPOINT){ byMail(); return; }
+    fetch(FORM_ENDPOINT, {method:'POST', headers:{'Accept':'application/json','Content-Type':'application/json'}, body:JSON.stringify(fields)})
+      .then(function(r){ if(!r.ok) throw new Error(r.status);
+        status.textContent = 'Thank you. We read every request and reply by mail.'; form.reset(); })
+      .catch(byMail);
+  }
+  var inviteForm = document.getElementById('invite-form');
+  if(inviteForm) inviteForm.addEventListener('submit', submitInvite);
+  window.inviteMailto = inviteMailto;   /* exposed for the local check */
 
   var figures = [];
 
@@ -1614,7 +1104,7 @@ VIZ['exchange'] = function(cv){
   });
 
   /* Every figure draws its own labels, and at least one of them lays out
-     against DM Mono's exact metrics. Drawing before the webfont arrives
+     against IBM Plex Mono's exact metrics. Drawing before the webfont arrives
      measures a fallback instead and pushes that text off the canvas, so the
      figures wait for the fonts rather than for the document. */
   function start(){
