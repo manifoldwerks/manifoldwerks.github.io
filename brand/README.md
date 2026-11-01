@@ -11,6 +11,7 @@ Brand assets for manifoldwerks.com, copied from the mnfldwrks design system.
 | `favicon.svg`, `favicon-32.png` | Browser tab icon (small mark). |
 | `apple-touch-icon.svg`, `apple-touch-icon.png` | iOS home-screen icon: sand mark on a cherry plate. |
 | `tokens.css` | Palette, type and spacing as CSS custom properties. |
+| `partners/mila.svg` | Mila wordmark, original purple, beside the "A Mila startup" line in the hero. Source: https://mila.quebec/sites/default/themes/mila_v1/logo.svg |
 | `partners/neiges.png` | Neiges Biotechnologies wordmark, used with permission on the partners band. Source: https://arenapole.ca/wp-content/uploads/2026/04/logo-neiges.png |
 
 The mark is a 64-unit grid: sphere r 25, great circle tilted -28 degrees, five steps at 160/130/100/70/40 degrees with radii 1.8 to 5.0. The steps always grow toward the upper right. One ink per mark; never rotate it, add gradients or connect the steps.
