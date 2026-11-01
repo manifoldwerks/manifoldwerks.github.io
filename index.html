@@ -149,10 +149,6 @@ a:hover{border-bottom-color:var(--cherry)}
 .portrait{flex:0 0 clamp(200px,24vw,300px);margin:0;border:1px solid var(--rule)}
 .portrait img{display:block;width:100%;height:auto}
 @media (max-width:56rem){.portrait{flex-basis:auto;width:min(100%,280px)}}
-.facts{display:grid;grid-template-columns:max-content 1fr;column-gap:32px;max-width:var(--measure)}
-.facts dt,.facts dd{padding:16px 0;border-top:1px solid var(--hair);margin:0}
-.facts dt{align-self:center}
-@media (max-width:40rem){.facts{grid-template-columns:1fr}.facts dt{padding-bottom:4px}.facts dd{border-top:none;padding-top:0}}
 
 /* --- the 32px cherry rule that sits under a label --- */
 .rule{width:32px;height:1px;background:var(--cherry);margin:20px 0 0;border:none}
@@ -387,6 +383,7 @@ html.settled .reveal{opacity:1!important;transform:none!important;transition:non
       <p class="lead reveal">Glasswerk runs on your machine. <em>Nothing trains on your data.</em> What travels is the method: the steps, settings and checks an expert would have chosen.</p>
     </div>
     <p class="body reveal" style="margin-top:22px;max-width:58ch"><span class="label" style="margin-right:12px">Next</span>Labs that opt in will share which methods worked on data shaped like theirs. The data will never leave.</p>
+    <p class="body reveal" style="margin-top:14px;max-width:58ch"><span class="label" style="margin-right:12px">Open source</span>The engine is public: manyruns, manyagents and manylatents, by <a href="https://latentreasoning.works" target="_blank" rel="noopener">Latent Reasoning Works</a>, on PyPI.</p>
     <div class="fig-scroll reveal" style="margin-top:clamp(2.5rem,5vw,3.5rem)">
     <svg class="fig fig--wide" viewBox="0 0 1200 360" style="max-width:1200px" role="img" aria-label="Three labs. The data stays inside each one. A method card travels between them." font-family="IBM Plex Mono, monospace">
       <g stroke="var(--rule)" fill="var(--paper-raised)">
@@ -466,12 +463,6 @@ html.settled .reveal{opacity:1!important;transform:none!important;transition:non
       <a href="https://www.neigesbiotech.com/" target="_blank" rel="noopener" style="border:none;display:block"><img src="/brand/partners/neiges.png" alt="Neiges Biotechnologies" style="height:56px;width:auto;filter:invert(1);opacity:.92"></a>
       <span class="label">Design partner · Montréal</span>
     </div>
-    <dl class="facts reveal" style="margin-top:clamp(2rem,4vw,3rem)">
-      <dt class="label">Design partners</dt><dd class="body">Three academic labs.</dd>
-      <dt class="label">Programme</dt><dd class="body">Mila Ventures Launchpad, October 2026.</dd>
-      <dt class="label">Grant</dt><dd class="body">Anthropic AI for Science.</dd>
-      <dt class="label"><a href="https://latentreasoning.works" target="_blank" rel="noopener" style="color:var(--cherry);border-bottom-color:var(--cherry)">Open source</a></dt><dd class="body">manyruns, manyagents and manylatents, by Latent Reasoning Works, on PyPI.</dd>
-    </dl>
   </div>
 </section>
 
