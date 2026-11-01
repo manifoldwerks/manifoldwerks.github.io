@@ -145,6 +145,10 @@ a:hover{border-bottom-color:var(--cherry)}
   border:1px solid var(--rule);border-radius:0;appearance:none;-webkit-appearance:none}
 .fields input:focus,.fields select:focus,.fields textarea:focus{outline:none;border-color:var(--ink)}
 @media (max-width:56rem){.fields{grid-template-columns:1fr}}
+.founder-row{align-items:flex-start}
+.portrait{flex:0 0 clamp(200px,24vw,300px);margin:0;border:1px solid var(--rule)}
+.portrait img{display:block;width:100%;height:auto}
+@media (max-width:56rem){.portrait{flex-basis:auto;width:min(100%,280px)}}
 .facts{display:grid;grid-template-columns:max-content 1fr;column-gap:32px;max-width:var(--measure)}
 .facts dt,.facts dd{padding:16px 0;border-top:1px solid var(--hair);margin:0}
 .facts dt{align-self:center}
@@ -477,12 +481,19 @@ html.settled .reveal{opacity:1!important;transform:none!important;transition:non
 <section class="band" id="founder">
   <div class="inner">
     <div class="chrome"><span class="label">Founder</span><span class="label">06</span></div>
-    <div class="head">
-      <h2 class="reveal"><a href="https://cmvcordova.com" target="_blank" rel="noopener" style="border-bottom-width:2px">César Miguel Valdez Córdova</a></h2>
-      <p class="lead reveal">PhD candidate at Mila and McGill in geometric deep learning for biology. <a href="https://scholar.google.com/citations?user=kI5hHesAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a>.</p>
+    <div class="row founder-row">
+      <figure class="reveal portrait">
+        <img src="/brand/founder/cesar.jpg" alt="César Miguel Valdez Córdova" width="720" height="840" loading="lazy">
+      </figure>
+      <div class="col">
+        <div class="head">
+          <h2 class="reveal"><a href="https://cmvcordova.com" target="_blank" rel="noopener" style="border-bottom-width:2px">César Miguel Valdez Córdova</a></h2>
+          <p class="lead reveal">PhD candidate at Mila and McGill in geometric deep learning for biology. <a href="https://scholar.google.com/citations?user=kI5hHesAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a>.</p>
+        </div>
+        <p class="body reveal" style="margin-top:22px;max-width:58ch">I am looking for a technical cofounder: someone who has shipped agentic systems in production and wants to build for biologists who do not code. Write to me.</p>
+        <p class="reveal" style="margin-top:clamp(1.5rem,3vw,2.2rem)"><a class="btn btn-primary" href="mailto:cesar@manifoldwerks.com">cesar@manifoldwerks.com</a></p>
+      </div>
     </div>
-    <p class="body reveal" style="margin-top:22px;max-width:58ch">I am looking for a technical cofounder: someone who has shipped agentic systems in production and wants to build for biologists who do not code. Write to me.</p>
-    <p class="reveal" style="margin-top:clamp(1.5rem,3vw,2.2rem)"><a class="btn btn-primary" href="mailto:cesar@manifoldwerks.com">cesar@manifoldwerks.com</a></p>
   </div>
 </section>
 
