@@ -380,7 +380,8 @@ html.settled .reveal{opacity:1!important;transform:none!important;transition:non
       <p class="lead reveal">Glasswerk runs on your machine. <em>Nothing trains on your data.</em> What travels is the method: the steps, settings and checks an expert would have chosen.</p>
     </div>
     <p class="body reveal" style="margin-top:22px;max-width:58ch"><span class="label" style="margin-right:12px">Next</span>Labs that opt in will share which methods worked on data shaped like theirs. The data will never leave.</p>
-    <svg class="fig reveal" viewBox="0 0 1200 360" style="margin-top:clamp(2.5rem,5vw,3.5rem);max-width:1200px" role="img" aria-label="Three labs. The data stays inside each one. A method card travels between them." font-family="IBM Plex Mono, monospace">
+    <div class="fig-scroll reveal" style="margin-top:clamp(2.5rem,5vw,3.5rem)">
+    <svg class="fig fig--wide" viewBox="0 0 1200 360" style="max-width:1200px" role="img" aria-label="Three labs. The data stays inside each one. A method card travels between them." font-family="IBM Plex Mono, monospace">
       <g stroke="var(--rule)" fill="var(--paper-raised)">
         <rect x="40" y="60" width="320" height="220"/><rect x="440" y="60" width="320" height="220"/><rect x="840" y="60" width="320" height="220"/>
       </g>
@@ -394,10 +395,10 @@ html.settled .reveal{opacity:1!important;transform:none!important;transition:non
         <text x="56" y="86">LAB A</text><text x="456" y="86">LAB B</text><text x="856" y="86">LAB C</text>
       </g>
       <path d="M200 320 H1000" stroke="var(--rule)" stroke-dasharray="6 8" fill="none"/>
-      <path d="M990 312 L1000 320 L990 328" stroke="var(--rule)" fill="none"/>
-      <rect x="470" y="298" width="260" height="44" fill="var(--paper)" stroke="var(--ink)"/>
+      <rect x="410" y="298" width="380" height="44" fill="var(--paper)" stroke="var(--ink)"/>
       <text x="600" y="326" fill="var(--ink)" font-size="16" text-anchor="middle">method · steps · settings · checks</text>
     </svg>
+    </div>
   </div>
 </section>
 
@@ -473,7 +474,7 @@ html.settled .reveal{opacity:1!important;transform:none!important;transition:non
       <p class="lead reveal">Founder. PhD candidate at Mila and McGill in geometric deep learning for biology. Published in Nature Genetics and at NeurIPS. Founder of Latent Reasoning Works.</p>
     </div>
     <p class="body reveal" style="margin-top:22px;max-width:58ch">I am looking for a technical cofounder: someone who has shipped agentic systems in production and wants to build for biologists who do not code. Write to me.</p>
-    <p class="reveal" style="margin-top:clamp(1.5rem,3vw,2.2rem)"><a class="btn btn-primary" href="mailto:cesar@manifoldwerks.com">Write to me</a></p>
+    <p class="reveal" style="margin-top:clamp(1.5rem,3vw,2.2rem)"><a class="btn btn-primary" href="mailto:cesar@manifoldwerks.com">cesar@manifoldwerks.com</a></p>
   </div>
 </section>
 
@@ -483,14 +484,14 @@ html.settled .reveal{opacity:1!important;transform:none!important;transition:non
      ═══════════════════════════════════════════════════════════════════════ -->
 <section class="band dark" id="invite">
   <div class="field-cover" aria-hidden="true" style="opacity:.18;display:flex;align-items:center">
-    <canvas class="fig fig--wide" data-viz="eroom" data-fixed data-opt='{"timeline":true,"further":true,"quiet":true,"mute":true}' width="1640" height="540" style="position:static;transform:none"></canvas>
+    <canvas class="fig fig--wide" data-viz="eroom" data-fixed data-opt='{"timeline":true,"further":true,"quiet":true,"mute":true}' width="1640" height="540" style="position:static;transform:none;height:auto"></canvas>
   </div>
   <div class="inner">
     <div class="chrome"><span class="label">Early access</span><span class="label">06</span></div>
     <div class="head">
       <h2 class="reveal">Request an invite.</h2>
     </div>
-    <form id="invite-form" class="reveal" method="POST" action="" novalidate style="margin-top:clamp(2rem,4vw,3rem)">
+    <form id="invite-form" class="reveal" method="POST" action="mailto:cesar@manifoldwerks.com" enctype="text/plain" novalidate style="margin-top:clamp(2rem,4vw,3rem)">
       <div class="fields">
         <label>Name<input type="text" name="name" required autocomplete="name"></label>
         <label>Email<input type="email" name="email" required autocomplete="email"></label>
@@ -1015,7 +1016,10 @@ VIZ['eroom'] = function(cv){
     var form = ev.target, status = document.getElementById('form-status');
     var fields = inviteFields(form);
     if(!fields.email){ status.textContent = 'An email address is needed so we can reply.'; return; }
-    var byMail = function(){ location.href = inviteMailto(fields); };
+    var byMail = function(){
+      status.textContent = 'Your mail app should open with this request. If it does not, write to cesar@manifoldwerks.com.';
+      location.href = inviteMailto(fields);
+    };
     if(!FORM_ENDPOINT){ byMail(); return; }
     fetch(FORM_ENDPOINT, {method:'POST', headers:{'Accept':'application/json','Content-Type':'application/json'}, body:JSON.stringify(fields)})
       .then(function(r){ if(!r.ok) throw new Error(r.status);
