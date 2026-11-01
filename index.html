@@ -40,7 +40,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <script>
 /* Entrances are gated on this class and it is set before first paint, so the
    page never flashes its finished state — and never hides its copy behind a
@@ -99,10 +99,8 @@ body{font-family:var(--f-body);background:var(--paper);color:var(--ink);
 .inner{width:100%;max-width:var(--measure);margin:0 auto;position:relative;z-index:2}
 
 /* ===========================================================================
-   TYPE
-   Heavy mixed-case display + light mixed-case body + small uppercase mono
-   label. Display type is NEVER uppercased; uppercase belongs to mono only.
-   Negative tracking on display is what gives the type its compressed feel.
+   TYPE — Archivo for headings and labels, Newsreader for reading, mono only
+   inside figures and the readout.
    =========================================================================== */
 h1{font-family:var(--f-display);font-weight:700;
   font-size:clamp(2.4rem,6.5vw,5.2rem);line-height:1.02;
@@ -114,16 +112,9 @@ h3{font-family:var(--f-display);font-weight:600;
   font-size:clamp(1.25rem,2.2vw,1.95rem);line-height:1.14;letter-spacing:-.014em}
 .lead{font-size:clamp(1.15rem,2vw,1.65rem);line-height:1.44}
 .body{font-size:clamp(1rem,1.25vw,1.2rem);line-height:1.52}
-.caption{font-size:clamp(.9rem,1vw,1rem);line-height:1.45}
 .label{font-family:var(--f-display);font-weight:600;font-size:.8rem;letter-spacing:0;
   color:var(--ink-muted)}
 .foot-items{display:inline-flex;gap:22px;flex-wrap:wrap}
-.pull{font-family:var(--f-display);font-weight:600;
-  font-size:clamp(1.35rem,2.7vw,2.15rem);line-height:1.2;
-  letter-spacing:-.018em;padding-bottom:.02em}
-.stat{font-family:var(--f-display);font-weight:800;
-  font-size:clamp(2.4rem,5vw,4rem);line-height:1.08;
-  letter-spacing:-.03em;padding-bottom:.04em}
 /* <em> is the band's one cherry element and stays upright. At most one per band. */
 em{font-style:normal;color:var(--cherry)}
 strong{font-weight:700}
@@ -135,10 +126,9 @@ a:hover{border-bottom-color:var(--cherry)}
 .btn{display:inline-block;font-family:var(--f-display);font-weight:600;font-size:1rem;
   padding:14px 22px;border:1px solid var(--ink);color:var(--ink);background:none;
   border-radius:0;text-decoration:none;cursor:pointer;line-height:1.2}
-.btn:hover{border-color:var(--ink);background:var(--paper-raised)}
+.btn:hover{background:var(--paper-raised)}
 .btn-primary{background:var(--cherry);border-color:var(--cherry);color:#f4eee1}
 .btn-primary:hover{background:var(--cherry-deep);border-color:var(--cherry-deep)}
-.plate{background:var(--paper-raised);border:1px solid var(--rule);padding:24px}
 .fields{display:grid;grid-template-columns:1fr 1fr;gap:18px 24px;max-width:56rem}
 .fields label{display:block;font-family:var(--f-display);font-weight:600;font-size:.85rem;color:var(--ink-muted)}
 .fields .wide{grid-column:1 / -1}
@@ -159,13 +149,9 @@ a:hover{border-bottom-color:var(--cherry)}
 .portrait img{display:block;width:100%;height:auto}
 @media (max-width:56rem){.portrait{flex-basis:auto;width:min(100%,280px)}}
 
-/* --- the 32px cherry rule that sits under a label --- */
-.rule{width:32px;height:1px;background:var(--cherry);margin:20px 0 0;border:none}
 
 /* --- the Steps mark (brand/steps-mark.svg, inlined so it takes currentColor) --- */
 .mark{display:block;width:1em;height:1em;flex:none}
-.hero-mark{font-size:clamp(3.4rem,8vw,6rem);color:var(--ink);margin-bottom:clamp(1.4rem,3vw,2.4rem)}
-.lockup{display:inline-flex;align-items:center;gap:.9em}
 /* --- hero: a top row, then a grid with the product window bleeding right --- */
 .hero-band{padding:0;overflow:visible}
 .top{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;
@@ -190,16 +176,7 @@ a:hover{border-bottom-color:var(--cherry)}
 }
 .wordmark{font-family:var(--f-display);font-weight:700;font-size:1rem;letter-spacing:.08em}
 .actions{display:flex;gap:12px;flex-wrap:wrap}
-.footband:has(.lockup){align-items:center}
-.lockup .mark{font-size:1.9em;color:var(--ink-muted)}
 
-/* ===========================================================================
-   CHROME — a mono label pair, separated by a hairline. Cover, quote and
-   closing bands suppress it by convention, as in the deck.
-   =========================================================================== */
-.chrome{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;
-  padding-bottom:14px;margin-bottom:clamp(2.5rem,5vw,4.5rem);
-  border-bottom:1px solid var(--hair)}
 .footband{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;
   padding-top:14px;margin-top:clamp(2.5rem,5vw,4.5rem);
   border-top:1px solid var(--hair)}
@@ -214,23 +191,7 @@ a:hover{border-bottom-color:var(--cherry)}
 .col{flex:1;min-width:0}
 @media (max-width:56rem){.row{flex-direction:column}}
 
-/* a plain region divided by hairlines rather than boxed */
-.cell{padding:0 0 0 30px;border-left:1px solid var(--hair)}
-.cell:first-child{padding-left:0;border-left:none}
-@media (max-width:56rem){
-  .cell{padding:26px 0 0;border-left:none;border-top:1px solid var(--hair)}
-  .cell:first-child{padding-top:0;border-top:none}
-}
 
-/* bullets: an em-dash marker in muted mono. Never a dot, never a check. */
-/* The em-dash marker is absolutely positioned rather than a grid column.
-   A grid li makes EVERY element child its own grid item, so any inline
-   <span>, <em> or <strong> inside a bullet jumps to a new row. */
-ul.ticks{list-style:none}
-ul.ticks li{position:relative;padding-left:1.5em;margin-bottom:15px;
-  font-size:clamp(1rem,1.25vw,1.2rem);line-height:1.46}
-ul.ticks li::before{content:"—";position:absolute;left:0;top:0;
-  font-family:var(--f-mono);color:var(--ink-muted)}
 
 /* ===========================================================================
    LIVE FIGURES
@@ -263,8 +224,6 @@ ul.ticks li::before{content:"—";position:absolute;left:0;top:0;
 
 /* Align absolutely positioned chrome to the centred measure rather than to
    the raw page padding, so it shares an edge with the copy above it. */
-.measure-inset{left:max(var(--pad-x),calc((100% - var(--measure)) / 2));
-  right:max(var(--pad-x),calc((100% - var(--measure)) / 2))}
 
 /* the instrument readout strip */
 .readout{position:absolute;bottom:clamp(1.5rem,4vh,3rem);
@@ -282,15 +241,10 @@ ul.ticks li::before{content:"—";position:absolute;left:0;top:0;
 /* a figure whose composition is authored at a fixed frame: scale the element,
    never re-lay-out the drawing, or its pinned annotations fall off the edge */
 .fig--wide{width:100%;min-width:720px;height:auto}
-.fig-cap{margin-top:22px}
 
 /* ===========================================================================
-   MOTION — one orchestrated reveal per band, staggered.
-
-   Every entrance is gated on html.js, which an inline script in the head sets
-   before first paint. With no JavaScript — or with a script that failed — the
-   page is simply already in its finished state rather than a blank green
-   field, since all of the copy lives inside .reveal.
+   MOTION — one orchestrated reveal, on the hero only. Gated on html.js so
+   the copy is visible with no JavaScript.
    =========================================================================== */
 html.js .reveal{opacity:0;transform:translateY(26px);
   transition:opacity var(--dur) var(--ease),transform var(--dur) var(--ease)}
@@ -301,10 +255,6 @@ html.js .band.visible .reveal:nth-child(3){transition-delay:.22s}
 html.js .band.visible .reveal:nth-child(4){transition-delay:.30s}
 html.js .band.visible .reveal:nth-child(5){transition-delay:.38s}
 html.js .band.visible .reveal:nth-child(6){transition-delay:.46s}
-html.js .band.visible .r-late{transition-delay:1.2s}
-html.js .band.visible .r-late2{transition-delay:1.4s}
-/* .reveal.r-turn, not .r-turn: the nth-child stagger outranks a bare class */
-html.js .band.visible .reveal.r-turn{transition-delay:4.9s}
 
 
 /* Reduced motion, print, and ?still=1 all resolve to the finished state. */
@@ -343,7 +293,7 @@ html.settled .reveal{opacity:1!important;transform:none!important;transition:non
         <a class="btn btn-primary" href="#invite">Request an invite</a>
         <a class="btn" href="https://github.com/latent-reasoning-works/manyruns" target="_blank" rel="noopener">Install the open engine</a>
       </div>
-      <p class="small reveal">Glasswerk is an invite-only alpha. The engine under it, manyruns, is open source.</p>
+      <p class="small reveal">Glasswerk is an invite-only alpha. The engine under it, manyruns, is open source and on PyPI.</p>
     </div>
     <figure class="window">
       <a href="/brand/stills/02-questions.png" target="_blank" rel="noopener"><img src="/brand/stills/02-questions.png" alt="Glasswerk after the first look: the cell map coloured by condition, and the questions this data can answer" width="1600" height="1000"></a>
@@ -354,7 +304,7 @@ html.settled .reveal{opacity:1!important;transform:none!important;transition:non
 
 
 <!-- ═══════════════════════════════════════════════════════════════════════
-     02 — THE WEEK. The pain on the left, the fix on the right.
+     02 — THE WEEK. The question, and the expert's read that only holds so far.
      ═══════════════════════════════════════════════════════════════════════ -->
 <section class="band" id="week">
   <div class="inner">
@@ -392,15 +342,15 @@ html.settled .reveal{opacity:1!important;transform:none!important;transition:non
         <figcaption><span class="label">3</span><p class="lead">Every run ends with a figure, a one-line result and its caveats. Enough to call the next experiment.</p></figcaption>
       </figure>
     </div>
-    <p class="label" style="margin-top:18px;text-transform:none;letter-spacing:0;font-size:.78rem">Shown: the alpha build on a public colon dataset, Garrido-Trigo et al., Nature Communications 2023.</p>
+    <p class="label" style="margin-top:18px">Shown: the alpha build on a public colon dataset, Garrido-Trigo et al., Nature Communications 2023.</p>
     <p class="body" style="margin-top:clamp(2rem,4vw,3rem);max-width:62ch"><span class="label" style="margin-right:12px">Next</span>Bring a hypothesis. Glasswerk will look through every view of your cells, keep the ones that hold, and say why. When none holds, it says so, and says what would change that: a sharper question, or more cells. You check the biology you see, and only that.</p>
   </div>
 </section>
 
 
 <!-- ═══════════════════════════════════════════════════════════════════════
-     04 — DATA STAYS. METHOD TRAVELS. A static figure: three labs, the data
-     locked inside each, one method card on the road between them.
+     04 — DATA STAYS. METHOD TRAVELS. The consoles figure: every lab with
+     its own names, the shared shape in the middle, the data never moving.
      ═══════════════════════════════════════════════════════════════════════ -->
 <section class="band dark" id="stays">
   <div class="inner">
@@ -413,6 +363,7 @@ html.settled .reveal{opacity:1!important;transform:none!important;transition:non
     <div class="fig-scroll" style="margin-top:clamp(2.5rem,5vw,3.5rem)">
       <canvas class="fig fig--wide" data-viz="consoles" data-fixed data-opt='{"theme":"dark"}' width="1680" height="560"></canvas>
     </div>
+    <p class="label" style="margin-top:14px">Same parts, each lab’s own names. Only the shape is shared.</p>
   </div>
 </section>
 
@@ -439,7 +390,7 @@ html.settled .reveal{opacity:1!important;transform:none!important;transition:non
       <div class="seam" aria-hidden="true"></div>
       <div class="fieldtag" style="left:24px;top:24px">
         <div class="label" style="color:var(--ink)">Starlings</div>
-        <div class="sub">Sturnus vulgaris &middot; winter roost</div>
+        <div class="sub">Sturnus vulgaris, winter roost</div>
       </div>
       <div class="fieldtag fieldtag--right" style="left:calc(50% + 24px);top:24px">
         <div class="label" style="color:var(--ink)">Epithelium</div>
@@ -452,8 +403,8 @@ html.settled .reveal{opacity:1!important;transform:none!important;transition:non
         <div class="sp">Live</div>
       </div>
     </figure>
-    <p class="label" style="margin-top:18px;text-transform:none;letter-spacing:0;font-size:.78rem;max-width:70ch">
-      Sources: Vicsek et al., Phys. Rev. Lett. 1995 &middot; Toner and Tu, Phys. Rev. E 1998 &middot; Szabó et al., Phys. Rev. E 2006 &middot; Marchetti et al., Rev. Mod. Phys. 2013.
+    <p class="label" style="margin-top:18px;max-width:70ch">
+      Sources: Vicsek et al., Phys. Rev. Lett. 1995; Toner and Tu, Phys. Rev. E 1998; Szabó et al., Phys. Rev. E 2006; Marchetti et al., Rev. Mod. Phys. 2013.
     </p>
   </div>
 </section>
@@ -505,7 +456,7 @@ html.settled .reveal{opacity:1!important;transform:none!important;transition:non
         <label class="wide">One line on the question you want answered<textarea name="question" rows="2"></textarea></label>
       </div>
       <p style="margin-top:22px"><button class="btn btn-primary" type="submit">Request an invite</button></p>
-      <p id="form-status" class="label" aria-live="polite" style="margin-top:14px;text-transform:none;letter-spacing:0;font-size:.85rem"></p>
+      <p id="form-status" class="label" aria-live="polite" style="margin-top:14px"></p>
     </form>
     <div class="footband" style="margin-top:clamp(3.5rem,8vw,6rem);flex-wrap:wrap">
       <span class="label foot-items"><span>Manifoldwerks, Montréal</span><a href="mailto:cesar@manifoldwerks.com">cesar@manifoldwerks.com</a><a href="https://github.com/latent-reasoning-works/manyruns" target="_blank" rel="noopener">GitHub</a></span>
@@ -534,6 +485,8 @@ const REDUCE = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 /* set around printing, so transparent figures do not flatten onto white */
 let PRINTING = false;
 const TOFF = parseFloat(new URLSearchParams(location.search).get('t') || '0') || 0;
+/* ?still=1 holds every figure at its printAt frame, as a print would */
+const STILL = /[?&]still=1/.test(location.search);
 
 /* deterministic PRNG — the composition is identical on every load */
 function mkRnd(seed){
@@ -617,22 +570,28 @@ const FONT = {
 };
 
 /* =========================================================================
-   TOLERANCE  —  band "Today the answer costs a week". Ported from the
-   Kindler talk. One group of cells slowly changes: it stretches into a
+   TOLERANCE  —  band "Today the answer costs a week". Ported from a
+   talk figure. One group of cells slowly changes: it stretches into a
    path, then the path splits. The expert's reading holds across a range
    and then flips. The ranges and their edges are illustrative. Loops.
    ========================================================================= */
 VIZ['tolerance'] = function(cv){
-  const W = cv.width, H = cv.height, ctx = cv.getContext('2d');
   const opt = JSON.parse(cv.dataset.opt || '{}');
   const P = PAL[opt.theme === 'light' ? 'light' : 'dark'];
+  /* a phone gets a portrait frame: the cloud above, the expert's read below */
+  const COMPACT = opt.compact === true || (opt.compact !== false && innerWidth < 768);
+  if(COMPACT){ cv.width = 720; cv.height = 900; cv.style.minWidth = '0'; }
+  const W = cv.width, H = cv.height, ctx = cv.getContext('2d');
   const rnd = mkRnd(33), N = 340;
   const pts = Array.from({length:N}, () => ({u:rnd(), v:gauss(rnd), w:gauss(rnd), s: rnd() < .5 ? -1 : 1}));
   const READS = [{l:'cluster', a:0, b:.33}, {l:'trajectory', a:.33, b:.68}, {l:'branching', a:.68, b:1}];
-  const bw = 980, px = 1060, pw = W - 1060;
+  const bw = COMPACT ? W : 980, bh = COMPACT ? 440 : H;
+  const px = COMPACT ? 40 : 1060, pw = COMPACT ? W - 80 : W - 1060;
+  const ty = COMPACT ? 500 : 40, wy = COMPACT ? 580 : 130, ay = COMPACT ? 690 : 250, row = COMPACT ? 64 : 76;
+  const fWord = COMPACT ? 64 : 76, fMono = COMPACT ? 22 : 20, fRow = 24;
   const PERIOD = 12;                       /* seconds: 8.5 of change, then a hold, then again */
   return {
-    printAt: 6.4,
+    printAt: 9.0,
     frame(t){
       ground(ctx, W, H, P.ground);
       const al = REDUCE ? .5 : clamp01(((t + .4) % PERIOD - .8)/8.5);
@@ -641,43 +600,47 @@ VIZ['tolerance'] = function(cv){
       for(const p of pts){
         let x = .5 + (p.u - .5)*L + p.w*.035;
         let y = .5 + p.v*.05 + .06*Math.sin((p.u - .5)*3)*smoothstep(.1, .6, al);
-        if(p.u > .5) y += p.s*br*(p.u - .5)*.75;
+        if(p.u > .5) y += p.s*br*(p.u - .5)*.6;
         ctx.fillStyle = rgba(P.ink, .82);
-        ctx.beginPath(); ctx.arc(x*bw, y*H, 4.4, 0, 6.283); ctx.fill();
+        ctx.beginPath(); ctx.arc(x*bw, y*bh, 4.4, 0, 6.283); ctx.fill();
       }
-      ctx.textAlign = 'left'; ctx.fillStyle = rgba(P.inkMuted, 1); ctx.font = FONT.mono(20);
-      ctx.fillText("the expert’s read", px, 40);
+      ctx.textAlign = 'left'; ctx.fillStyle = rgba(P.inkMuted, 1); ctx.font = FONT.mono(fMono);
+      ctx.fillText("the expert’s read", px, ty);
       const cur = READS.find(r => al < r.b) || READS[2];
-      ctx.fillStyle = rgba(P.cherry, 1); ctx.font = FONT.bold(76);
-      ctx.fillText(cur.l, px, 130);
-      const ax0 = px, aw = pw - 20, ay = 250;
-      ctx.fillStyle = rgba(P.inkMuted, 1); ctx.font = FONT.mono(18);
+      ctx.fillStyle = rgba(P.cherry, 1); ctx.font = FONT.bold(fWord);
+      ctx.fillText(cur.l, px, wy);
+      const ax0 = px, aw = pw - 20;
+      ctx.fillStyle = rgba(P.inkMuted, 1); ctx.font = FONT.mono(fMono - 2);
       ctx.fillText('how far the shape has changed  →', ax0, ay - 24);
       READS.forEach((r, i) => {
-        const y = ay + 30 + i*76, on = r === cur;
-        ctx.fillStyle = rgba(P.ink, on ? .95 : .4); ctx.font = FONT.monob(24);
+        const y = ay + 30 + i*row, on = r === cur;
+        ctx.fillStyle = rgba(P.ink, on ? .95 : .4); ctx.font = FONT.monob(fRow);
         ctx.fillText(r.l, ax0, y);
         ctx.fillStyle = rgba(P.ink, on ? .9 : .16);
         ctx.fillRect(ax0 + aw*r.a, y + 14, aw*(r.b - r.a) - 6, 14);
       });
       const mx = ax0 + aw*al;
       ctx.strokeStyle = rgba(P.ink, .9); ctx.lineWidth = 3;
-      ctx.beginPath(); ctx.moveTo(mx, ay + 2); ctx.lineTo(mx, ay + 30 + 2*76 + 36); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(mx, ay + 2); ctx.lineTo(mx, ay + 30 + 2*row + 36); ctx.stroke();
     }
   };
 };
 
+
 /* =========================================================================
-   CONSOLES  —  band "Your data stays in your lab". Ported from the Kindler
-   talk. Every lab has its own console: the same arrangement, turned its own
+   CONSOLES  —  band "Your data stays in your lab". Ported from a talk
+   figure. Every lab has its own console: the same arrangement, turned its own
    way, named in its own script. Lines link the matching parts across
    consoles; the shared shape assembles in the middle with no names on it.
    Data stays in each lab.
    ========================================================================= */
 VIZ['consoles'] = function(cv){
-  const W = cv.width, H = cv.height, ctx = cv.getContext('2d');
   const opt = JSON.parse(cv.dataset.opt || '{}');
   const P = PAL[opt.theme === 'light' ? 'light' : 'dark'];
+  /* a phone gets a portrait frame with four labs */
+  const COMPACT = opt.compact === true || (opt.compact !== false && innerWidth < 768);
+  if(COMPACT){ cv.width = 720; cv.height = 900; cv.style.minWidth = '0'; }
+  const W = cv.width, H = cv.height, ctx = cv.getContext('2d');
   const rnd = mkRnd(404);
   const base = [];
   for(let i=0;i<34;i++) base.push([.22 + gauss(rnd)*.05, .5 + gauss(rnd)*.06]);
@@ -685,17 +648,28 @@ VIZ['consoles'] = function(cv){
   for(let i=0;i<24;i++){ const u = rnd(); base.push([.58 + .26*u + gauss(rnd)*.012, .5 - .28*u + gauss(rnd)*.015]); }
   for(let i=0;i<24;i++){ const u = rnd(); base.push([.58 + .26*u + gauss(rnd)*.012, .5 + .28*u + gauss(rnd)*.015]); }
   const ANCH = [[.22,.5],[.84,.22],[.84,.78]];
-  const LABS = [
+  /* the same three parts, named the way each lab names them */
+  const WIDE = [
     {x:.10, y:.24, rot:0,    flip:1,  names:['stem','neuron','glia']},
-    {x:.10, y:.76, rot:2.2,  flip:-1, names:['kel','vora','tisk']},
-    {x:.30, y:.80, rot:-1.3, flip:1,  names:['ハ','リ','ヲ']},
-    {x:.70, y:.80, rot:.9,   flip:-1, names:['Δ','Ψ','Ω']},
-    {x:.90, y:.76, rot:-2.6, flip:1,  names:['ᚠ','ᚢ','ᚦ']},
-    {x:.90, y:.24, rot:1.7,  flip:1,  names:['ra','tun','ves']},
-    {x:.30, y:.16, rot:3.0,  flip:-1, names:['a','b','c']},
-    {x:.70, y:.16, rot:-.4,  flip:-1, names:['∴','∷','∻']}
+    {x:.10, y:.76, rot:2.2,  flip:-1, names:['c0','c1','c2']},
+    {x:.30, y:.80, rot:-1.3, flip:1,  names:['HSC','B','T']},
+    {x:.70, y:.80, rot:.9,   flip:-1, names:['prog','int','term']},
+    {x:.90, y:.76, rot:-2.6, flip:1,  names:['root','left','right']},
+    {x:.90, y:.24, rot:1.7,  flip:1,  names:['cl.1','cl.2','cl.3']},
+    {x:.30, y:.16, rot:3.0,  flip:-1, names:['A','B','C']},
+    {x:.70, y:.16, rot:-.4,  flip:-1, names:['α','β','γ']}
   ];
-  const bw = 210, bh = 130;
+  const NARROW = [
+    {x:.25, y:.15, rot:0,    flip:1,  names:['stem','neuron','glia']},
+    {x:.75, y:.15, rot:1.7,  flip:1,  names:['cl.1','cl.2','cl.3']},
+    {x:.25, y:.86, rot:2.2,  flip:-1, names:['c0','c1','c2']},
+    {x:.75, y:.86, rot:.9,   flip:-1, names:['prog','int','term']}
+  ];
+  const LABS = COMPACT ? NARROW : WIDE;
+  const order = COMPACT ? [0,1,3,2] : [0,1,6,7,5,4,3,2];
+  const bw = COMPACT ? 250 : 210, bh = COMPACT ? 150 : 130;
+  const fName = COMPACT ? 22 : 16, fLab = COMPACT ? 17 : 13, fCap = COMPACT ? 20 : 16;
+  const sw = COMPACT ? 520 : 560, shh = COMPACT ? 300 : 330;
   const place = (lab, p, cx, cy, sw, sh) => {
     const x = (p[0] - .5), y = (p[1] - .5)*lab.flip;
     const c = Math.cos(lab.rot), si = Math.sin(lab.rot);
@@ -704,12 +678,12 @@ VIZ['consoles'] = function(cv){
   return {
     printAt: 9,
     frame(t){
+      const T = REDUCE ? 9 : t;
       ground(ctx, W, H, P.ground);
       const centers = LABS.map(l => [l.x*W, l.y*H]);
-      const lk = smoothstep(3.0, 5.0, t);
+      const lk = smoothstep(3.0, 5.0, T);
       if(lk > 0){
         ctx.setLineDash([5, 9]); ctx.lineWidth = 1.5;
-        const order = [0,1,6,7,5,4,3,2];
         for(let i=0;i<LABS.length;i++){
           const j = (i + 1) % LABS.length;
           const A = LABS[order[i]], B = LABS[order[j]];
@@ -723,7 +697,7 @@ VIZ['consoles'] = function(cv){
         ctx.setLineDash([]);
       }
       LABS.forEach((l, k) => {
-        const a = smoothstep(.2 + k*.3, .7 + k*.3, t);
+        const a = smoothstep(.2 + k*.3, .7 + k*.3, T);
         if(a <= 0) return;
         const [cx, cy] = centers[k];
         ctx.globalAlpha = a;
@@ -736,16 +710,16 @@ VIZ['consoles'] = function(cv){
         ctx.textAlign = 'center';
         ANCH.forEach((p, j) => {
           const [x, y] = place(l, p, cx, cy, bw*.8, bh*.8);
-          ctx.fillStyle = rgba(P.brass, .95); ctx.font = FONT.monob(16);
+          ctx.fillStyle = rgba(P.brass, .95); ctx.font = FONT.monob(fName);
           ctx.fillText(l.names[j], x, y - 10);
         });
-        ctx.fillStyle = rgba(P.inkMuted, 1); ctx.font = FONT.mono(13);
-        ctx.fillText('lab ' + (k + 1) + ', data stays here', cx, cy + bh/2 + 18);
+        ctx.fillStyle = rgba(P.inkMuted, 1); ctx.font = FONT.mono(fLab);
+        ctx.fillText('lab ' + (k + 1) + ', data stays here', cx, cy + bh/2 + 18 + (COMPACT ? 4 : 0));
         ctx.globalAlpha = 1;
       });
-      const sh = smoothstep(5.2, 7.0, t);
+      const sh = smoothstep(5.2, 7.0, T);
       if(sh > 0){
-        const cx = W/2, cy = H/2, sw = 560, shh = 330;
+        const cx = W/2, cy = H/2;
         const id = {rot:0, flip:1};
         ctx.globalAlpha = sh;
         for(const p of base){
@@ -758,13 +732,14 @@ VIZ['consoles'] = function(cv){
           const [x, y] = place(id, p, cx, cy, sw, shh);
           ctx.beginPath(); ctx.arc(x, y, 26, 0, 6.283); ctx.stroke();
         });
-        ctx.fillStyle = rgba(P.inkMuted, 1); ctx.font = FONT.mono(16); ctx.textAlign = 'center';
+        ctx.fillStyle = rgba(P.inkMuted, 1); ctx.font = FONT.mono(fCap); ctx.textAlign = 'center';
         ctx.fillText('the shape that holds', cx, cy + shh/2 + 26);
         ctx.globalAlpha = 1;
       }
     }
   };
 };
+
 
 /* =========================================================================
    1. FIELD SPLIT  —  band "Nature repeats her best ideas"
@@ -1238,7 +1213,7 @@ VIZ['eroom'] = function(cv){
       var f = figures.filter(function(x){ return x.cv === e.target; })[0];
       if(!f) return;
       if(e.isIntersecting){
-        if(!f.running){ f.running = true; f.t0 = null; }
+        if(!f.running && !f.frozen){ f.running = true; f.t0 = null; }
       } else {
         f.running = false;
       }
@@ -1269,6 +1244,7 @@ VIZ['eroom'] = function(cv){
       seen.disconnect();
       mountAll();
       observeAll();
+      freezeAll();
     }, 220);
   });
 
@@ -1282,15 +1258,19 @@ VIZ['eroom'] = function(cv){
 
     sweep();
 
-    /* ?t=<seconds> freezes every figure at a settled moment, for stills and
-       visual checks. Carried over from the deck's PDF export path. */
-    if(TOFF){
-      figures.forEach(function(f){
-        f.running = false;
-        f.inst.reset && f.inst.reset();
-        for(var k = 90; k >= 0; k--) f.inst.frame(TOFF - k * 0.016);
-      });
-    }
+    freezeAll();
+  }
+
+  /* ?t=<seconds> freezes every figure at that moment; ?still=1 at each
+     figure's own printAt. For stills and visual checks. */
+  function freezeAll(){
+    if(!TOFF && !STILL) return;
+    figures.forEach(function(f){
+      f.running = false; f.frozen = true;
+      var at = TOFF || f.inst.printAt || 4.2;
+      f.inst.reset && f.inst.reset();
+      for(var k = 90; k >= 0; k--) f.inst.frame(at - k * 0.016);
+    });
   }
 
   /* Printing captures every figure, not just the ones on screen, each at the
@@ -1328,8 +1308,8 @@ VIZ['eroom'] = function(cv){
 
   /* A browser does not compute intersections for a tab it has never rendered,
      so a page opened in a background tab can reach first paint with nothing
-     revealed and no figure running. Every band's copy lives inside .reveal, so
-     that would be a blank page. Sweep the geometry directly whenever the tab
+     revealed and no figure running. The hero's copy lives inside .reveal, so
+     that would be a blank hero. Sweep the geometry directly whenever the tab
      could have changed state, and treat the observer as the fast path rather
      than the only one. */
   function sweep(){
@@ -1340,7 +1320,7 @@ VIZ['eroom'] = function(cv){
     figures.forEach(function(f){
       var r = f.cv.getBoundingClientRect();
       var on = r.top < innerHeight + 120 && r.bottom > -120;
-      if(on && !f.running){ f.running = true; f.t0 = null; }
+      if(on && !f.running && !f.frozen){ f.running = true; f.t0 = null; }
       else if(!on && f.running){ f.running = false; }
     });
   }
