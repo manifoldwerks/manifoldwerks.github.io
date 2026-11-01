@@ -145,6 +145,11 @@ a:hover{border-bottom-color:var(--cherry)}
   border:1px solid var(--rule);border-radius:0;appearance:none;-webkit-appearance:none}
 .fields input:focus,.fields select:focus,.fields textarea:focus{outline:none;border-color:var(--ink)}
 @media (max-width:56rem){.fields{grid-template-columns:1fr}}
+.steps{align-items:flex-start}
+.step{margin:0}
+.step img,.step-frame{display:block;width:100%;height:auto;aspect-ratio:16/10;border:1px solid var(--rule);background:var(--paper-raised)}
+.step figcaption{margin-top:16px}
+.step figcaption .lead{margin-top:8px;font-size:clamp(1rem,1.3vw,1.2rem)}
 .founder-row{align-items:flex-start}
 .portrait{flex:0 0 clamp(200px,24vw,300px);margin:0;border:1px solid var(--rule)}
 .portrait img{display:block;width:100%;height:auto}
@@ -349,23 +354,23 @@ html.settled .reveal{opacity:1!important;transform:none!important;transition:non
   <div class="inner">
     <div class="chrome"><span class="label">Glasswerk</span><span class="label">02</span></div>
     <div class="head">
-      <h2 class="reveal">Glasswerk, in three steps.</h2>
+      <h2 class="reveal">Glasswerk, shown.</h2>
     </div>
-    <!-- stills: Task 8 replaces the three cells with plates -->
-    <div class="row reveal" style="margin-top:clamp(2.5rem,5vw,3.5rem)">
-      <div class="col cell">
-        <div class="label">1</div>
-        <p class="lead" style="margin-top:14px">Open a dataset. The first look starts on its own: a cell map and a lineage recipe.</p>
-      </div>
-      <div class="col cell">
-        <div class="label">2</div>
-        <p class="lead" style="margin-top:14px">Ask what your data can answer. Each question names the method and the paper behind it.</p>
-      </div>
-      <div class="col cell">
-        <div class="label">3</div>
-        <p class="lead" style="margin-top:14px">Every run ends with a figure, a one-line result and its caveats. Enough to call the next experiment.</p>
-      </div>
+    <div class="row steps reveal" style="margin-top:clamp(2.5rem,5vw,3.5rem)">
+      <figure class="col step">
+        <img src="/brand/stills/01-first-look.png" alt="Glasswerk, a dataset just opened: the first look runs, three steps ticked and the fourth live, with a Stop button" width="1600" height="1000" loading="lazy">
+        <figcaption><span class="label">1</span><p class="lead">Open a dataset. The first look starts on its own: a cell map and a lineage recipe.</p></figcaption>
+      </figure>
+      <figure class="col step">
+        <img src="/brand/stills/02-questions.png" alt="Glasswerk after the first look: the cell map coloured by condition, and the column of questions this data can answer, each with its method and paper" width="1600" height="1000" loading="lazy">
+        <figcaption><span class="label">2</span><p class="lead">Ask what your data can answer. Each question names the method and the paper behind it.</p></figcaption>
+      </figure>
+      <figure class="col step step--pending">
+        <div class="step-frame" aria-hidden="true"></div>
+        <figcaption><span class="label">3</span><p class="lead">Every run ends with a figure, a one-line result and its caveats. Enough to call the next experiment.</p></figcaption>
+      </figure>
     </div>
+    <p class="label reveal" style="margin-top:18px;text-transform:none;letter-spacing:0;font-size:.78rem">Shown: the alpha build on a public colon dataset, Garrido-Trigo et al., Nature Communications 2023.</p>
     <p class="body reveal" style="margin-top:clamp(2rem,4vw,3rem);max-width:62ch"><span class="label" style="margin-right:12px">Next</span>Bring a hypothesis. Glasswerk will look through every view of your cells, keep the ones that hold, and say why. When none holds, it says so, and says what would change that: a sharper question, or more cells. You check the biology you see, and only that.</p>
   </div>
 </section>
