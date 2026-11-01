@@ -137,6 +137,10 @@ a:hover{border-bottom-color:var(--cherry)}
 .btn-primary{background:var(--cherry);border-color:var(--cherry);color:#f4eee1}
 .btn-primary:hover{background:var(--cherry-deep);border-color:var(--cherry-deep)}
 .plate{background:var(--paper-raised);border:1px solid var(--rule);padding:24px}
+.facts{display:grid;grid-template-columns:max-content 1fr;column-gap:32px;max-width:var(--measure)}
+.facts dt,.facts dd{padding:16px 0;border-top:1px solid var(--hair);margin:0}
+.facts dt{align-self:center}
+@media (max-width:40rem){.facts{grid-template-columns:1fr}.facts dt{padding-bottom:4px}.facts dd{border-top:none;padding-top:0}}
 
 /* --- the 32px cherry rule that sits under a label --- */
 .rule{width:32px;height:1px;background:var(--cherry);margin:20px 0 0;border:none}
@@ -423,6 +427,45 @@ html.settled .reveal{opacity:1!important;transform:none!important;transition:non
     <div>alignment, sheet <span class="v acc" id="phi-sheet">0.000</span></div>
     <div><span class="v">one shared field, both panels</span></div>
     <div class="sp">Live</div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     06 — PARTNERS AND BACKING. One logo, four lines, one cherry link.
+     ═══════════════════════════════════════════════════════════════════════ -->
+<section class="band dark" id="partners">
+  <div class="inner">
+    <div class="chrome"><span class="label">Partners</span><span class="label">04</span></div>
+    <div class="head">
+      <h2 class="reveal">Who we work with.</h2>
+    </div>
+    <div class="plate reveal" style="margin-top:clamp(2.5rem,5vw,3.5rem);display:inline-flex;flex-direction:column;gap:18px;align-items:flex-start">
+      <img src="/brand/partners/neiges.png" alt="Neiges Biotechnologies" style="height:56px;width:auto;filter:invert(1);opacity:.92">
+      <span class="label">Design partner · Montréal</span>
+    </div>
+    <dl class="facts reveal" style="margin-top:clamp(2rem,4vw,3rem)">
+      <dt class="label">Design partners</dt><dd class="body">Three academic labs.</dd>
+      <dt class="label">Programme</dt><dd class="body">Mila Ventures Launchpad, October 2026.</dd>
+      <dt class="label">Grant</dt><dd class="body">Anthropic AI for Science.</dd>
+      <dt class="label"><a href="https://github.com/latent-reasoning-works/manyruns" target="_blank" rel="noopener" style="color:var(--cherry);border-bottom-color:var(--cherry)">Open source</a></dt><dd class="body">manyruns and manylatents, on PyPI, MIT licence.</dd>
+    </dl>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     07 — FOUNDER. One person, and the seat next to him.
+     ═══════════════════════════════════════════════════════════════════════ -->
+<section class="band" id="founder">
+  <div class="inner">
+    <div class="chrome"><span class="label">Founder</span><span class="label">05</span></div>
+    <div class="head">
+      <h2 class="reveal">César Valdez</h2>
+      <p class="lead reveal">Founder. PhD candidate at Mila and McGill in geometric deep learning for biology. Published in Nature Genetics and at NeurIPS. Founder of Latent Reasoning Works.</p>
+    </div>
+    <p class="body reveal" style="margin-top:22px;max-width:58ch">I am looking for a technical cofounder: someone who has shipped agentic systems in production and wants to build for biologists who do not code. Write to me.</p>
+    <p class="reveal" style="margin-top:clamp(1.5rem,3vw,2.2rem)"><a class="btn btn-primary" href="mailto:cesar@manifoldwerks.com">Write to me</a></p>
   </div>
 </section>
 
