@@ -305,80 +305,50 @@ html.settled .reveal{opacity:1!important;transform:none!important;transition:non
 
 
 <!-- ═══════════════════════════════════════════════════════════════════════
-     02 — THE CURVE. The question, and nothing else. The close shows this
-     same figure again with one line added.
+     02 — GLASSWERK, in three steps. Plain until the stills from the dev
+     build land; then each step becomes a plate with its still.
      ═══════════════════════════════════════════════════════════════════════ -->
-<section class="band dark" id="cures">
+<section class="band dark" id="glasswerk">
   <div class="inner">
-    <div class="chrome"><span class="label">The problem</span><span class="label">01</span></div>
+    <div class="chrome"><span class="label">Glasswerk</span><span class="label">01</span></div>
     <div class="head">
-      <h2 class="reveal" style="max-width:20ch">Cures keep getting harder to find.</h2>
-      <p class="lead reveal" style="margin-top:26px;max-width:52ch;color:var(--ink-cream-2)">
-        Up close, it is one scientist, one week, and an analysis that never had a chance.
-      </p>
+      <h2 class="reveal">Glasswerk, in three steps.</h2>
     </div>
-    <div class="fig-scroll reveal" style="margin-top:clamp(2.5rem,5vw,3.5rem)">
-      <canvas class="fig fig--wide" data-viz="eroom" data-fixed data-opt='{"timeline":true,"quiet":true}'
-              width="1640" height="540"></canvas>
-    </div>
-    <div class="footband">
-      <span class="pull">We spend more looking every year, and find less. <em>The methods are sound &mdash; so why?</em></span>
+    <!-- stills: Task 8 replaces the three cells with plates -->
+    <div class="row reveal" style="margin-top:clamp(2.5rem,5vw,3.5rem)">
+      <div class="col cell">
+        <div class="label">1</div>
+        <p class="lead" style="margin-top:14px">Open a dataset. The first look starts on its own: a cell map and a lineage recipe.</p>
+      </div>
+      <div class="col cell">
+        <div class="label">2</div>
+        <p class="lead" style="margin-top:14px">Ask what your data can answer. Each question names the method and the paper behind it.</p>
+      </div>
+      <div class="col cell">
+        <div class="label">3</div>
+        <p class="lead" style="margin-top:14px">Every run ends with a figure, a one-line result and its caveats.</p>
+      </div>
     </div>
   </div>
 </section>
 
 
 <!-- ═══════════════════════════════════════════════════════════════════════
-     03 — WHY. Too much happens alone. The street stays dark, then lights
-     outward from the one window that never went out, and the turn lands.
+     03 — THE WEEK. The pain on the left, the fix on the right.
      ═══════════════════════════════════════════════════════════════════════ -->
-<section class="band void" id="alone">
+<section class="band" id="week">
   <div class="inner">
-    <div class="chrome" style="border-bottom-color:var(--bd-dark)"><span class="label">Why</span><span class="label">02</span></div>
+    <div class="chrome"><span class="label">The problem</span><span class="label">02</span></div>
     <div class="head">
-      <h2 class="reveal">Too much happens alone.</h2>
-      <p class="lead reveal" style="margin-top:26px;max-width:52ch;color:rgba(240,232,210,.72)">
-        Somewhere, someone has already found the way forward.
-        The scientist who needs it is working by herself.
-      </p>
+      <h2 class="reveal" style="max-width:18ch">Today that question costs a week.</h2>
     </div>
-    <div class="fig-scroll reveal" style="margin-top:clamp(2.5rem,5vw,3.5rem)">
-      <canvas class="fig fig--wide" data-viz="labs" data-fixed width="1680" height="430"></canvas>
-    </div>
-    <h2 class="reveal r-turn" style="margin-top:clamp(2rem,4vw,3rem);color:var(--accent)">You&rsquo;re not alone anymore.</h2>
-  </div>
-</section>
-
-
-<!-- ═══════════════════════════════════════════════════════════════════════
-     04 — THE AMBITION. One line, no numbers, and the picture.
-     ═══════════════════════════════════════════════════════════════════════ -->
-<section class="band void" id="ambition">
-  <div class="inner">
-    <h1 class="reveal" style="max-width:22ch">We&rsquo;re building the world&rsquo;s biggest team of scientists<span style="color:var(--accent)">.</span></h1>
-    <div class="fig-scroll reveal r-late" style="margin-top:clamp(2rem,4vw,3rem)">
-      <canvas class="fig fig--wide" data-viz="world" data-fixed width="1680" height="600"></canvas>
-    </div>
-  </div>
-</section>
-
-
-<!-- ═══════════════════════════════════════════════════════════════════════
-     05 — PRODUCT. A world of workflows, narrowed to yours. Drawn, not
-     described: three givens cut the field and one survivor is recommended.
-     ═══════════════════════════════════════════════════════════════════════ -->
-<section class="band dark" id="product">
-  <div class="inner">
-    <div class="chrome"><span class="label">co-science</span><span class="label">03</span></div>
-    <div class="head">
-      <h2 class="reveal">A world of workflows. <em>Narrowed to yours.</em></h2>
-    </div>
-    <div class="fig-scroll reveal" style="margin-top:clamp(2.5rem,5vw,3.5rem)">
-      <canvas class="fig fig--wide" data-viz="exchange" data-fixed width="1640" height="600"></canvas>
-    </div>
-    <div class="footband" style="flex-wrap:wrap;align-items:center">
-      <span class="pull">No proprietary data leaves the lab.</span>
-      <span class="pull" style="color:var(--accent);font-size:clamp(1.1rem,2vw,1.6rem)">Seeded by every scientist using co-science.</span>
+    <div class="row reveal" style="margin-top:clamp(2.5rem,5vw,3.5rem)">
+      <div class="col cell">
+        <p class="lead">Dozens of 2D plots. One tool after another. The computational biologist who could tell you is booked until spring.</p>
+      </div>
+      <div class="col cell">
+        <p class="lead">Glasswerk runs the workflow an expert would start with, on your own machine, and shows every step, setting and caveat. When a question needs a method it does not have, <em>it says so</em> instead of guessing.</p>
+      </div>
     </div>
   </div>
 </section>
