@@ -168,11 +168,12 @@ a:hover{border-bottom-color:var(--cherry)}
 .hero .small{margin-top:1.2rem;font-size:1rem;color:var(--ink-muted)}
 .window{position:relative;width:100%;margin:0;min-width:0}
 .window a{border:none;display:block}
-.window img{display:block;width:118%;max-width:none;height:auto;border:1px solid var(--rule);background:var(--paper-raised)}
+.window img,.window-frame{display:block;width:118%;max-width:none;height:auto;border:1px solid var(--rule);background:var(--paper-raised)}
+.window-frame{aspect-ratio:16/10}
 .window figcaption{margin-top:12px;font-size:.95rem;color:var(--ink-muted)}
 @media (max-width:56rem){
   .hero{grid-template-columns:1fr;min-height:auto;padding-right:var(--pad-x);padding-top:3rem}
-  .window img{width:100%}
+  .window img,.window-frame{width:100%}
 }
 .wordmark{font-family:var(--f-display);font-weight:700;font-size:1rem;letter-spacing:.08em}
 .actions{display:flex;gap:12px;flex-wrap:wrap}
@@ -296,8 +297,9 @@ html.settled .reveal{opacity:1!important;transform:none!important;transition:non
       <p class="small reveal">Glasswerk is an invite-only alpha. The engine under it, manyruns, is open source and on PyPI.</p>
     </div>
     <figure class="window">
-      <a href="/brand/stills/02-questions.png" target="_blank" rel="noopener"><img src="/brand/stills/02-questions.png" alt="Glasswerk after the first look: the cell map coloured by condition, and the questions this data can answer" width="1600" height="1000"></a>
-      <figcaption>The alpha, on a public colon dataset. Garrido-Trigo et al., 2023.</figcaption>
+      <!-- stills: the window image goes here when the anonymised captures land -->
+      <div class="window-frame" aria-hidden="true"></div>
+      <figcaption>Glasswerk, the alpha. Pictures follow.</figcaption>
     </figure>
   </div>
 </section>
@@ -326,15 +328,15 @@ html.settled .reveal{opacity:1!important;transform:none!important;transition:non
 <section class="band" id="glasswerk">
   <div class="inner">
     <div class="head">
-      <h2>Glasswerk, shown.</h2>
+      <h2>Glasswerk, in three steps.</h2>
     </div>
     <div class="row steps" style="margin-top:clamp(2.5rem,5vw,3.5rem)">
       <figure class="col step">
-        <a href="/brand/stills/01-first-look.png" target="_blank" rel="noopener" style="border:none;display:block"><img src="/brand/stills/01-first-look.png" alt="Glasswerk, a dataset just opened: the first look runs, three steps ticked and the fourth live, with a Stop button" width="1600" height="1000" loading="lazy"></a>
+        <div class="step-frame" aria-hidden="true"></div>
         <figcaption><span class="label">1</span><p class="lead">Open a dataset. The first look starts on its own: a cell map and a lineage recipe.</p></figcaption>
       </figure>
       <figure class="col step">
-        <a href="/brand/stills/02-questions.png" target="_blank" rel="noopener" style="border:none;display:block"><img src="/brand/stills/02-questions.png" alt="Glasswerk after the first look: the cell map coloured by condition, and the column of questions this data can answer, each with its method and paper" width="1600" height="1000" loading="lazy"></a>
+        <div class="step-frame" aria-hidden="true"></div>
         <figcaption><span class="label">2</span><p class="lead">Ask what your data can answer. Each question names the method and the paper behind it.</p></figcaption>
       </figure>
       <figure class="col step step--pending">
@@ -342,7 +344,6 @@ html.settled .reveal{opacity:1!important;transform:none!important;transition:non
         <figcaption><span class="label">3</span><p class="lead">Every run ends with a figure, a one-line result and its caveats. Enough to call the next experiment.</p></figcaption>
       </figure>
     </div>
-    <p class="label" style="margin-top:18px">Shown: the alpha build on a public colon dataset, Garrido-Trigo et al., Nature Communications 2023.</p>
     <p class="body" style="margin-top:clamp(2rem,4vw,3rem);max-width:62ch"><span class="label" style="margin-right:12px">Next</span>Bring a hypothesis. Glasswerk will look through every view of your cells, keep the ones that hold, and say why. When none holds, it says so, and says what would change that: a sharper question, or more cells. You check the biology you see, and only that.</p>
   </div>
 </section>
