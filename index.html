@@ -164,6 +164,28 @@ a:hover{border-bottom-color:var(--cherry)}
 .mark{display:block;width:1em;height:1em;flex:none}
 .hero-mark{font-size:clamp(3.4rem,8vw,6rem);color:var(--ink);margin-bottom:clamp(1.4rem,3vw,2.4rem)}
 .lockup{display:inline-flex;align-items:center;gap:.9em}
+/* --- hero: a top row, then a grid with the product window bleeding right --- */
+.hero-band{padding:0;overflow:visible}
+.top{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;
+  padding:28px var(--pad-x) 0;font-family:var(--f-display);font-weight:600;font-size:.95rem}
+.top .brand{display:inline-flex;align-items:center;gap:.6em}
+.top .brand .mark{font-size:1.4em;color:var(--ink)}
+.top .where{font-weight:500;color:var(--ink-muted);display:inline-flex;align-items:center;gap:10px}
+.top .where img{height:22px;width:auto;display:block}
+.hero{display:grid;grid-template-columns:minmax(20rem,38%) 1fr;gap:clamp(2rem,5vw,5rem);align-items:center;
+  min-height:calc(100svh - 80px);padding:2rem 0 3rem var(--pad-x);overflow:hidden}
+.hero h1{font-size:clamp(2.4rem,4.6vw,4.4rem);max-width:12ch}
+.hero .lead{margin-top:1.4rem;max-width:30ch}
+.hero .actions{margin-top:2.2rem}
+.hero .small{margin-top:1.2rem;font-size:1rem;color:var(--ink-muted)}
+.window{position:relative;width:100%;margin:0;min-width:0}
+.window a{border:none;display:block}
+.window img{display:block;width:118%;max-width:none;height:auto;border:1px solid var(--rule);background:var(--paper-raised)}
+.window figcaption{margin-top:12px;font-size:.95rem;color:var(--ink-muted)}
+@media (max-width:56rem){
+  .hero{grid-template-columns:1fr;min-height:auto;padding-right:var(--pad-x);padding-top:3rem}
+  .window img{width:100%}
+}
 .wordmark{font-family:var(--f-display);font-weight:700;font-size:1rem;letter-spacing:.08em}
 .actions{display:flex;gap:12px;flex-wrap:wrap}
 .footband:has(.lockup){align-items:center}
@@ -302,27 +324,29 @@ html.settled .reveal{opacity:1!important;transform:none!important;transition:non
 <body>
 
 <!-- ═══════════════════════════════════════════════════════════════════════
-     01 — HERO. The question, Glasswerk in one line, two actions. The one
-     cherry element is the primary button, so the mark is ink.
+     01 — HERO. The Glasswerk window owns the page. Text column left, the
+     window bleeding off the right edge. The one cherry element is the
+     primary button.
      ═══════════════════════════════════════════════════════════════════════ -->
-<section class="band" id="top" style="min-height:100svh;display:flex;flex-direction:column;justify-content:center">
-  <div class="inner">
-    <div class="chrome reveal" style="align-items:center">
-      <span class="lockup" style="gap:.7em"><svg class="mark" style="font-size:1.6em;color:var(--ink)" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-linecap="round" role="img" aria-label="Manifoldwerks mark"><circle cx="32" cy="32" r="25" stroke-width="3.5"/><path d="M9.93 43.74A25 10 -28 0 1 54.07 20.26" stroke-width="2.4" stroke-dasharray="0 4.6"/><path d="M54.07 20.26A25 10 -28 0 1 9.93 43.74" stroke-width="2"/><g fill="currentColor" stroke="none"><circle cx="12.86" cy="46.05" r="1.8"/><circle cx="21.41" cy="46.31" r="2.6"/><circle cx="32.79" cy="42.73" r="3.4"/><circle cx="43.96" cy="36.28" r="4.2"/><circle cx="51.93" cy="28.68" r="5"/></g></svg><span class="wordmark">MANIFOLDWERKS</span></span>
-      <span class="lockup" style="gap:14px"><img src="/brand/partners/mila.svg" alt="Mila" style="height:26px;width:auto;display:block"><span class="label">A Mila startup, Montréal</span></span>
+<section class="band hero-band" id="top">
+  <div class="top">
+    <span class="brand"><svg class="mark" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-linecap="round" role="img" aria-label="Manifoldwerks mark"><circle cx="32" cy="32" r="25" stroke-width="3.5"/><path d="M9.93 43.74A25 10 -28 0 1 54.07 20.26" stroke-width="2.4" stroke-dasharray="0 4.6"/><path d="M54.07 20.26A25 10 -28 0 1 9.93 43.74" stroke-width="2"/><g fill="currentColor" stroke="none"><circle cx="12.86" cy="46.05" r="1.8"/><circle cx="21.41" cy="46.31" r="2.6"/><circle cx="32.79" cy="42.73" r="3.4"/><circle cx="43.96" cy="36.28" r="4.2"/><circle cx="51.93" cy="28.68" r="5"/></g></svg><span class="wordmark">MANIFOLDWERKS</span></span>
+    <span class="where"><img src="/brand/partners/mila.svg" alt="Mila"><span>A Mila startup, Montréal</span></span>
+  </div>
+  <div class="hero">
+    <div class="hero-copy">
+      <h1 class="reveal">Does your data show what you think it shows?</h1>
+      <p class="lead reveal">Glasswerk clones your best computational biologist. Drop a single-cell dataset. Get the analysis an expert would run, and see why.</p>
+      <div class="actions reveal">
+        <a class="btn btn-primary" href="#invite">Request an invite</a>
+        <a class="btn" href="https://github.com/latent-reasoning-works/manyruns" target="_blank" rel="noopener">Install the open engine</a>
+      </div>
+      <p class="small reveal">Glasswerk is an invite-only alpha. The engine under it, manyruns, is open source.</p>
     </div>
-    <h1 class="reveal" style="max-width:16ch">Does your data show what you think it shows?</h1>
-    <p class="lead reveal" style="margin-top:clamp(1.4rem,3vw,2.2rem);max-width:48ch">
-      Glasswerk clones your best computational biologist. Drop a single-cell dataset.
-      Get the analysis an expert would run, and see why.
-    </p>
-    <div class="actions reveal" style="margin-top:clamp(2rem,4vw,3rem)">
-      <a class="btn btn-primary" href="#invite">Request an invite</a>
-      <a class="btn" href="https://github.com/latent-reasoning-works/manyruns" target="_blank" rel="noopener">Install the open engine</a>
-    </div>
-    <p class="label reveal" style="margin-top:24px;text-transform:none;letter-spacing:0;font-size:.8rem">
-      Glasswerk is an invite-only alpha. The engine under it, manyruns, is open source and on PyPI.
-    </p>
+    <figure class="window">
+      <a href="/brand/stills/02-questions.png" target="_blank" rel="noopener"><img src="/brand/stills/02-questions.png" alt="Glasswerk after the first look: the cell map coloured by condition, and the questions this data can answer" width="1600" height="1000"></a>
+      <figcaption>The alpha, on a public colon dataset. Garrido-Trigo et al., 2023.</figcaption>
+    </figure>
   </div>
 </section>
 
