@@ -217,9 +217,11 @@ ul.ticks li::before{content:"—";position:absolute;left:0;top:0;
 /* the seam where the two regimes meet */
 .seam{position:absolute;left:50%;top:0;width:1px;height:100%;z-index:1;pointer-events:none;
   background:var(--rule)}
-/* copy over a live field sits on a paper panel, no gradient */
-.field-copy{background:color-mix(in srgb,var(--paper) 86%,transparent);padding:24px;
-  margin-left:-24px;width:calc(100% + 48px);max-width:calc(var(--measure) + 48px)}
+/* a live field held in a hairlined frame at a fixed aspect, never a splash */
+.field-frame{position:relative;width:100%;aspect-ratio:16/7;min-height:320px;overflow:hidden;
+  border:1px solid var(--rule);background:var(--paper);margin:0}
+.field-frame .fieldtag{top:24px}
+@media (max-width:48rem){.field-frame{aspect-ratio:4/3}}
 /* a label pinned onto a live field */
 .fieldtag{position:absolute;top:clamp(4rem,12vh,9rem);z-index:3;isolation:isolate}
 .fieldtag::before{content:"";position:absolute;left:-12px;top:-8px;
@@ -404,38 +406,44 @@ html.settled .reveal{opacity:1!important;transform:none!important;transition:non
 
 
 <!-- ═══════════════════════════════════════════════════════════════════════
-     05 — WHY METHODS TRANSFER. One field, two parameter regimes, identical
-     quiver on both halves: the arrows are literally the same arrows.
+     05 — A MOTIVATING EXAMPLE. One field, two parameter regimes, identical
+     quiver on both halves. A contained figure, not a splash: the argument
+     is the product, this is the picture behind the bet.
      ═══════════════════════════════════════════════════════════════════════ -->
-<section class="band" id="transfer" style="min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:clamp(7rem,16vh,11rem)">
-  <div class="field-cover" aria-hidden="true">
-    <canvas data-viz="field-split" data-opt='{"theme":"light"}'></canvas>
-  </div>
-  <div class="seam" aria-hidden="true"></div>
-
-  <div class="fieldtag reveal r-late" style="left:max(var(--pad-x),calc((100% - var(--measure)) / 2))">
-    <div class="label" style="color:var(--ink)">Starlings</div>
-    <div class="sub">Sturnus vulgaris &middot; winter roost</div>
-  </div>
-  <div class="fieldtag fieldtag--right reveal r-late2" style="left:calc(50% + clamp(1.5rem,4vw,5rem))">
-    <div class="label" style="color:var(--ink)">Epithelium</div>
-    <div class="sub">confluent cell monolayer</div>
-  </div>
-
-  <div class="inner field-copy">
-    <h2 class="reveal">Nature repeats her best ideas.</h2>
-    <p class="lead reveal" style="margin-top:clamp(1.2rem,2.5vw,1.8rem);max-width:52ch">
-      Starlings over a city and cells in a tissue sheet move under the same equations.
-      A method that is right for one is right for the other.
-      That is why a workflow proven in one lab can transfer to yours.
+<section class="band" id="transfer">
+  <div class="inner">
+    <div class="chrome"><span class="label">A motivating example</span><span class="label">04</span></div>
+    <div class="head">
+      <h2 class="reveal">Nature repeats her best ideas.</h2>
+      <p class="lead reveal" style="max-width:56ch">
+        Starlings over a city and cells in a tissue sheet are described by the same family of equations.
+        Methods written for one have been fitted to the other.
+        Glasswerk starts from the same bet: a method proven on data shaped like yours is the place to begin on yours.
+      </p>
+    </div>
+    <figure class="field-frame reveal" style="margin-top:clamp(2.5rem,5vw,3.5rem)">
+      <div class="field-cover" aria-hidden="true">
+        <canvas data-viz="field-split" data-opt='{"theme":"light"}'></canvas>
+      </div>
+      <div class="seam" aria-hidden="true"></div>
+      <div class="fieldtag reveal r-late" style="left:24px;top:24px">
+        <div class="label" style="color:var(--ink)">Starlings</div>
+        <div class="sub">Sturnus vulgaris &middot; winter roost</div>
+      </div>
+      <div class="fieldtag fieldtag--right reveal r-late2" style="left:calc(50% + 24px);top:24px">
+        <div class="label" style="color:var(--ink)">Epithelium</div>
+        <div class="sub">confluent cell monolayer</div>
+      </div>
+      <div class="readout" style="left:24px;right:24px;bottom:20px">
+        <div>alignment, flock <span class="v acc" id="phi-flock">0.000</span></div>
+        <div>alignment, sheet <span class="v acc" id="phi-sheet">0.000</span></div>
+        <div><span class="v">one shared field, both panels</span></div>
+        <div class="sp">Live</div>
+      </div>
+    </figure>
+    <p class="label reveal" style="margin-top:18px;text-transform:none;letter-spacing:0;font-size:.78rem;max-width:70ch">
+      Sources: Vicsek et al., Phys. Rev. Lett. 1995 &middot; Toner and Tu, Phys. Rev. E 1998 &middot; Szabó et al., Phys. Rev. E 2006 &middot; Marchetti et al., Rev. Mod. Phys. 2013.
     </p>
-  </div>
-
-  <div class="readout measure-inset">
-    <div>alignment, flock <span class="v acc" id="phi-flock">0.000</span></div>
-    <div>alignment, sheet <span class="v acc" id="phi-sheet">0.000</span></div>
-    <div><span class="v">one shared field, both panels</span></div>
-    <div class="sp">Live</div>
   </div>
 </section>
 
@@ -445,7 +453,7 @@ html.settled .reveal{opacity:1!important;transform:none!important;transition:non
      ═══════════════════════════════════════════════════════════════════════ -->
 <section class="band dark" id="partners">
   <div class="inner">
-    <div class="chrome"><span class="label">Partners</span><span class="label">04</span></div>
+    <div class="chrome"><span class="label">Partners</span><span class="label">05</span></div>
     <div class="head">
       <h2 class="reveal">Who we work with.</h2>
     </div>
@@ -457,7 +465,7 @@ html.settled .reveal{opacity:1!important;transform:none!important;transition:non
       <dt class="label">Design partners</dt><dd class="body">Three academic labs.</dd>
       <dt class="label">Programme</dt><dd class="body">Mila Ventures Launchpad, October 2026.</dd>
       <dt class="label">Grant</dt><dd class="body">Anthropic AI for Science.</dd>
-      <dt class="label"><a href="https://github.com/latent-reasoning-works/manyruns" target="_blank" rel="noopener" style="color:var(--cherry);border-bottom-color:var(--cherry)">Open source</a></dt><dd class="body">manyruns and manylatents, on PyPI, MIT licence.</dd>
+      <dt class="label"><a href="https://github.com/latent-reasoning-works/manyruns" target="_blank" rel="noopener" style="color:var(--cherry);border-bottom-color:var(--cherry)">Open source</a></dt><dd class="body">manyruns, manyagents and manylatents, by Latent Reasoning Works, on PyPI.</dd>
     </dl>
   </div>
 </section>
@@ -468,7 +476,7 @@ html.settled .reveal{opacity:1!important;transform:none!important;transition:non
      ═══════════════════════════════════════════════════════════════════════ -->
 <section class="band" id="founder">
   <div class="inner">
-    <div class="chrome"><span class="label">Founder</span><span class="label">05</span></div>
+    <div class="chrome"><span class="label">Founder</span><span class="label">06</span></div>
     <div class="head">
       <h2 class="reveal"><a href="https://cmvcordova.com" target="_blank" rel="noopener" style="border-bottom-width:2px">César Miguel Valdez Córdova</a></h2>
       <p class="lead reveal">PhD candidate at Mila and McGill in geometric deep learning for biology. <a href="https://scholar.google.com/citations?user=kI5hHesAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a>.</p>
@@ -487,7 +495,7 @@ html.settled .reveal{opacity:1!important;transform:none!important;transition:non
     <canvas class="fig fig--wide" data-viz="eroom" data-fixed data-opt='{"timeline":true,"further":true,"quiet":true,"mute":true}' width="1640" height="540" style="position:static;transform:none;height:auto"></canvas>
   </div>
   <div class="inner">
-    <div class="chrome"><span class="label">Early access</span><span class="label">06</span></div>
+    <div class="chrome"><span class="label">Early access</span><span class="label">07</span></div>
     <div class="head">
       <h2 class="reveal">Request an invite.</h2>
     </div>
