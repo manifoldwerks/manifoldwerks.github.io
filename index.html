@@ -153,6 +153,8 @@ a:hover{border-bottom-color:var(--cherry)}
 .step figcaption{margin-top:16px}
 .step figcaption .lead{margin-top:8px;font-size:clamp(1rem,1.3vw,1.2rem)}
 .founder-row{align-items:flex-start}
+.partner{flex:0 0 clamp(160px,18vw,220px);padding-top:6px}
+@media (max-width:56rem){.partner{flex-basis:auto;padding-top:0}}
 .portrait{flex:0 0 clamp(200px,24vw,300px);margin:0;border:1px solid var(--rule)}
 .portrait img{display:block;width:100%;height:auto}
 @media (max-width:56rem){.portrait{flex-basis:auto;width:min(100%,280px)}}
@@ -458,22 +460,6 @@ html.settled .reveal{opacity:1!important;transform:none!important;transition:non
 
 
 <!-- ═══════════════════════════════════════════════════════════════════════
-     06 — PARTNERS AND BACKING. One logo, four lines, one cherry link.
-     ═══════════════════════════════════════════════════════════════════════ -->
-<section class="band" id="partners">
-  <div class="inner">
-    <div class="head">
-      <h2>Who we work with.</h2>
-    </div>
-    <div class="plate" style="margin-top:clamp(2.5rem,5vw,3.5rem);display:inline-flex;flex-direction:column;gap:18px;align-items:flex-start">
-      <a href="https://www.neigesbiotech.com/" target="_blank" rel="noopener" style="border:none;display:block"><img src="/brand/partners/neiges.png" alt="Neiges Biotechnologies" style="height:56px;width:auto;filter:invert(1);opacity:.92"></a>
-      <span class="label">Design partner, Montréal</span>
-    </div>
-  </div>
-</section>
-
-
-<!-- ═══════════════════════════════════════════════════════════════════════
      07 — FOUNDER. One person, and the seat next to him.
      ═══════════════════════════════════════════════════════════════════════ -->
 <section class="band" id="founder">
@@ -490,6 +476,10 @@ html.settled .reveal{opacity:1!important;transform:none!important;transition:non
         <p class="body" style="margin-top:22px;max-width:58ch">I am looking for a technical cofounder who has shipped agentic systems in production to own the product end to end, so biologists can think about cells and what they do. Write to me.</p>
         <p style="margin-top:clamp(1.5rem,3vw,2.2rem)"><a class="btn btn-primary" href="mailto:cesar@manifoldwerks.com">cesar@manifoldwerks.com</a></p>
       </div>
+      <aside class="partner">
+        <span class="label">Design partner</span>
+        <a href="https://www.neigesbiotech.com/" target="_blank" rel="noopener" style="border:none;display:block;margin-top:14px"><img src="/brand/partners/neiges.png" alt="Neiges Biotechnologies" style="height:48px;width:auto;display:block"></a>
+      </aside>
     </div>
   </div>
 </section>
