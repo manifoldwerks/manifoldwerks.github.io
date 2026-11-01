@@ -409,23 +409,7 @@ html.settled .reveal{opacity:1!important;transform:none!important;transition:non
     <p class="body" style="margin-top:22px;max-width:58ch"><span class="label" style="margin-right:12px">Next</span>Labs that opt in will share which methods worked on data shaped like theirs. The data will never leave.</p>
     <p class="body" style="margin-top:14px;max-width:58ch"><span class="label" style="margin-right:12px">Open source</span>The engine is public: manyruns, manyagents and manylatents, by <a href="https://latentreasoning.works" target="_blank" rel="noopener">Latent Reasoning Works</a>, on PyPI.</p>
     <div class="fig-scroll" style="margin-top:clamp(2.5rem,5vw,3.5rem)">
-    <svg class="fig fig--wide" viewBox="0 0 1200 360" style="max-width:1200px" role="img" aria-label="Three labs. The data stays inside each one. A method card travels between them." font-family="IBM Plex Mono, monospace">
-      <g stroke="var(--rule)" fill="var(--paper-raised)">
-        <rect x="40" y="60" width="320" height="220"/><rect x="440" y="60" width="320" height="220"/><rect x="840" y="60" width="320" height="220"/>
-      </g>
-      <g fill="var(--sand-deep)">
-        <rect x="140" y="140" width="120" height="60"/><rect x="540" y="140" width="120" height="60"/><rect x="940" y="140" width="120" height="60"/>
-      </g>
-      <g fill="var(--ink)" font-size="18" text-anchor="middle">
-        <text x="200" y="232">data</text><text x="600" y="232">data</text><text x="1000" y="232">data</text>
-      </g>
-      <g fill="var(--ink-muted)" font-size="14" text-anchor="start">
-        <text x="56" y="86">LAB A</text><text x="456" y="86">LAB B</text><text x="856" y="86">LAB C</text>
-      </g>
-      <path d="M200 320 H1000" stroke="var(--rule)" stroke-dasharray="6 8" fill="none"/>
-      <rect x="410" y="298" width="380" height="44" fill="var(--paper)" stroke="var(--ink)"/>
-      <text x="600" y="326" fill="var(--ink)" font-size="16" text-anchor="middle">method: steps, settings, checks</text>
-    </svg>
+      <canvas class="fig fig--wide" data-viz="consoles" data-fixed data-opt='{"theme":"dark"}' width="1680" height="560"></canvas>
     </div>
   </div>
 </section>
@@ -689,6 +673,105 @@ VIZ['tolerance'] = function(cv){
       const mx = ax0 + aw*al;
       ctx.strokeStyle = rgba(P.ink, .9); ctx.lineWidth = 3;
       ctx.beginPath(); ctx.moveTo(mx, ay + 2); ctx.lineTo(mx, ay + 30 + 2*76 + 36); ctx.stroke();
+    }
+  };
+};
+
+/* =========================================================================
+   CONSOLES  —  band "Your data stays in your lab". Ported from the Kindler
+   talk. Every lab has its own console: the same arrangement, turned its own
+   way, named in its own script. Lines link the matching parts across
+   consoles; the shared shape assembles in the middle with no names on it.
+   Data stays in each lab.
+   ========================================================================= */
+VIZ['consoles'] = function(cv){
+  const W = cv.width, H = cv.height, ctx = cv.getContext('2d');
+  const opt = JSON.parse(cv.dataset.opt || '{}');
+  const P = PAL[opt.theme === 'light' ? 'light' : 'dark'];
+  const rnd = mkRnd(404);
+  const base = [];
+  for(let i=0;i<34;i++) base.push([.22 + gauss(rnd)*.05, .5 + gauss(rnd)*.06]);
+  for(let i=0;i<26;i++){ const u = rnd(); base.push([.28 + .3*u + gauss(rnd)*.012, .5 + gauss(rnd)*.015]); }
+  for(let i=0;i<24;i++){ const u = rnd(); base.push([.58 + .26*u + gauss(rnd)*.012, .5 - .28*u + gauss(rnd)*.015]); }
+  for(let i=0;i<24;i++){ const u = rnd(); base.push([.58 + .26*u + gauss(rnd)*.012, .5 + .28*u + gauss(rnd)*.015]); }
+  const ANCH = [[.22,.5],[.84,.22],[.84,.78]];
+  const LABS = [
+    {x:.10, y:.24, rot:0,    flip:1,  names:['stem','neuron','glia']},
+    {x:.10, y:.76, rot:2.2,  flip:-1, names:['kel','vora','tisk']},
+    {x:.30, y:.80, rot:-1.3, flip:1,  names:['ハ','リ','ヲ']},
+    {x:.70, y:.80, rot:.9,   flip:-1, names:['Δ','Ψ','Ω']},
+    {x:.90, y:.76, rot:-2.6, flip:1,  names:['ᚠ','ᚢ','ᚦ']},
+    {x:.90, y:.24, rot:1.7,  flip:1,  names:['ra','tun','ves']},
+    {x:.30, y:.16, rot:3.0,  flip:-1, names:['a','b','c']},
+    {x:.70, y:.16, rot:-.4,  flip:-1, names:['∴','∷','∻']}
+  ];
+  const bw = 210, bh = 130;
+  const place = (lab, p, cx, cy, sw, sh) => {
+    const x = (p[0] - .5), y = (p[1] - .5)*lab.flip;
+    const c = Math.cos(lab.rot), si = Math.sin(lab.rot);
+    return [cx + (x*c - y*si)*sw, cy + (x*si + y*c)*sh];
+  };
+  return {
+    printAt: 9,
+    frame(t){
+      ground(ctx, W, H, P.ground);
+      const centers = LABS.map(l => [l.x*W, l.y*H]);
+      const lk = smoothstep(3.0, 5.0, t);
+      if(lk > 0){
+        ctx.setLineDash([5, 9]); ctx.lineWidth = 1.5;
+        const order = [0,1,6,7,5,4,3,2];
+        for(let i=0;i<LABS.length;i++){
+          const j = (i + 1) % LABS.length;
+          const A = LABS[order[i]], B = LABS[order[j]];
+          const ca = centers[order[i]], cb = centers[order[j]];
+          ANCH.forEach(p => {
+            const pa = place(A, p, ca[0], ca[1], bw*.8, bh*.8), pb = place(B, p, cb[0], cb[1], bw*.8, bh*.8);
+            ctx.strokeStyle = rgba(P.brass, .30*lk);
+            ctx.beginPath(); ctx.moveTo(pa[0], pa[1]); ctx.lineTo(pa[0] + (pb[0] - pa[0])*lk, pa[1] + (pb[1] - pa[1])*lk); ctx.stroke();
+          });
+        }
+        ctx.setLineDash([]);
+      }
+      LABS.forEach((l, k) => {
+        const a = smoothstep(.2 + k*.3, .7 + k*.3, t);
+        if(a <= 0) return;
+        const [cx, cy] = centers[k];
+        ctx.globalAlpha = a;
+        ctx.fillStyle = 'rgb(' + P.panel + ')'; ctx.fillRect(cx - bw/2, cy - bh/2, bw, bh);
+        ctx.strokeStyle = rgba(P.ink, .18); ctx.lineWidth = 1.5; ctx.strokeRect(cx - bw/2, cy - bh/2, bw, bh);
+        for(const p of base){
+          const [x, y] = place(l, p, cx, cy, bw*.8, bh*.8);
+          ctx.fillStyle = rgba(P.ink, .75); ctx.fillRect(x - 1.4, y - 1.4, 2.8, 2.8);
+        }
+        ctx.textAlign = 'center';
+        ANCH.forEach((p, j) => {
+          const [x, y] = place(l, p, cx, cy, bw*.8, bh*.8);
+          ctx.fillStyle = rgba(P.brass, .95); ctx.font = FONT.monob(16);
+          ctx.fillText(l.names[j], x, y - 10);
+        });
+        ctx.fillStyle = rgba(P.inkMuted, 1); ctx.font = FONT.mono(13);
+        ctx.fillText('lab ' + (k + 1) + ', data stays here', cx, cy + bh/2 + 18);
+        ctx.globalAlpha = 1;
+      });
+      const sh = smoothstep(5.2, 7.0, t);
+      if(sh > 0){
+        const cx = W/2, cy = H/2, sw = 560, shh = 330;
+        const id = {rot:0, flip:1};
+        ctx.globalAlpha = sh;
+        for(const p of base){
+          const [x, y] = place(id, p, cx, cy, sw, shh);
+          ctx.fillStyle = rgba(P.ink, .95);
+          ctx.beginPath(); ctx.arc(x, y, 3.6, 0, 6.283); ctx.fill();
+        }
+        ctx.strokeStyle = rgba(P.brass, .8); ctx.lineWidth = 2;
+        ANCH.forEach(p => {
+          const [x, y] = place(id, p, cx, cy, sw, shh);
+          ctx.beginPath(); ctx.arc(x, y, 26, 0, 6.283); ctx.stroke();
+        });
+        ctx.fillStyle = rgba(P.inkMuted, 1); ctx.font = FONT.mono(16); ctx.textAlign = 'center';
+        ctx.fillText('the shape that holds', cx, cy + shh/2 + 26);
+        ctx.globalAlpha = 1;
+      }
     }
   };
 };
