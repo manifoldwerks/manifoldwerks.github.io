@@ -348,8 +348,8 @@ html.settled .reveal{opacity:1!important;transform:none!important;transition:non
 
 
 <!-- ═══════════════════════════════════════════════════════════════════════
-     04 — DATA STAYS. METHOD TRAVELS. The consoles figure: every lab with
-     its own names, the shared shape in the middle, the data never moving.
+     04 — DATA STAYS. The method figure: this lab's cells with their names
+     on one side, the method as steps and expected shape on the other.
      ═══════════════════════════════════════════════════════════════════════ -->
 <section class="band dark" id="stays">
   <div class="inner">
@@ -359,9 +359,9 @@ html.settled .reveal{opacity:1!important;transform:none!important;transition:non
     </div>
     <p class="body" style="margin-top:22px;max-width:58ch"><span class="label" style="margin-right:12px">Open source</span>The engine is public: manyruns, manyagents and manylatents, by <a href="https://latentreasoning.works" target="_blank" rel="noopener">Latent Reasoning Works</a>, on PyPI.</p>
     <div class="fig-scroll" style="margin-top:clamp(2.5rem,5vw,3.5rem)">
-      <canvas class="fig fig--wide" data-viz="consoles" data-fixed data-opt='{"theme":"dark"}' width="1680" height="560"></canvas>
+      <canvas class="fig fig--wide" data-viz="method" data-fixed data-opt='{"theme":"dark"}' width="1680" height="560"></canvas>
     </div>
-    <p class="label" style="margin-top:14px">Same parts, each lab’s own names. Only the shape is shared.</p>
+    <p class="label" style="margin-top:14px">What Glasswerk holds is the method: its steps, and the shape they expect. Not your cells.</p>
   </div>
 </section>
 
@@ -626,16 +626,15 @@ VIZ['tolerance'] = function(cv){
 
 
 /* =========================================================================
-   CONSOLES  —  band "Your data stays in your lab". Ported from a talk
-   figure. Every lab has its own console: the same arrangement, turned its own
-   way, named in its own script. Lines link the matching parts across
-   consoles; the shared shape assembles in the middle with no names on it.
-   Data stays in each lab.
+   METHOD  —  band "Your data stays in your lab". One panel holds the cells,
+   named the way this lab names them. The other holds what Glasswerk works
+   with: the method, as its steps and the shape it expects. Only the rings
+   lift from one panel to the other; every dot stays where it is.
    ========================================================================= */
-VIZ['consoles'] = function(cv){
+VIZ['method'] = function(cv){
   const opt = JSON.parse(cv.dataset.opt || '{}');
   const P = PAL[opt.theme === 'light' ? 'light' : 'dark'];
-  /* a phone gets a portrait frame with four labs */
+  /* a phone stacks the two panels */
   const COMPACT = opt.compact === true || (opt.compact !== false && innerWidth < 768);
   if(COMPACT){ cv.width = 720; cv.height = 900; cv.style.minWidth = '0'; }
   const W = cv.width, H = cv.height, ctx = cv.getContext('2d');
@@ -646,94 +645,72 @@ VIZ['consoles'] = function(cv){
   for(let i=0;i<24;i++){ const u = rnd(); base.push([.58 + .26*u + gauss(rnd)*.012, .5 - .28*u + gauss(rnd)*.015]); }
   for(let i=0;i<24;i++){ const u = rnd(); base.push([.58 + .26*u + gauss(rnd)*.012, .5 + .28*u + gauss(rnd)*.015]); }
   const ANCH = [[.22,.5],[.84,.22],[.84,.78]];
-  /* the same three parts, named the way each lab names them */
-  const WIDE = [
-    {x:.10, y:.24, rot:0,    flip:1,  names:['stem','neuron','glia']},
-    {x:.10, y:.76, rot:2.2,  flip:-1, names:['c0','c1','c2']},
-    {x:.30, y:.80, rot:-1.3, flip:1,  names:['HSC','B','T']},
-    {x:.70, y:.80, rot:.9,   flip:-1, names:['prog','int','term']},
-    {x:.90, y:.76, rot:-2.6, flip:1,  names:['root','left','right']},
-    {x:.90, y:.24, rot:1.7,  flip:1,  names:['cl.1','cl.2','cl.3']},
-    {x:.30, y:.16, rot:3.0,  flip:-1, names:['A','B','C']},
-    {x:.70, y:.16, rot:-.4,  flip:-1, names:['α','β','γ']}
-  ];
-  const NARROW = [
-    {x:.25, y:.15, rot:0,    flip:1,  names:['stem','neuron','glia']},
-    {x:.75, y:.15, rot:1.7,  flip:1,  names:['cl.1','cl.2','cl.3']},
-    {x:.25, y:.86, rot:2.2,  flip:-1, names:['c0','c1','c2']},
-    {x:.75, y:.86, rot:.9,   flip:-1, names:['prog','int','term']}
-  ];
-  const LABS = COMPACT ? NARROW : WIDE;
-  const order = COMPACT ? [0,1,3,2] : [0,1,6,7,5,4,3,2];
-  const bw = COMPACT ? 250 : 210, bh = COMPACT ? 150 : 130;
-  const fName = COMPACT ? 22 : 16, fLab = COMPACT ? 17 : 13, fCap = COMPACT ? 20 : 16;
-  const sw = COMPACT ? 520 : 560, shh = COMPACT ? 300 : 330;
-  const place = (lab, p, cx, cy, sw, sh) => {
-    const x = (p[0] - .5), y = (p[1] - .5)*lab.flip;
-    const c = Math.cos(lab.rot), si = Math.sin(lab.rot);
-    return [cx + (x*c - y*si)*sw, cy + (x*si + y*c)*sh];
+  const NAMES = ['stem','enterocyte','goblet'];
+  const STEPS = ['normalise','reduce','group','order'];
+  /* boxes: cells, method, steps column */
+  const CELLS = COMPACT ? {x:60, y:70, w:600, h:340} : {x:100, y:80, w:620, h:380};
+  const METH  = COMPACT ? {x:60, y:500, w:430, h:340} : {x:840, y:80, w:620, h:380};
+  const COL   = COMPACT ? {x:530, y:500, w:160, h:340} : {x:1500, y:80, w:160, h:380};
+  const fName = COMPACT ? 21 : 17, fCap = COMPACT ? 20 : 16, fStep = COMPACT ? 21 : 18;
+  const at = (box, p) => [box.x + box.w*(.1 + .8*p[0]), box.y + box.h*(.1 + .8*p[1])];
+  const panel = (b, a) => {
+    ctx.globalAlpha = a;
+    ctx.fillStyle = 'rgb(' + P.panel + ')'; ctx.fillRect(b.x, b.y, b.w, b.h);
+    ctx.strokeStyle = rgba(P.ink, .18); ctx.lineWidth = 1.5; ctx.strokeRect(b.x, b.y, b.w, b.h);
+    ctx.globalAlpha = 1;
   };
+  const ring = (x, y, r, a) => { ctx.strokeStyle = rgba(P.brass, a); ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(x, y, r, 0, 6.283); ctx.stroke(); };
   return {
     printAt: 9,
     frame(t){
       const T = REDUCE ? 9 : t;
       ground(ctx, W, H, P.ground);
-      const centers = LABS.map(l => [l.x*W, l.y*H]);
-      const lk = smoothstep(3.0, 5.0, T);
-      if(lk > 0){
-        ctx.setLineDash([5, 9]); ctx.lineWidth = 1.5;
-        for(let i=0;i<LABS.length;i++){
-          const j = (i + 1) % LABS.length;
-          const A = LABS[order[i]], B = LABS[order[j]];
-          const ca = centers[order[i]], cb = centers[order[j]];
-          ANCH.forEach(p => {
-            const pa = place(A, p, ca[0], ca[1], bw*.8, bh*.8), pb = place(B, p, cb[0], cb[1], bw*.8, bh*.8);
-            ctx.strokeStyle = rgba(P.brass, .30*lk);
-            ctx.beginPath(); ctx.moveTo(pa[0], pa[1]); ctx.lineTo(pa[0] + (pb[0] - pa[0])*lk, pa[1] + (pb[1] - pa[1])*lk); ctx.stroke();
-          });
-        }
+      ctx.textAlign = 'center';
+      /* the cells, as this lab sees them */
+      const a0 = smoothstep(.2, 1.0, T);
+      panel(CELLS, a0); panel(METH, smoothstep(.6, 1.4, T));
+      ctx.globalAlpha = a0;
+      for(const p of base){ const [x, y] = at(CELLS, p); ctx.fillStyle = rgba(P.ink, .8); ctx.fillRect(x - 1.6, y - 1.6, 3.2, 3.2); }
+      const an = smoothstep(1.0, 2.2, T);
+      ANCH.forEach((p, j) => { const [x, y] = at(CELLS, p); ctx.fillStyle = rgba(P.brass, .95*an); ctx.font = FONT.monob(fName); ctx.fillText(NAMES[j], x, y - 30); });
+      ctx.globalAlpha = 1;
+      /* the rings lift out of the cells and settle in the method panel */
+      ANCH.forEach((p, j) => {
+        const u = smoothstep(2.6 + j*.5, 4.2 + j*.5, T);
+        if(u <= 0) return;
+        const [ax, ay] = at(CELLS, p), [bx, by] = at(METH, p);
+        ring(ax, ay, 22, .35 + .35*(1 - u));
+        const e = 1 - Math.pow(1 - u, 3);
+        const x = ax + (bx - ax)*e, y = ay + (by - ay)*e;
+        if(u < 1){ ctx.setLineDash([4, 10]); ctx.strokeStyle = rgba(P.brass, .25); ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(ax, ay); ctx.lineTo(x, y); ctx.stroke(); ctx.setLineDash([]); }
+        ring(x, y, 22, .95);
+      });
+      /* the shape the method expects: root, trunk, two branches */
+      const sk = smoothstep(4.6, 6.4, T);
+      if(sk > 0){
+        const r = at(METH, ANCH[0]), f = at(METH, [.58, .5]), b1 = at(METH, ANCH[1]), b2 = at(METH, ANCH[2]);
+        const seg = (A, B, u) => { if(u <= 0) return; ctx.beginPath(); ctx.moveTo(A[0], A[1]); ctx.lineTo(A[0] + (B[0] - A[0])*u, A[1] + (B[1] - A[1])*u); ctx.stroke(); };
+        ctx.setLineDash([6, 8]); ctx.strokeStyle = rgba(P.brass, .7); ctx.lineWidth = 2;
+        seg(r, f, clamp01(sk*2)); seg(f, b1, clamp01(sk*2 - 1)); seg(f, b2, clamp01(sk*2 - 1));
         ctx.setLineDash([]);
       }
-      LABS.forEach((l, k) => {
-        const a = smoothstep(.2 + k*.3, .7 + k*.3, T);
-        if(a <= 0) return;
-        const [cx, cy] = centers[k];
-        ctx.globalAlpha = a;
-        ctx.fillStyle = 'rgb(' + P.panel + ')'; ctx.fillRect(cx - bw/2, cy - bh/2, bw, bh);
-        ctx.strokeStyle = rgba(P.ink, .18); ctx.lineWidth = 1.5; ctx.strokeRect(cx - bw/2, cy - bh/2, bw, bh);
-        for(const p of base){
-          const [x, y] = place(l, p, cx, cy, bw*.8, bh*.8);
-          ctx.fillStyle = rgba(P.ink, .75); ctx.fillRect(x - 1.4, y - 1.4, 2.8, 2.8);
-        }
-        ctx.textAlign = 'center';
-        ANCH.forEach((p, j) => {
-          const [x, y] = place(l, p, cx, cy, bw*.8, bh*.8);
-          ctx.fillStyle = rgba(P.brass, .95); ctx.font = FONT.monob(fName);
-          ctx.fillText(l.names[j], x, y - 10);
-        });
-        ctx.fillStyle = rgba(P.inkMuted, 1); ctx.font = FONT.mono(fLab);
-        ctx.fillText('lab ' + (k + 1) + ', data stays here', cx, cy + bh/2 + 18 + (COMPACT ? 4 : 0));
-        ctx.globalAlpha = 1;
+      /* the steps, one lighting after another */
+      ctx.textAlign = 'left';
+      const rowH = COL.h/(STEPS.length + 1);
+      STEPS.forEach((w, i) => {
+        const on = smoothstep(5.0 + i*.6, 5.6 + i*.6, T);
+        ctx.fillStyle = rgba(P.ink, .3 + .65*on); ctx.font = on > .5 ? FONT.monob(fStep) : FONT.mono(fStep);
+        ctx.fillText(w, COL.x, COL.y + rowH*(i + 1) + 6);
+        if(on > 0){ ctx.fillStyle = rgba(P.brass, on); ctx.fillRect(COL.x - 18, COL.y + rowH*(i + 1) - 1, 8, 8); }
       });
-      const sh = smoothstep(5.2, 7.0, T);
-      if(sh > 0){
-        const cx = W/2, cy = H/2;
-        const id = {rot:0, flip:1};
-        ctx.globalAlpha = sh;
-        for(const p of base){
-          const [x, y] = place(id, p, cx, cy, sw, shh);
-          ctx.fillStyle = rgba(P.ink, .95);
-          ctx.beginPath(); ctx.arc(x, y, 3.6, 0, 6.283); ctx.fill();
-        }
-        ctx.strokeStyle = rgba(P.brass, .8); ctx.lineWidth = 2;
-        ANCH.forEach(p => {
-          const [x, y] = place(id, p, cx, cy, sw, shh);
-          ctx.beginPath(); ctx.arc(x, y, 26, 0, 6.283); ctx.stroke();
-        });
-        ctx.fillStyle = rgba(P.inkMuted, 1); ctx.font = FONT.mono(fCap); ctx.textAlign = 'center';
-        ctx.fillText('the shape that holds', cx, cy + shh/2 + 26);
-        ctx.globalAlpha = 1;
-      }
+      /* captions */
+      ctx.textAlign = 'center'; ctx.fillStyle = rgba(P.inkMuted, 1); ctx.font = FONT.mono(fCap);
+      ctx.globalAlpha = a0;
+      ctx.fillText('your cells, your names. they stay here.', CELLS.x + CELLS.w/2, CELLS.y + CELLS.h + 30);
+      ctx.globalAlpha = smoothstep(4.0, 5.0, T);
+      const mx = COMPACT ? (METH.x + (COL.x + COL.w))/2 : (METH.x + (COL.x + COL.w))/2;
+      ctx.fillText('the method: its steps, and the shape it expects', mx, METH.y + METH.h + 30);
+      ctx.globalAlpha = 1;
     }
   };
 };
